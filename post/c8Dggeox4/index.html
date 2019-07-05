@@ -1,0 +1,452 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<title>Git操作 | Martian`Blog</title>
+<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562331633312">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142296260-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142296260-1');
+</script>
+
+
+</head>
+<body class="home blog ct-body standard">
+<div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+    <div class='top-navigation top-navigation-important'>
+        <div class='container'>
+            <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+                <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+                <div class="menu">
+                    <ul id="menu-secondary-items" class="menu-secondary-items">
+                        
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/web">WEB</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/3h7N1DtwN">BLOG</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Lv3dEyzll">FUNNY</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
+                        </li>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+            <ul class="social-media-icons">
+                
+                    
+                        <li>
+                            <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                                <i class="fab fa-github" title="github"></i>
+                                <span class="screen-reader-text">github</span>
+                            </a>
+                        </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li>
+                            <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                                <i class="fa fa-rss" title="rss"></i>
+                                <span class="screen-reader-text">rss</span>
+                            </a>
+                        </li>
+                    
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="title-info" class="title-info">
+            <div id='site-title' class='site-title'>
+                <a href="https://42one.xyz">  Martian`Blog </a>
+            </div>
+        </div>
+        <button id="toggle-navigation" class="toggle-navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+        <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+            <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+            <div class="menu">
+                <ul id="menu-primary-items" class="menu-primary-items">
+                     
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/">首页</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/archives">归档</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/tags">标签</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/post/about">ABOUT</a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+    <div id="main" class="main" role="main">
+        <div id="loop-container" class="loop-container">
+            <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+                
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/c8Dggeox4.jpg">
+                    </div>
+                
+
+                <div class="entry-meta">
+                    <span class="date">· 2019-06-20 ·</span> <span> / </span>
+                    <span class="author">
+            <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
+          </span>
+                    
+                        <span class="category">
+                    <span> / </span>
+                    <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
+                </span>
+                    
+                </div>
+                <div class='entry-header'>
+                    <h1 class='entry-title'>Git操作</h1>
+                </div>
+                <div class="entry-container">
+                    <div class="entry-content">
+                        <article>
+                            <ul>
+<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
+<li><a href="#head2"> <strong>版本管理</strong></a></li>
+<li><a href="#head3"> <strong>撤销修改</strong></a></li>
+<li><a href="#head4"> <strong>远程仓库</strong></a></li>
+<li><a href="#head5"> 未完待续...😬</a></li>
+</ul>
+<!-- more -->
+<br>
+<hr>
+<p><img src="https://42one.xyz/post-images/1561036798587.png" alt=""></p>
+<hr>
+</br>  
+<h3 id="span-idhead1-初始化一个git环境span"><span id="head1"> <strong>初始化一个Git环境</strong></span></h3>
+<hr>
+<p><strong>Git init</strong><br>
+添加文件到git仓库.</p>
+<p><strong>Git add file</strong><br>
+可以多次使用,添加文件到暂缓区.</p>
+<p><strong>Git commit -m &quot;massage&quot;</strong><br>
+完成把暂缓区的所有内容提交到当前分支.</p>
+</br>
+<h3 id="span-idhead2-版本管理span"><span id="head2"> <strong>版本管理</strong></span></h3>
+<hr>
+<p><strong>Git reset --herd commend ID</strong><br>
+head指向的版本就是当前版本,Git允许我们在所有版本的历史内任意穿梭.穿梭前,用git log 查看提交历史,以确认要回退的版本.要重返未来,用git relog 查看命令历史,以便确认未来的版本.</p>
+</br>
+<h3 id="span-idhead3-撤销修改span"><span id="head3"> <strong>撤销修改</strong></span></h3>
+<hr>
+<p><strong>场景一</strong><br>
+当你改乱了工作区的某个文件的内容,想直接丢弃工作区的更改时,使用命令<strong>git checkout --file</strong></p>
+<p><strong>场景二</strong><br>
+当你不但改乱了工作区的文件的内容,而且已经提交给了暂缓区,想丢弃修改,分两步:第一步用命令<strong>git reset</strong>回到上一个版本,也就是场景一,第二步按场景一的方式修改.</p>
+<blockquote>
+<p><em>git checkout其实是用版本库的版本去替换工作区的版本,无论工作区是是修改还是删除埋在可以一键删除</em></p>
+</blockquote>
+</br>
+<h3 id="span-idhead4-远程仓库span"><span id="head4"> <strong>远程仓库</strong></span></h3>
+<hr>
+<p><strong>1.克隆远程仓库</strong></p>
+<p><em>要克隆一个仓库,必须知道仓库的地址,然后使用<strong>git clone</strong> 命令克隆</em></p>
+<pre><code class="language-js">git clone git@github:markwhitey.github.io.git
+</code></pre>
+<p><em>github支持多种协议,包括https,但ssh原生的git协议最快</em></p>
+<p><strong>2.添加远程仓库</strong></p>
+<pre><code class="language-js">git remote add [shortname] [url]
+</code></pre>
+<p><strong>3.查看当前远程仓库</strong></p>
+<pre><code class="language-js">git remote
+</code></pre>
+<p><strong>4.提取远程仓库</strong></p>
+<ul>
+<li>从远程仓库下载分支</li>
+</ul>
+<pre><code class="language-java">git fetch
+</code></pre>
+<p><em>该命令执行后需要执行git merge远程分支到自己的分支</em></p>
+<ul>
+<li>从远程仓库和本地仓库合并</li>
+</ul>
+<pre><code class="language-java">git merge
+</code></pre>
+</br>  
+<h1 id="span-idhead5-未完待续span"><span id="head5"> 未完待续...😬</span></h1>
+
+                        </article>
+                    </div>
+                    <div class='entry-meta-bottom'>
+                        <div class="entry-categories">
+                            <p>
+                                <span style="color:#8FBC8B;font-size:20px">Tags</span>
+                                
+                                    
+                                        
+                                        <a href="https://42one.xyz/tag/web"
+                                           title="View all posts in WEB">WEB</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Iw4_cGMkz"
+                                           title="View all posts in JAVA">JAVA</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/3h7N1DtwN"
+                                           title="View all posts in BLOG">BLOG</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Lv3dEyzll"
+                                           title="View all posts in FUNNY">FUNNY</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/CA7Cv-521"
+                                           title="View all posts in LINUX">LINUX</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/yZsB2hCgh"
+                                           title="View all posts in GIT">GIT</a>
+                                        
+                                
+                            </p>
+                        </div>
+                        <!--            <div class="entry-tags">
+                                      <p><span>Tags</span>
+                                      </p>
+                                    </div>-->
+                    </div>
+                    <div class="author-meta">
+                        <div class="author">
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562331633312"
+                                 class='avatar avatar-72 photo' height='72' width='72'>
+                            <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
+                                        href='https://42one.xyz'>Martian</a> </span>
+                        </div>
+                        <div class="bio">
+                            <p>KEEP LOOKING     |  |  NEVER SETTLE.</p>
+                            
+                                
+                                    <a class="github" target="_blank"
+                                       href="https://github.com/markwhitey">
+                                        <i class="fab fa-github"
+                                           title="github"></i>
+                                    </a>
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                                    <a class="rss" target="_blank"
+                                       href="https://42one.xyz/atom.xml">
+                                        <i class="fa fa-rss"
+                                           title="rss"></i>
+                                    </a>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                    <nav class="navigation pagination" role="navigation">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="next page-numbers"
+                               href="https://42one.xyz/post/N846lZsvx">下一篇->linux(二)常用命令</a>
+                        </div>
+                    </nav>
+                
+            </div>
+            <section id="comments" class="comments">
+                
+                    
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ae4c2b195cb86142aacf',
+    clientSecret: '41420acfbb5030f42a8e9d0ea216cea3b4216076',
+    repo: 'markwhitey.github.io',
+    owner: 'markwhitey',
+    admin: ['markwhitey'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+
+                    
+                
+            </section>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+    <h1>
+        <a href="https://42one.xyz"> Martian`Blog </a>
+    </h1>
+    <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+    <div id="menu-footer" class="menu-container menu-footer" role="navigation">
+        <div class="menu">
+            <ul id="menu-footer-items" class="menu-footer-items">
+            </ul>
+        </div>
+    </div>
+    <ul class="social-media-icons">
+        
+            
+                <li>
+                    <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                        <i class="fab fa-github" title="github"></i>
+                        <span class="screen-reader-text">github</span>
+                    </a>
+                </li>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <li>
+                    <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                        <i class="fas fa-rss" title="rss"></i>
+                        <span class="screen-reader-text">rss</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+<!--    <div class="design-credit">
+        <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></p>
+    </div>-->
+</footer>
+
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+<script src="https://42one.xyz/media/scripts/lib/jquery.min.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/jquerymigrate.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/production.min.js"></script>
+
+
+
+
+    <button id="return-top" class="return-top" >
+<!--    <a title="返回顶部">返回</a>-->
+    <i class="fas fa-arrow-up"></i>
+</button>
+</div>
+</body>
+</html>
+

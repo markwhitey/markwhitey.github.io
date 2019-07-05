@@ -1,0 +1,473 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<title>java面试题(辨析) | Martian`Blog</title>
+<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562331633312">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142296260-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142296260-1');
+</script>
+
+
+</head>
+<body class="home blog ct-body standard">
+<div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+    <div class='top-navigation top-navigation-important'>
+        <div class='container'>
+            <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+                <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+                <div class="menu">
+                    <ul id="menu-secondary-items" class="menu-secondary-items">
+                        
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/web">WEB</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/3h7N1DtwN">BLOG</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Lv3dEyzll">FUNNY</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
+                        </li>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+            <ul class="social-media-icons">
+                
+                    
+                        <li>
+                            <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                                <i class="fab fa-github" title="github"></i>
+                                <span class="screen-reader-text">github</span>
+                            </a>
+                        </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li>
+                            <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                                <i class="fa fa-rss" title="rss"></i>
+                                <span class="screen-reader-text">rss</span>
+                            </a>
+                        </li>
+                    
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="title-info" class="title-info">
+            <div id='site-title' class='site-title'>
+                <a href="https://42one.xyz">  Martian`Blog </a>
+            </div>
+        </div>
+        <button id="toggle-navigation" class="toggle-navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+        <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+            <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+            <div class="menu">
+                <ul id="menu-primary-items" class="menu-primary-items">
+                     
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/">首页</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/archives">归档</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/tags">标签</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/post/about">ABOUT</a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+    <div id="main" class="main" role="main">
+        <div id="loop-container" class="loop-container">
+            <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+                
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/v6elpPCfB.jpg">
+                    </div>
+                
+
+                <div class="entry-meta">
+                    <span class="date">· 2019-06-21 ·</span> <span> / </span>
+                    <span class="author">
+            <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
+          </span>
+                    
+                        <span class="category">
+                    <span> / </span>
+                    <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                </span>
+                    
+                </div>
+                <div class='entry-header'>
+                    <h1 class='entry-title'>java面试题(辨析)</h1>
+                </div>
+                <div class="entry-container">
+                    <div class="entry-content">
+                        <article>
+                            <ul>
+<li><a href="#head1"><strong>==和equals</strong>  </a></li>
+<li><a href="#head2"> <strong>continue和break</strong></a></li>
+<li><a href="#head3"><strong>final, finally, finalize有什么区别</strong></a></li>
+<li><a href="#head4"> <strong>String和StringBuffer的对比</strong></a></li>
+<li><a href="#head5"> <strong>JDK,JRE和JVM的区别和联系</strong></a></li>
+<li><a href="#head6"> <strong>接口和抽象类的区别以及联系</strong></a></li>
+<li><a href="#head7"> 未完待续😉</a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1和equals-span"><span id="head1"><strong>==和equals</strong>  </span></h3>
+<hr>
+<ul>
+<li><strong>==:</strong> 比较的是两个字符串内存地址(堆内存)的数值是否相等,属于数值比较.</li>
+<li><strong>equals():</strong> 比较的是两个字符串的内容,属于内容比较,<strong>所以以后字符串相等判断的时候都使用equals</strong>.</li>
+</ul>
+<blockquote>
+<p>equals这个方法的初始默认行为行为是比较字符串的内存地址值,一般来说意义不大,所以,在一些类库中这个方法被重写了,如string,integer,date.在这些类中equals有其自身的实现(一般来说是比较对象的成员变量值是否相等),而不去比较字符串的内存地址.</p>
+</blockquote>
+</br>
+<h3 id="span-idhead2-continue和breakspan"><span id="head2"> <strong>continue和break</strong></span></h3>
+<hr>
+<ul>
+<li><strong>continue</strong> 跳出本次循环继续下一个循环.</li>
+<li><strong>break</strong> 跳出循环体,继续执行循环体味道函数体</li>
+<li><strong>return</strong> 跳出循环体,函数体后边的部分不再执行</li>
+</ul>
+</br>
+<h3 id="span-idhead3final-finally-finalize有什么区别span"><span id="head3"><strong>final, finally, finalize有什么区别</strong></span></h3>
+<hr>
+<ul>
+<li>final用于声明属性,方法和类.分别表示属性不可变,方法不可重写(可重载),类不可继承</li>
+<li>finally是异常处理语句结构的一部分</li>
+<li>finalize是object类的一个方法,在垃圾收集器执行的时候会被调用被回收对象的此方法可以覆盖此方法提供垃圾收集时的其他资源回收,例如关闭软件</li>
+</ul>
+</br>
+<h3 id="span-idhead4-string和stringbuffer的对比span"><span id="head4"> <strong>String和StringBuffer的对比</strong></span></h3>
+<hr>
+<ul>
+<li><strong>stringbuffer</strong> :保存的是字符串常量,里边的值可以被修改,比较适合做字符串的更新操作,效率较高.</li>
+<li><strong>string</strong> :保存的是字符串常量,里边的值不能改变,每次只能更改内存地址,所以不适合做字符串的更新操作,适合作为数据库存储.</li>
+</ul>
+</br>
+<h3 id="span-idhead5-jdkjre和jvm的区别和联系span"><span id="head5"> <strong>JDK,JRE和JVM的区别和联系</strong></span></h3>
+<hr>
+<p>JDK(Java Development Kit):Java开发工具包<br>
+JRE(Java runtime environment):Java运行环境<br>
+JVM(Java Virtual Machine):Java虚拟机</p>
+<ul>
+<li><strong>三者联系:</strong>
+<ul>
+<li>JVM不能单独搞定class的执行，解释class的时候JVM需要调用解释所需要的类库lib。在JDK下面的的jre目录里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。JVM+Lib=JRE。总体来说就是，我们利用JDK（调用JAVA API）开发了属于我们自己的JAVA程序后，通过JDK中的编译程序（javac）将我们的文本java文件编译成JAVA字节码，在JRE上运行这些JAVA字节码，JVM解析这些字节码，映射到CPU指令集或OS的系统调用。</li>
+</ul>
+</li>
+<li><strong>三者区别:</strong>
+<ul>
+<li>JDK和JRE区别：在bin文件夹下会发现，JDK有javac.exe而JRE里面没有，javac指令是用来将java文件编译成class文件的，这是开发者需要的，而用户（只需要运行的人）是不需要的。JDK还有jar.exe, javadoc.exe等等用于开发的可执行指令文件。这也证实了一个是开发环境，一个是运行环境。</li>
+<li>JRE和JVM区别：JVM并不代表就可以执行class了，JVM执行.class还需要JRE下的lib类库的支持，尤其是rt.jar。</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead6-接口和抽象类的区别以及联系span"><span id="head6"> <strong>接口和抽象类的区别以及联系</strong></span></h3>
+<hr>
+<ul>
+<li>联系:
+<ul>
+<li>都是上层的抽象层</li>
+<li>都不能被实例化</li>
+<li>都包含抽象的方法,用于描述类具备的功能,但是不提供具体的实现</li>
+</ul>
+</li>
+<li>区别:
+<ul>
+<li>在抽象类中可以写非抽象的方法,从而避免在子类中重复书写他们,这样可以提高代码的复用性,这是抽象类的优势.接口中只有抽象类的方法</li>
+<li>一个类只能继承一个直接父类,这个父类可以是具体的类也可以是抽象类.但是一个类可以实现多个接口.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Java语言中类的继承是单继承原因是：当子类重写父类方法的时候，或者隐藏父类的成员变量以及静态方法的时候，JVM使用不同的绑定规则。如果一个类有多个直接的父类，那么会使绑定规则变得更复杂。为了简化软件的体系结构和绑定机制，java语言禁止多继承。接口可以多继承，是因为接口中只有抽象方法，没有静态方法和非常量的属性，只有接口的实现类才会重写接口中方法。因此一个类有多个接口也不会增加JVM的绑定机制和复杂度。对于已经存在的继承树，可以方便的从类中抽象出新的接口，但是从类中抽象出新的抽象类就不那么容易了，因此接口更有利于软件系统的维护和重构。</p>
+</blockquote>
+<br>
+<h1 id="span-idhead7-未完待续span"><span id="head7"> 未完待续😉</span></h1>
+
+                        </article>
+                    </div>
+                    <div class='entry-meta-bottom'>
+                        <div class="entry-categories">
+                            <p>
+                                <span style="color:#8FBC8B;font-size:20px">Tags</span>
+                                
+                                    
+                                        
+                                        <a href="https://42one.xyz/tag/web"
+                                           title="View all posts in WEB">WEB</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Iw4_cGMkz"
+                                           title="View all posts in JAVA">JAVA</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/3h7N1DtwN"
+                                           title="View all posts in BLOG">BLOG</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Lv3dEyzll"
+                                           title="View all posts in FUNNY">FUNNY</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/CA7Cv-521"
+                                           title="View all posts in LINUX">LINUX</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/yZsB2hCgh"
+                                           title="View all posts in GIT">GIT</a>
+                                        
+                                
+                            </p>
+                        </div>
+                        <!--            <div class="entry-tags">
+                                      <p><span>Tags</span>
+                                      </p>
+                                    </div>-->
+                    </div>
+                    <div class="author-meta">
+                        <div class="author">
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562331633312"
+                                 class='avatar avatar-72 photo' height='72' width='72'>
+                            <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
+                                        href='https://42one.xyz'>Martian</a> </span>
+                        </div>
+                        <div class="bio">
+                            <p>KEEP LOOKING     |  |  NEVER SETTLE.</p>
+                            
+                                
+                                    <a class="github" target="_blank"
+                                       href="https://github.com/markwhitey">
+                                        <i class="fab fa-github"
+                                           title="github"></i>
+                                    </a>
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                                    <a class="rss" target="_blank"
+                                       href="https://42one.xyz/atom.xml">
+                                        <i class="fa fa-rss"
+                                           title="rss"></i>
+                                    </a>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                    <nav class="navigation pagination" role="navigation">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="next page-numbers"
+                               href="https://42one.xyz/post/c8Dggeox4">下一篇->Git操作</a>
+                        </div>
+                    </nav>
+                
+            </div>
+            <section id="comments" class="comments">
+                
+                    
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ae4c2b195cb86142aacf',
+    clientSecret: '41420acfbb5030f42a8e9d0ea216cea3b4216076',
+    repo: 'markwhitey.github.io',
+    owner: 'markwhitey',
+    admin: ['markwhitey'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+
+                    
+                
+            </section>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+    <h1>
+        <a href="https://42one.xyz"> Martian`Blog </a>
+    </h1>
+    <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+    <div id="menu-footer" class="menu-container menu-footer" role="navigation">
+        <div class="menu">
+            <ul id="menu-footer-items" class="menu-footer-items">
+            </ul>
+        </div>
+    </div>
+    <ul class="social-media-icons">
+        
+            
+                <li>
+                    <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                        <i class="fab fa-github" title="github"></i>
+                        <span class="screen-reader-text">github</span>
+                    </a>
+                </li>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <li>
+                    <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                        <i class="fas fa-rss" title="rss"></i>
+                        <span class="screen-reader-text">rss</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+<!--    <div class="design-credit">
+        <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></p>
+    </div>-->
+</footer>
+
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+<script src="https://42one.xyz/media/scripts/lib/jquery.min.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/jquerymigrate.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/production.min.js"></script>
+
+
+
+
+    <button id="return-top" class="return-top" >
+<!--    <a title="返回顶部">返回</a>-->
+    <i class="fas fa-arrow-up"></i>
+</button>
+</div>
+</body>
+</html>
+

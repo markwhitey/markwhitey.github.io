@@ -1,0 +1,595 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<title>java面试题(集合) | Martian`Blog</title>
+<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562331633312">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142296260-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142296260-1');
+</script>
+
+
+</head>
+<body class="home blog ct-body standard">
+<div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+    <div class='top-navigation top-navigation-important'>
+        <div class='container'>
+            <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+                <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+                <div class="menu">
+                    <ul id="menu-secondary-items" class="menu-secondary-items">
+                        
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/web">WEB</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/3h7N1DtwN">BLOG</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Lv3dEyzll">FUNNY</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
+                        </li>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+            <ul class="social-media-icons">
+                
+                    
+                        <li>
+                            <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                                <i class="fab fa-github" title="github"></i>
+                                <span class="screen-reader-text">github</span>
+                            </a>
+                        </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li>
+                            <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                                <i class="fa fa-rss" title="rss"></i>
+                                <span class="screen-reader-text">rss</span>
+                            </a>
+                        </li>
+                    
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="title-info" class="title-info">
+            <div id='site-title' class='site-title'>
+                <a href="https://42one.xyz">  Martian`Blog </a>
+            </div>
+        </div>
+        <button id="toggle-navigation" class="toggle-navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+        <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+            <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+            <div class="menu">
+                <ul id="menu-primary-items" class="menu-primary-items">
+                     
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/">首页</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/archives">归档</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/tags">标签</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/post/about">ABOUT</a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+    <div id="main" class="main" role="main">
+        <div id="loop-container" class="loop-container">
+            <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+                
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/HOVDsriA1.jpg">
+                    </div>
+                
+
+                <div class="entry-meta">
+                    <span class="date">· 2019-06-21 ·</span> <span> / </span>
+                    <span class="author">
+            <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
+          </span>
+                    
+                        <span class="category">
+                    <span> / </span>
+                    <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                </span>
+                    
+                </div>
+                <div class='entry-header'>
+                    <h1 class='entry-title'>java面试题(集合)</h1>
+                </div>
+                <div class="entry-container">
+                    <div class="entry-content">
+                        <article>
+                            <ul>
+<li><a href="#head1"> <strong>集合的分类</strong></a><a name="divtop"></a></li>
+<li><a href="#head2"> <strong>ArrayList和vector的区别</strong></a></li>
+<li><a href="#head3"> <strong>HashMap与HashTable的区别</strong></a></li>
+<li><a href="#head4"> <strong>HashMap是怎么解决哈希冲突的</strong></a><a name="divtop"></a></li>
+<li><a href="#head5"> <strong>list和map的区别</strong></a></li>
+<li><a href="#head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></a></li>
+<li><a href="#head7"> <strong>arraylist和linkedlist的存储特性</strong></a></li>
+<li><a href="#head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1-集合的分类span"><span id="head1"> <strong>集合的分类</strong></span></h3>
+<hr>
+<p>主要分为collection,map.</p>
+<ul>
+<li><strong>collection</strong>
+<ul>
+<li>list
+<ul>
+<li><strong>ArrayLis</strong>t</li>
+<li>linkedlist</li>
+<li>vector(已过时,了解)</li>
+</ul>
+</li>
+<li>set
+<ul>
+<li>hashset
+<ul>
+<li>linkedhashset</li>
+</ul>
+</li>
+<li>treeset</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>map</strong>
+<ul>
+<li><strong>hashmap</strong>
+<ul>
+<li>linkedhashmap</li>
+</ul>
+</li>
+<li>hashtable
+<ul>
+<li>properties</li>
+</ul>
+</li>
+<li>concurrenthashmap</li>
+</ul>
+</li>
+<li>treemap</li>
+</ul>
+<br>
+<h3 id="span-idhead2-arraylist和vector的区别span"><span id="head2"> <strong>ArrayList和vector的区别</strong></span></h3>
+<hr>
+<p><strong>共同点</strong>:这两个类都实现了list接口,他们都是有序的集合(存储有序),底层是数组,允许元素重复和为null</p>
+<p><strong>区别</strong>:</p>
+<ul>
+<li>同步性
+<ul>
+<li>ArrayList是非同步的</li>
+<li>vector是同步的</li>
+<li>需要同步时一般通过collections工具构建同步的ArrayList</li>
+</ul>
+</li>
+<li>扩容大小
+<ul>
+<li>vector增长原来的一倍,ArrayList增长原来的0.5倍</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead3-hashmap与hashtable的区别span"><span id="head3"> <strong>HashMap与HashTable的区别</strong></span></h3>
+<hr>
+<ul>
+<li>HashMap没有考虑同步，是线程不安全的；Hashtable使用了synchronized关键字，是线程安全的；</li>
+<li>HashMap允许K/V都为null；后者K/V都不允许为null；</li>
+<li>HashMap继承自AbstractMap类；而Hashtable继承自Dictionary类；</li>
+</ul>
+<p>HashMap的put方法的具体流程？</p>
+<br>
+<p>源码为:</p>
+<pre><code class="language-js">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+    HashMap.Node&lt;K,V&gt;[] tab; HashMap.Node&lt;K,V&gt; p; int n, i;
+    // 1.如果table为空或者长度为0，即没有元素，那么使用resize()方法扩容    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
+    // 2.计算插入存储的数组索引i，此处计算方法同 1.7 中的indexFor()方法    // 如果数组为空，即不存在Hash冲突，则直接插入数组    if ((p = tab[i = (n - 1) &amp; hash]) == null)
+        tab[i] = newNode(hash, key, value, null);
+    // 3.插入时，如果发生Hash冲突，则依次往下判断    else {
+        HashMap.Node&lt;K,V&gt; e; K k;
+        // a.判断table[i]的元素的key是否与需要插入的key一样，若相同则直接用新的value覆盖掉旧的value        // 判断原则equals() - 所以需要当key的对象重写该方法        if (p.hash == hash &amp;&amp;
+                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+            e = p;
+        // b.继续判断：需要插入的数据结构是红黑树还是链表        // 如果是红黑树，则直接在树中插入 or 更新键值对        else if (p instanceof HashMap.TreeNode)
+            e = ((HashMap.TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+        // 如果是链表，则在链表中插入 or 更新键值对        else {
+            // i .遍历table[i]，判断key是否已存在：采用equals对比当前遍历结点的key与需要插入数据的key            //    如果存在相同的，则直接覆盖            // ii.遍历完毕后任务发现上述情况，则直接在链表尾部插入数据            //    插入完成后判断链表长度是否 &gt; 8：若是，则把链表转换成红黑树            for (int binCount = 0; ; ++binCount) {
+                if ((e = p.next) == null) {
+                    p.next = newNode(hash, key, value, null);
+                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st                        treeifyBin(tab, hash);
+                    break;
+                }
+                if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                    break;
+                p = e;
+            }
+        }
+        // 对于i 情况的后续操作：发现key已存在，直接用新value覆盖旧value&amp;返回旧value        if (e != null) { // existing mapping for key            V oldValue = e.value;
+            if (!onlyIfAbsent || oldValue == null)
+                e.value = value;
+            afterNodeAccess(e);
+            return oldValue;
+        }
+    }
+    ++modCount;
+    // 插入成功后，判断实际存在的键值对数量size &gt; 最大容量    // 如果大于则进行扩容    if (++size &gt; threshold)
+        resize();
+    // 插入成功时会调用的方法（默认实现为空）    afterNodeInsertion(evict);
+    return null;
+}
+</code></pre>
+<p>图示为:</p>
+<p><img src="https://42one.xyz/post-images/1561125478643.png" alt=""></p>
+<br>
+<h3 id="span-idhead4-hashmap是怎么解决哈希冲突的span"><span id="head4"> <strong>HashMap是怎么解决哈希冲突的</strong></span></h3>
+<hr>
+<p><strong>什么是哈希？</strong><br>
+Hash，一般翻译为“散列”，也有直接音译为“哈希”的，这就是把任意长度的输入通过散列算法，变换成固定长度的输出，该输出就是散列值（哈希值）；这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，所以不可能从散列值来唯一的确定输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。</p>
+<p>所有散列函数都有如下一个基本特性：根据同一散列函数计算出的散列值如果不同，那么输入值肯定也不同。但是，根据同一散列函数计算出的散列值如果相同，输入值不一定相同。</p>
+<p><strong>解决办法</strong></p>
+<ol>
+<li>使用链地址法（使用散列表）来链接拥有相同hash值的数据；</li>
+<li>使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；</li>
+<li>引入红黑树进一步降低遍历的时间复杂度，使得遍历更快；</li>
+</ol>
+<br>
+<h3 id="span-idhead5-list和map的区别span"><span id="head5"> <strong>list和map的区别</strong></span></h3>
+<hr>
+<ul>
+<li>存储结构不同
+<ul>
+<li>list是存储单列的集合</li>
+<li>map是以键值对的形式存储数据的</li>
+</ul>
+</li>
+<li>元素是否重复
+<ul>
+<li>list允许元素重复</li>
+<li>map不允许元素重复</li>
+</ul>
+</li>
+<li>是否有序
+<ul>
+<li>list集合元素是有序的</li>
+<li>map集合元素是无序的</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead6-set里的元素是不能重复的那么用什么方法来区分重复的元素是还是equalsspan"><span id="head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></span></h3>
+<hr>
+<p>set集合实际上大都使用的是 <strong>map集合的put方法来添加元素的</strong><br>
+以hashset元素为例,hashset里的元素不能重复<br>
+源码为</p>
+<p>// 1. 如果key 相等<br>
+if (p.hash == hash &amp;&amp;<br>
+((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))<br>
+e = p;<br>
+// 2. 修改对应的value<br>
+if (e != null) { // existing mapping for key<br>
+V oldValue = e.value;<br>
+if (!onlyIfAbsent || oldValue == null)<br>
+e.value = value;<br>
+afterNodeAccess(e);<br>
+return oldValue;<br>
+}</p>
+<p>添加元素的时候,如果key(也就是对应的是set集合的元素)相等,那么修改value值.而在set集合中,value值仅仅是一个object对象罢了(该对象对set集合来说是无用的)</p>
+<p><strong>Set集合如果添加的元素相同时，是根本没有插入的(仅修改了一个无用的value值)！从源码(HashMap)中也看出来，==和equals()方法都有使用！</strong></p>
+<br>
+<h3 id="span-idhead7-arraylist和linkedlist的存储特性span"><span id="head7"> <strong>arraylist和linkedlist的存储特性</strong></span></h3>
+<hr>
+<p>ArrayList的底层是数组，LinkedList的底层是双向链表。</p>
+<ul>
+<li>ArrayList它支持以角标位置进行索引出对应的元素(随机访问)，而LinkedList则需要遍历整个链表来获取对应的元素。因此一般来说ArrayList的访问速度是要比LinkedList要快的</li>
+<li>ArrayList由于是数组，对于删除和修改而言消耗是比较大(复制和移动数组实现)，LinkedList是双向链表删除和修改只需要修改对应的指针即可，消耗是很小的。因此一般来说LinkedList的增删速度是要比ArrayList要快的</li>
+</ul>
+<br>
+<blockquote>
+<p>ArrayList的增删未必就是比LinkedList要慢。</p>
+<ul>
+<li>如果增删都是在末尾来操作【每次调用的都是remove()和add()】，此时ArrayList就不需要移动和复制数组来进行操作了。如果数据量有百万级的时，速度是会比LinkedList要快的。</li>
+<li>如果删除操作的位置是在中间。由于LinkedList的消耗主要是在遍历上，ArrayList的消耗主要是在移动和复制上(底层调用的是arraycopy()方法，是native方法)。
+<ul>
+<li>LinkedList的遍历速度是要慢于ArrayList的复制移动速度的</li>
+<li>如果数据量有百万级的时，还是ArrayList要快。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<br>
+<h3 id="span-idhead8-arraylist集合中插入一万条数据如何提高效率span"><span id="head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></span><a href="#divtop">🔝</a></h3>
+<hr>
+<p>ArrayList的默认初始容量为10，要插入大量数据的时候需要不断扩容，而扩容是非常影响性能的。因此，现在明确了10万条数据了，我们可以直接在初始化的时候就设置ArrayList的容量.</p>
+
+                        </article>
+                    </div>
+                    <div class='entry-meta-bottom'>
+                        <div class="entry-categories">
+                            <p>
+                                <span style="color:#8FBC8B;font-size:20px">Tags</span>
+                                
+                                    
+                                        
+                                        <a href="https://42one.xyz/tag/web"
+                                           title="View all posts in WEB">WEB</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Iw4_cGMkz"
+                                           title="View all posts in JAVA">JAVA</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/3h7N1DtwN"
+                                           title="View all posts in BLOG">BLOG</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Lv3dEyzll"
+                                           title="View all posts in FUNNY">FUNNY</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/CA7Cv-521"
+                                           title="View all posts in LINUX">LINUX</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/yZsB2hCgh"
+                                           title="View all posts in GIT">GIT</a>
+                                        
+                                
+                            </p>
+                        </div>
+                        <!--            <div class="entry-tags">
+                                      <p><span>Tags</span>
+                                      </p>
+                                    </div>-->
+                    </div>
+                    <div class="author-meta">
+                        <div class="author">
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562331633312"
+                                 class='avatar avatar-72 photo' height='72' width='72'>
+                            <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
+                                        href='https://42one.xyz'>Martian</a> </span>
+                        </div>
+                        <div class="bio">
+                            <p>KEEP LOOKING     |  |  NEVER SETTLE.</p>
+                            
+                                
+                                    <a class="github" target="_blank"
+                                       href="https://github.com/markwhitey">
+                                        <i class="fab fa-github"
+                                           title="github"></i>
+                                    </a>
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                                    <a class="rss" target="_blank"
+                                       href="https://42one.xyz/atom.xml">
+                                        <i class="fa fa-rss"
+                                           title="rss"></i>
+                                    </a>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                    <nav class="navigation pagination" role="navigation">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="next page-numbers"
+                               href="https://42one.xyz/post/v6elpPCfB">下一篇->java面试题(辨析)</a>
+                        </div>
+                    </nav>
+                
+            </div>
+            <section id="comments" class="comments">
+                
+                    
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ae4c2b195cb86142aacf',
+    clientSecret: '41420acfbb5030f42a8e9d0ea216cea3b4216076',
+    repo: 'markwhitey.github.io',
+    owner: 'markwhitey',
+    admin: ['markwhitey'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+
+                    
+                
+            </section>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+    <h1>
+        <a href="https://42one.xyz"> Martian`Blog </a>
+    </h1>
+    <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+    <div id="menu-footer" class="menu-container menu-footer" role="navigation">
+        <div class="menu">
+            <ul id="menu-footer-items" class="menu-footer-items">
+            </ul>
+        </div>
+    </div>
+    <ul class="social-media-icons">
+        
+            
+                <li>
+                    <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                        <i class="fab fa-github" title="github"></i>
+                        <span class="screen-reader-text">github</span>
+                    </a>
+                </li>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <li>
+                    <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                        <i class="fas fa-rss" title="rss"></i>
+                        <span class="screen-reader-text">rss</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+<!--    <div class="design-credit">
+        <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></p>
+    </div>-->
+</footer>
+
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+<script src="https://42one.xyz/media/scripts/lib/jquery.min.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/jquerymigrate.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/production.min.js"></script>
+
+
+
+
+    <button id="return-top" class="return-top" >
+<!--    <a title="返回顶部">返回</a>-->
+    <i class="fas fa-arrow-up"></i>
+</button>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,541 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<title>Java面试题(Servlet) | Martian`Blog</title>
+<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562331633312">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142296260-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-142296260-1');
+</script>
+
+
+</head>
+<body class="home blog ct-body standard">
+<div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+    <div class='top-navigation top-navigation-important'>
+        <div class='container'>
+            <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+                <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fa fa-plus"></i></button>
+                <div class="menu">
+                    <ul id="menu-secondary-items" class="menu-secondary-items">
+                        
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/web">WEB</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/3h7N1DtwN">BLOG</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/Lv3dEyzll">FUNNY</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
+                        </li>
+                            
+                        
+                            
+                        <li id="menu-item" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item">
+                            <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
+                        </li>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+            <ul class="social-media-icons">
+                
+                    
+                        <li>
+                            <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                                <i class="fab fa-github" title="github"></i>
+                                <span class="screen-reader-text">github</span>
+                            </a>
+                        </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li>
+                            <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                                <i class="fa fa-rss" title="rss"></i>
+                                <span class="screen-reader-text">rss</span>
+                            </a>
+                        </li>
+                    
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="title-info" class="title-info">
+            <div id='site-title' class='site-title'>
+                <a href="https://42one.xyz">  Martian`Blog </a>
+            </div>
+        </div>
+        <button id="toggle-navigation" class="toggle-navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+        <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+            <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+            <div class="menu">
+                <ul id="menu-primary-items" class="menu-primary-items">
+                     
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/">首页</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/archives">归档</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/tags">标签</a>
+                            </li>
+                        
+                    
+                        
+                            <li id="menu-item" class='menu-item menu-item-type-post_type menu-item-object-page current-menu-item current_page_item'>
+                                <a href="/post/about">ABOUT</a>
+                            </li>
+                        
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</header>
+
+
+    <div id="main" class="main" role="main">
+        <div id="loop-container" class="loop-container">
+            <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+                
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/8sT_2xfrt.jpg">
+                    </div>
+                
+
+                <div class="entry-meta">
+                    <span class="date">· 2019-07-02 ·</span> <span> / </span>
+                    <span class="author">
+            <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
+          </span>
+                    
+                        <span class="category">
+                    <span> / </span>
+                    <a href="https://42one.xyz/tag/web">WEB</a>
+                </span>
+                    
+                </div>
+                <div class='entry-header'>
+                    <h1 class='entry-title'>Java面试题(Servlet)</h1>
+                </div>
+                <div class="entry-container">
+                    <div class="entry-content">
+                        <article>
+                            <ul>
+<li><a href="#head1"> <strong>forward和redirect的区别</strong></a></li>
+<li><a href="#head2"> <strong>get方式和post方式有何区别</strong></a></li>
+<li><a href="#head3"> <strong>什么是cookie?session和cookie的区别?</strong></a></li>
+<li><a href="#head4"> <strong>Servelet调用流程</strong></a></li>
+<li><a href="#head5"> <strong>servletvcontext对象</strong></a></li>
+<li><a href="#head6"> <strong>servlet之间进行通信</strong></a></li>
+<li></li>
+</ul>
+<!-- more -->
+<h3 id="span-idhead1-forward和redirect的区别span"><span id="head1"> <strong>forward和redirect的区别</strong></span></h3>
+<hr>
+<p><strong>实际发生位置不同,地址栏不同</strong></p>
+<ul>
+<li>转发是发生在服务器上<br>
+<strong>转发是由服务器进行跳转的</strong>，细心的朋友会发现，在转发的时候，<strong>浏览器的地址栏是没有发生变化的</strong>，在我访问Servlet111的时候，即使跳转到了Servlet222的页面，浏览器的地址还是Servlet111的。也就是说<strong>浏览器是不知道该跳转的动作，转发是对浏览器透明的</strong>。通过上面的转发时序图我们也可以发现，<strong>实现转发只是一次的http请求</strong>，<strong>一次转发中request和response对象都是同一个</strong>。这也解释了，为什么可以使用<strong>request作为域对象进行Servlet之间的通讯。</strong></li>
+<li>重定向是发生在浏览器的<br>
+<strong>重定向是由浏览器进行跳转的</strong>，进行重定向跳转的时候，<strong>浏览器的地址会发生变化的</strong>。曾经介绍过：实现重定向的原理是由response的状态码和Location头组合而实现的。<strong>这是由浏览器进行的页面跳转</strong>实现重定向<strong>会发出两个http请求</strong>，<strong>request域对象是无效的，因为它不是同一个request对象</strong></li>
+</ul>
+<p><strong>用法不同:</strong></p>
+<ul>
+<li>很多人都搞不清楚转发和重定向的时候，<strong>资源地址究竟怎么写</strong>。有的时候要把应用名写上，有的时候不用把应用名写上。很容易把人搞晕。记住一个原则： <strong>给服务器用的直接从资源名开始写，给浏览器用的要把应用名写上</strong></li>
+</ul>
+<pre><code>request.getRequestDispatcher(&quot;/资源名 URI&quot;).forward(request,response)
+</code></pre>
+<blockquote>
+<p>转发时&quot;/&quot;代表的是本应用程序的根目录【zhongfucheng</p>
+</blockquote>
+<pre><code>response.send(&quot;/web应用/资源名 URI&quot;);
+</code></pre>
+<blockquote>
+<p>重定向时&quot;/&quot;代表的是webapps目录</p>
+</blockquote>
+<p><strong>能够去往的URL的范围不一样:</strong></p>
+<ul>
+<li><strong>转发是服务器跳转只能去往当前web应用的资源</strong></li>
+<li><strong>重定向是服务器跳转，可以去往任何的资源</strong></li>
+</ul>
+<p><strong>传递数据的类型不同</strong></p>
+<ul>
+<li><strong>转发的request对象可以传递各种类型的数据，包括对象</strong></li>
+<li><strong>重定向只能传递字符串</strong></li>
+</ul>
+<p><strong>跳转的时间不同</strong></p>
+<ul>
+<li><strong>转发时：执行到跳转语句时就会立刻跳转</strong></li>
+<li><strong>重定向：整个页面执行完之后才执行跳转</strong></li>
+</ul>
+<p><strong>那么转发(forward)和重定向(redirect)使用哪一个？</strong></p>
+<ul>
+<li>根据上面说明了转发和重定向的区别也可以很容易概括出来**。转发是带着转发前的请求的参数的。重定向是新的请求**。</li>
+</ul>
+<p><strong>典型的应用场景：</strong></p>
+<ol>
+<li>转发: 访问 Servlet 处理业务逻辑，然后 forward 到 jsp 显示处理结果，浏览器里 URL 不变</li>
+<li>重定向: 提交表单，处理成功后 redirect 到另一个 jsp，防止表单重复提交，浏览器里 URL 变了</li>
+</ol>
+<br>
+<h3 id="span-idhead2-get方式和post方式有何区别span"><span id="head2"> <strong>get方式和post方式有何区别</strong></span></h3>
+<hr>
+<p><strong>数据携带上</strong><br>
+- get方式:在URL地址后附带的参数是有限制的,其数据流量通常不超过1kb<br>
+- post方式:可以在请求的实体内容中向服务器发送数据,传送的数据量不限制</p>
+<p><strong>请求参数的位置上</strong><br>
+- get方式:请求参数放在URL地址后边,以?的形式来进行拼接<br>
+- post方式:请求参数放在HTTP请求包中</p>
+<p><strong>用途上</strong><br>
+- get方式:一般用来获取数据<br>
+- post方式:一般用来提交数据</p>
+<blockquote>
+<p><strong>原因:</strong><br>
+首先是因为get方式携带的数据量比较小,无法携带很大的数据量<br>
+post方式提交的参数后台更加容易解析(使用post方式提交的中文数据,后台更加容易解决)<br>
+get方式比post方式要快</p>
+</blockquote>
+<br>
+<h3 id="span-idhead3-什么是cookiesession和cookie的区别span"><span id="head3"> <strong>什么是cookie?session和cookie的区别?</strong></span></h3>
+<hr>
+<p><strong>什么是cookie</strong></p>
+<ul>
+<li>网页之间的交互是通过HTTP的协议传输数据的,而HTTP协议是无状态的协议.一旦数据提交上去后,浏览器与服务器的连接就会关闭,再次交互需要重新建立新的连接</li>
+<li>服务器无法确认用户端信息.所以给每个用户都发一个通行证,无论谁访问的时候都需要携带通行证,这样的话服务器就可以确认用户信息</li>
+</ul>
+<p><strong>session和cookie的区别</strong></p>
+<ul>
+<li><strong>从存储方式上比较</strong></li>
+<li>Cookie只能存储字符串，如果要存储非ASCII字符串还要对其编码。</li>
+<li>Session可以存储任何类型的数据，可以把Session看成是一个容器</li>
+<li><strong>从隐私安全上比较</strong></li>
+<li><strong>Cookie存储在浏览器中，对客户端是可见的</strong>。信息容易泄露出去。如果使用Cookie，最好将Cookie加密</li>
+<li><strong>Session存储在服务器上，对客户端是透明的</strong>。不存在敏感信息泄露问题。</li>
+<li><strong>从有效期上比较</strong></li>
+<li>Cookie保存在硬盘中，只需要设置maxAge属性为比较大的正整数，即使关闭浏览器，Cookie还是存在的</li>
+<li><strong>Session的保存在服务器中，设置maxInactiveInterval属性值来确定Session的有效期。并且Session依赖于名为JSESSIONID的Cookie，该Cookie默认的maxAge属性为-1。如果关闭了浏览器，该Session虽然没有从服务器中消亡，但也就失效了。</strong></li>
+<li><strong>从对服务器的负担比较</strong></li>
+<li>Session是保存在服务器的，每个用户都会产生一个Session，如果是并发访问的用户非常多，是不能使用Session的，Session会消耗大量的内存。</li>
+<li>Cookie是保存在客户端的。不占用服务器的资源。像baidu、Sina这样的大型网站，一般都是使用Cookie来进行会话跟踪。</li>
+<li><strong>从浏览器的支持上比较</strong></li>
+<li>如果浏览器禁用了Cookie，那么Cookie是无用的了！</li>
+<li>如果浏览器禁用了Cookie，Session可以通过URL地址重写来进行会话跟踪。</li>
+<li><strong>从跨域名上比较</strong></li>
+<li>Cookie可以设置domain属性来实现跨域名</li>
+<li>Session只在当前的域名内有效，不可夸域名</li>
+</ul>
+<br>
+<h3 id="span-idhead4-servelet调用流程span"><span id="head4"> <strong>Servelet调用流程</strong></span></h3>
+<hr>
+<ol>
+<li>连接web服务器(浏览器)</li>
+<li>发送HTTP请求(浏览器)</li>
+<li>解析出客户端想访问的主机(web服务器)</li>
+<li>解析出客户端想访问的web资源(web服务器)</li>
+<li>如果发现servlet是第一次访问,服务器就会第一次加载servlet.并且初始化servlet对象(web服务器)</li>
+<li>调用servlet类的init方法(servlet)</li>
+<li>service方法执行,把数据写入response中(servlet)</li>
+<li>web服务器把response数据传回浏览器(Web服务器)</li>
+</ol>
+<br>
+<h3 id="span-idhead5-servletvcontext对象span"><span id="head5"> <strong>servletvcontext对象</strong></span></h3>
+<hr>
+<p><strong>概念</strong></p>
+<p>当tomcat启动的时候,就会创建一个servletcontext对象.他代表着当前web站点</p>
+<p><strong>servletcontext用什么用</strong></p>
+<ul>
+<li>servletcontext代表着当前web页面,那么所有的servlet对象都共享着同一个servletcontext对象,那么所有的servlet可以通过servletContext进行通信</li>
+<li>servletconfig获取的是单个servlet的参数信息,servletcontext可以获取的是配置整个web站点的参数信息</li>
+<li>利用servletcontext读取web站点的资源文件</li>
+<li>实现servlet的转发(多数使用request的转发)</li>
+</ul>
+<br>
+<h3 id="span-idhead6-servlet之间进行通信span"><span id="head6"> <strong>servlet之间进行通信</strong></span></h3>
+<hr>
+<p>servletcontext对象可以被称为域对象(可以理解成为容器,类似于map集合)</p>
+<p>实现servlet之间的通信就要用到servletcontext的setattribute(string name,object obj)方法,第一个参数是关键字,第二个参数是你要存储的对象</p>
+<p><strong>demo1:</strong></p>
+<pre><code class="language-java">//获取到ServletContext对象
+ServletContext servletContext = this.getServletContext();
+
+String value = &quot;mark&quot;;
+
+//MyName作为关键字，value作为值存进   域对象【类型于Map集合】
+servletContext.setAttribute(&quot;MyName&quot;, value);
+</code></pre>
+<p><strong>demo2:</strong></p>
+<pre><code class="language-java">//获取ServletContext对象
+ServletContext servletContext = this.getServletContext();
+
+//通过关键字获取存储在域对象的值
+String value = (String) servletContext.getAttribute(&quot;MyName&quot;);
+
+System.out.println(value);
+</code></pre>
+<h2 id=""></h2>
+
+                        </article>
+                    </div>
+                    <div class='entry-meta-bottom'>
+                        <div class="entry-categories">
+                            <p>
+                                <span style="color:#8FBC8B;font-size:20px">Tags</span>
+                                
+                                    
+                                        
+                                        <a href="https://42one.xyz/tag/web"
+                                           title="View all posts in WEB">WEB</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Iw4_cGMkz"
+                                           title="View all posts in JAVA">JAVA</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/3h7N1DtwN"
+                                           title="View all posts in BLOG">BLOG</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Lv3dEyzll"
+                                           title="View all posts in FUNNY">FUNNY</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/CA7Cv-521"
+                                           title="View all posts in LINUX">LINUX</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/yZsB2hCgh"
+                                           title="View all posts in GIT">GIT</a>
+                                        
+                                
+                            </p>
+                        </div>
+                        <!--            <div class="entry-tags">
+                                      <p><span>Tags</span>
+                                      </p>
+                                    </div>-->
+                    </div>
+                    <div class="author-meta">
+                        <div class="author">
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562331633312"
+                                 class='avatar avatar-72 photo' height='72' width='72'>
+                            <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
+                                        href='https://42one.xyz'>Martian</a> </span>
+                        </div>
+                        <div class="bio">
+                            <p>KEEP LOOKING     |  |  NEVER SETTLE.</p>
+                            
+                                
+                                    <a class="github" target="_blank"
+                                       href="https://github.com/markwhitey">
+                                        <i class="fab fa-github"
+                                           title="github"></i>
+                                    </a>
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                                    <a class="rss" target="_blank"
+                                       href="https://42one.xyz/atom.xml">
+                                        <i class="fa fa-rss"
+                                           title="rss"></i>
+                                    </a>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                    <nav class="navigation pagination" role="navigation">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="next page-numbers"
+                               href="https://42one.xyz/post/vfym9KQCV">下一篇->关于Java基础你不得不会的几个问题</a>
+                        </div>
+                    </nav>
+                
+            </div>
+            <section id="comments" class="comments">
+                
+                    
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ae4c2b195cb86142aacf',
+    clientSecret: '41420acfbb5030f42a8e9d0ea216cea3b4216076',
+    repo: 'markwhitey.github.io',
+    owner: 'markwhitey',
+    admin: ['markwhitey'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+
+                    
+                
+            </section>
+        </div>
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+    <h1>
+        <a href="https://42one.xyz"> Martian`Blog </a>
+    </h1>
+    <p class="site-description"><h style="font-family:arial;color:#DCEDC8;font-size:18px;">  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。</h></p>
+    <div id="menu-footer" class="menu-container menu-footer" role="navigation">
+        <div class="menu">
+            <ul id="menu-footer-items" class="menu-footer-items">
+            </ul>
+        </div>
+    </div>
+    <ul class="social-media-icons">
+        
+            
+                <li>
+                    <a href="https://github.com/markwhitey" data-animate-hover="pulse" class="github" target="_blank">
+                        <i class="fab fa-github" title="github"></i>
+                        <span class="screen-reader-text">github</span>
+                    </a>
+                </li>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <li>
+                    <a href="https://42one.xyz/atom.xml" data-animate-hover="pulse" class="rss" target="_blank">
+                        <i class="fas fa-rss" title="rss"></i>
+                        <span class="screen-reader-text">rss</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+<!--    <div class="design-credit">
+        <p>Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></p>
+    </div>-->
+</footer>
+
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+<script src="https://42one.xyz/media/scripts/lib/jquery.min.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/jquerymigrate.js"></script>
+<script src="https://42one.xyz/media/scripts/lib/production.min.js"></script>
+
+
+
+
+    <button id="return-top" class="return-top" >
+<!--    <a title="返回顶部">返回</a>-->
+    <i class="fas fa-arrow-up"></i>
+</button>
+</div>
+</body>
+</html>
+

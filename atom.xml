@@ -1,0 +1,1256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://42one.xyz</id>
+    <title>Martian`Blog</title>
+    <updated>2019-07-05T13:00:37.587Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://42one.xyz"/>
+    <link rel="self" href="https://42one.xyz/atom.xml"/>
+    <subtitle>&lt;h style=&quot;font-family:arial;color:#DCEDC8;font-size:18px;&quot;&gt;  明白自己无能为力是人生的基本，活着就是要在基本上添加别的东西，哪怕是一点点也好。&lt;/h&gt;</subtitle>
+    <logo>https://42one.xyz/images/avatar.png</logo>
+    <icon>https://42one.xyz/favicon.ico</icon>
+    <rights>All rights reserved 2019, Martian`Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Java面试题(Servlet)]]></title>
+        <id>https://42one.xyz/post/8sT_2xfrt</id>
+        <link href="https://42one.xyz/post/8sT_2xfrt">
+        </link>
+        <updated>2019-07-02T14:48:25.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>forward和redirect的区别</strong></a></li>
+<li><a href="#head2"> <strong>get方式和post方式有何区别</strong></a></li>
+<li><a href="#head3"> <strong>什么是cookie?session和cookie的区别?</strong></a></li>
+<li><a href="#head4"> <strong>Servelet调用流程</strong></a></li>
+<li><a href="#head5"> <strong>servletvcontext对象</strong></a></li>
+<li><a href="#head6"> <strong>servlet之间进行通信</strong></a></li>
+<li></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>forward和redirect的区别</strong></a></li>
+<li><a href="#head2"> <strong>get方式和post方式有何区别</strong></a></li>
+<li><a href="#head3"> <strong>什么是cookie?session和cookie的区别?</strong></a></li>
+<li><a href="#head4"> <strong>Servelet调用流程</strong></a></li>
+<li><a href="#head5"> <strong>servletvcontext对象</strong></a></li>
+<li><a href="#head6"> <strong>servlet之间进行通信</strong></a></li>
+<li></li>
+</ul>
+<!-- more -->
+<h3 id="span-idhead1-forward和redirect的区别span"><span id="head1"> <strong>forward和redirect的区别</strong></span></h3>
+<hr>
+<p><strong>实际发生位置不同,地址栏不同</strong></p>
+<ul>
+<li>转发是发生在服务器上<br>
+<strong>转发是由服务器进行跳转的</strong>，细心的朋友会发现，在转发的时候，<strong>浏览器的地址栏是没有发生变化的</strong>，在我访问Servlet111的时候，即使跳转到了Servlet222的页面，浏览器的地址还是Servlet111的。也就是说<strong>浏览器是不知道该跳转的动作，转发是对浏览器透明的</strong>。通过上面的转发时序图我们也可以发现，<strong>实现转发只是一次的http请求</strong>，<strong>一次转发中request和response对象都是同一个</strong>。这也解释了，为什么可以使用<strong>request作为域对象进行Servlet之间的通讯。</strong></li>
+<li>重定向是发生在浏览器的<br>
+<strong>重定向是由浏览器进行跳转的</strong>，进行重定向跳转的时候，<strong>浏览器的地址会发生变化的</strong>。曾经介绍过：实现重定向的原理是由response的状态码和Location头组合而实现的。<strong>这是由浏览器进行的页面跳转</strong>实现重定向<strong>会发出两个http请求</strong>，<strong>request域对象是无效的，因为它不是同一个request对象</strong></li>
+</ul>
+<p><strong>用法不同:</strong></p>
+<ul>
+<li>很多人都搞不清楚转发和重定向的时候，<strong>资源地址究竟怎么写</strong>。有的时候要把应用名写上，有的时候不用把应用名写上。很容易把人搞晕。记住一个原则： <strong>给服务器用的直接从资源名开始写，给浏览器用的要把应用名写上</strong></li>
+</ul>
+<pre><code>request.getRequestDispatcher(&quot;/资源名 URI&quot;).forward(request,response)
+</code></pre>
+<blockquote>
+<p>转发时&quot;/&quot;代表的是本应用程序的根目录【zhongfucheng</p>
+</blockquote>
+<pre><code>response.send(&quot;/web应用/资源名 URI&quot;);
+</code></pre>
+<blockquote>
+<p>重定向时&quot;/&quot;代表的是webapps目录</p>
+</blockquote>
+<p><strong>能够去往的URL的范围不一样:</strong></p>
+<ul>
+<li><strong>转发是服务器跳转只能去往当前web应用的资源</strong></li>
+<li><strong>重定向是服务器跳转，可以去往任何的资源</strong></li>
+</ul>
+<p><strong>传递数据的类型不同</strong></p>
+<ul>
+<li><strong>转发的request对象可以传递各种类型的数据，包括对象</strong></li>
+<li><strong>重定向只能传递字符串</strong></li>
+</ul>
+<p><strong>跳转的时间不同</strong></p>
+<ul>
+<li><strong>转发时：执行到跳转语句时就会立刻跳转</strong></li>
+<li><strong>重定向：整个页面执行完之后才执行跳转</strong></li>
+</ul>
+<p><strong>那么转发(forward)和重定向(redirect)使用哪一个？</strong></p>
+<ul>
+<li>根据上面说明了转发和重定向的区别也可以很容易概括出来**。转发是带着转发前的请求的参数的。重定向是新的请求**。</li>
+</ul>
+<p><strong>典型的应用场景：</strong></p>
+<ol>
+<li>转发: 访问 Servlet 处理业务逻辑，然后 forward 到 jsp 显示处理结果，浏览器里 URL 不变</li>
+<li>重定向: 提交表单，处理成功后 redirect 到另一个 jsp，防止表单重复提交，浏览器里 URL 变了</li>
+</ol>
+<br>
+<h3 id="span-idhead2-get方式和post方式有何区别span"><span id="head2"> <strong>get方式和post方式有何区别</strong></span></h3>
+<hr>
+<p><strong>数据携带上</strong><br>
+- get方式:在URL地址后附带的参数是有限制的,其数据流量通常不超过1kb<br>
+- post方式:可以在请求的实体内容中向服务器发送数据,传送的数据量不限制</p>
+<p><strong>请求参数的位置上</strong><br>
+- get方式:请求参数放在URL地址后边,以?的形式来进行拼接<br>
+- post方式:请求参数放在HTTP请求包中</p>
+<p><strong>用途上</strong><br>
+- get方式:一般用来获取数据<br>
+- post方式:一般用来提交数据</p>
+<blockquote>
+<p><strong>原因:</strong><br>
+首先是因为get方式携带的数据量比较小,无法携带很大的数据量<br>
+post方式提交的参数后台更加容易解析(使用post方式提交的中文数据,后台更加容易解决)<br>
+get方式比post方式要快</p>
+</blockquote>
+<br>
+<h3 id="span-idhead3-什么是cookiesession和cookie的区别span"><span id="head3"> <strong>什么是cookie?session和cookie的区别?</strong></span></h3>
+<hr>
+<p><strong>什么是cookie</strong></p>
+<ul>
+<li>网页之间的交互是通过HTTP的协议传输数据的,而HTTP协议是无状态的协议.一旦数据提交上去后,浏览器与服务器的连接就会关闭,再次交互需要重新建立新的连接</li>
+<li>服务器无法确认用户端信息.所以给每个用户都发一个通行证,无论谁访问的时候都需要携带通行证,这样的话服务器就可以确认用户信息</li>
+</ul>
+<p><strong>session和cookie的区别</strong></p>
+<ul>
+<li><strong>从存储方式上比较</strong></li>
+<li>Cookie只能存储字符串，如果要存储非ASCII字符串还要对其编码。</li>
+<li>Session可以存储任何类型的数据，可以把Session看成是一个容器</li>
+<li><strong>从隐私安全上比较</strong></li>
+<li><strong>Cookie存储在浏览器中，对客户端是可见的</strong>。信息容易泄露出去。如果使用Cookie，最好将Cookie加密</li>
+<li><strong>Session存储在服务器上，对客户端是透明的</strong>。不存在敏感信息泄露问题。</li>
+<li><strong>从有效期上比较</strong></li>
+<li>Cookie保存在硬盘中，只需要设置maxAge属性为比较大的正整数，即使关闭浏览器，Cookie还是存在的</li>
+<li><strong>Session的保存在服务器中，设置maxInactiveInterval属性值来确定Session的有效期。并且Session依赖于名为JSESSIONID的Cookie，该Cookie默认的maxAge属性为-1。如果关闭了浏览器，该Session虽然没有从服务器中消亡，但也就失效了。</strong></li>
+<li><strong>从对服务器的负担比较</strong></li>
+<li>Session是保存在服务器的，每个用户都会产生一个Session，如果是并发访问的用户非常多，是不能使用Session的，Session会消耗大量的内存。</li>
+<li>Cookie是保存在客户端的。不占用服务器的资源。像baidu、Sina这样的大型网站，一般都是使用Cookie来进行会话跟踪。</li>
+<li><strong>从浏览器的支持上比较</strong></li>
+<li>如果浏览器禁用了Cookie，那么Cookie是无用的了！</li>
+<li>如果浏览器禁用了Cookie，Session可以通过URL地址重写来进行会话跟踪。</li>
+<li><strong>从跨域名上比较</strong></li>
+<li>Cookie可以设置domain属性来实现跨域名</li>
+<li>Session只在当前的域名内有效，不可夸域名</li>
+</ul>
+<br>
+<h3 id="span-idhead4-servelet调用流程span"><span id="head4"> <strong>Servelet调用流程</strong></span></h3>
+<hr>
+<ol>
+<li>连接web服务器(浏览器)</li>
+<li>发送HTTP请求(浏览器)</li>
+<li>解析出客户端想访问的主机(web服务器)</li>
+<li>解析出客户端想访问的web资源(web服务器)</li>
+<li>如果发现servlet是第一次访问,服务器就会第一次加载servlet.并且初始化servlet对象(web服务器)</li>
+<li>调用servlet类的init方法(servlet)</li>
+<li>service方法执行,把数据写入response中(servlet)</li>
+<li>web服务器把response数据传回浏览器(Web服务器)</li>
+</ol>
+<br>
+<h3 id="span-idhead5-servletvcontext对象span"><span id="head5"> <strong>servletvcontext对象</strong></span></h3>
+<hr>
+<p><strong>概念</strong></p>
+<p>当tomcat启动的时候,就会创建一个servletcontext对象.他代表着当前web站点</p>
+<p><strong>servletcontext用什么用</strong></p>
+<ul>
+<li>servletcontext代表着当前web页面,那么所有的servlet对象都共享着同一个servletcontext对象,那么所有的servlet可以通过servletContext进行通信</li>
+<li>servletconfig获取的是单个servlet的参数信息,servletcontext可以获取的是配置整个web站点的参数信息</li>
+<li>利用servletcontext读取web站点的资源文件</li>
+<li>实现servlet的转发(多数使用request的转发)</li>
+</ul>
+<br>
+<h3 id="span-idhead6-servlet之间进行通信span"><span id="head6"> <strong>servlet之间进行通信</strong></span></h3>
+<hr>
+<p>servletcontext对象可以被称为域对象(可以理解成为容器,类似于map集合)</p>
+<p>实现servlet之间的通信就要用到servletcontext的setattribute(string name,object obj)方法,第一个参数是关键字,第二个参数是你要存储的对象</p>
+<p><strong>demo1:</strong></p>
+<pre><code class="language-java">//获取到ServletContext对象
+ServletContext servletContext = this.getServletContext();
+
+String value = &quot;mark&quot;;
+
+//MyName作为关键字，value作为值存进   域对象【类型于Map集合】
+servletContext.setAttribute(&quot;MyName&quot;, value);
+</code></pre>
+<p><strong>demo2:</strong></p>
+<pre><code class="language-java">//获取ServletContext对象
+ServletContext servletContext = this.getServletContext();
+
+//通过关键字获取存储在域对象的值
+String value = (String) servletContext.getAttribute(&quot;MyName&quot;);
+
+System.out.println(value);
+</code></pre>
+<h2 id=""></h2>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于Java基础你不得不会的几个问题]]></title>
+        <id>https://42one.xyz/post/vfym9KQCV</id>
+        <link href="https://42one.xyz/post/vfym9KQCV">
+        </link>
+        <updated>2019-06-30T10:48:13.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>面向对象和面向过程的基础</strong></a></li>
+<li><a href="#head2"> <strong>Java和c++的区别</strong></a></li>
+<li><a href="#head3"> <strong>构造器constructor是否可以被override</strong></a></li>
+<li><a href="#head4"> <strong>hashcode与equals</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>面向对象和面向过程的基础</strong></a></li>
+<li><a href="#head2"> <strong>Java和c++的区别</strong></a></li>
+<li><a href="#head3"> <strong>构造器constructor是否可以被override</strong></a></li>
+<li><a href="#head4"> <strong>hashcode与equals</strong></a></li>
+</ul>
+<!-- more -->
+<h3 id="span-idhead1-面向对象和面向过程的基础span"><span id="head1"> <strong>面向对象和面向过程的基础</strong></span></h3>
+<hr>
+<p><strong>面向过程</strong></p>
+<ul>
+<li>优点:性能比面向对象高,因为类调用时需要实例化,开销比较大,比较消耗资源.比如单片机,嵌入式开发,linux/unix等一般采用面向过程开发,性能是最重要的因素</li>
+<li>缺点:没有面向对象易维护,易复用,易拓展</li>
+</ul>
+<p><strong>面向对象</strong></p>
+<ul>
+<li>优点:易维护,易复用,易拓展,由于面向对象有封装,继承,,多态的特性,可以设计出低耦合的系统,使系统更加灵活,更加易于维护</li>
+<li>缺点:性能比面向对象低</li>
+</ul>
+<br>
+<h3 id="span-idhead2-java和c的区别span"><span id="head2"> <strong>Java和c++的区别</strong></span></h3>
+<hr>
+<ul>
+<li>都是面向对象的语言,都支持封装,继承,多态</li>
+<li>Java不提供指针访问内存,程序内存更加安全</li>
+<li>Java类只支持单继承,c++支持多继承,但是Java可以实现多个接口</li>
+<li>Java有自动释放内存管理机制,不需要手动释放内存</li>
+</ul>
+<br>
+<h3 id="span-idhead3-构造器constructor是否可以被overridespan"><span id="head3"> <strong>构造器constructor是否可以被override</strong></span></h3>
+<hr>
+<p>父类的私有属性和构造方法不能被继承,所以说constructor不能被override,但是可以overload,所以一个类中有多个构造方法</p>
+<br>
+<h3 id="span-idhead4-hashcode与equalsspan"><span id="head4"> <strong>hashcode与equals</strong></span></h3>
+<hr>
+<p>你重写过hashcode和equals吗.为什么重写equals是必须重写hashcode?</p>
+<p><strong>hashcode()介绍</strong></p>
+<ul>
+<li>hashcode()的作用是获取哈希码,他实际上是方茴一个int整数.这个哈希码的作用是确定该对象在哈希表的索引位置.hashcode定义在jdk的object.java中,这意味着在java的任何类中都有hashcode()函数.</li>
+<li>哈希表存储的是键值对,他的特点是能根据&quot;键&quot;快速的检索出对应的值,这其中就利用了哈希码</li>
+</ul>
+<p><strong>为什么要有hashcode</strong></p>
+<blockquote>
+<p>我们以&quot;hashcode如何检查重复&quot;为例,说明为什么要用hashcode</p>
+<p>当你把对象加入hashset时,hashset会计算对象的hashcode值来判断对象加入的位置,同时也会与其他已经加入的对象的hashcode值做对比,如果没有相符的hashcode,hashset会假设对象没有重复出现,如果发现有相同的hashcode值的对象,这时会调用equals()方法来检查hashcode对象是否真的相同.如果两者相同,hashset就不会让其加入操作成功.如果不同的话,就会重新散列到其他位置,这样的话会减少equals的次数,也就相应的提高了执行速度.</p>
+</blockquote>
+<p><strong>hashcode()和equals的相关规定</strong></p>
+<ol>
+<li>如果两个对象相等,则hashcode也一定相同</li>
+<li>两个对象相等,对两个对象调用equals的方法都返回true</li>
+<li>两个对象有相同的hashcode值,它们也不一定相等</li>
+<li>equals方法被覆盖,则hashcode方法也必须被覆盖</li>
+<li>hashcode的默认行为是对堆上的对象产生独特值,如果没有重写hashcode,则该class文件中的两个对象无论如何都不会相等(即使两个对象指向同一个数据)</li>
+</ol>
+<p>​</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[代码和数学公式渲染]]></title>
+        <id>https://42one.xyz/post/d-SAxjqze</id>
+        <link href="https://42one.xyz/post/d-SAxjqze">
+        </link>
+        <updated>2019-06-29T14:21:24.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>前言</strong></a></li>
+<li><a href="#head2"> <strong>代码主题渲染</strong></a></li>
+<li><a href="#head3"> <strong>数学公式</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>前言</strong></a></li>
+<li><a href="#head2"> <strong>代码主题渲染</strong></a></li>
+<li><a href="#head3"> <strong>数学公式</strong></a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1-前言span"><span id="head1"> <strong>前言</strong></span></h3>
+<hr>
+<p><strong>首先我们需要了解cdn一下</strong></p>
+<blockquote>
+<p>内容分发网络（英语：Content Delivery Network或Content Distribution Network，缩写：CDN）是指一种透过互联网互相连接的计算机网络系统，利用最靠近每位用户的服务器，更快、更可靠地将音乐、图片、影片、应用程序及其他文件发送给用户，来提供高性能、可扩展性及低成本的网络内容传递给用户。</p>
+</blockquote>
+<p><strong>优点:</strong></p>
+<ul>
+<li>内容分发网络的总承载量可以比单一骨干最大的带宽还要大。这使得内容分发网络可以承载的用户数量比起传统单一服务器多。也就是说，若把有100Gbps处理能力的服务器放在只有10Gbps带宽的数据中心，则亦只能发挥出10Gbps的承载量。但如果放到十个有10Gbps的地点，整个系统的承载量就可以到10×10Gbps。同时，将服务器放到不同地点，可以减少互连的流量，进而降低带宽成本。</li>
+<li>对于TCP传输而言，TCP的速度（throughput）会受到延迟时间（latency）与数据包漏失率（packet loss）影响。为了改善这些负面因素，内容分发网络通常会指派较近、较顺畅的服务器节点将数据传输给用户。虽然距离并不是绝对因素，但这么做可以尽可能提高性能，用户将会觉得比较顺畅。这使得一些比较高带宽的应用（传输高清画质的影片）更容易推动。</li>
+<li>内容分发网络另外一个好处在于有异地备援。当某个服务器故障时，系统将会调用其他邻近地区的服务器服务，进而提供接近100%的可靠度。</li>
+<li>除此之外，内容分发网络提供给服务提供者更多的控制权。提供服务的人可以针对客户、地区，或是其他因子调整。</li>
+</ul>
+<p><strong>公用开源cdn哪家强?</strong></p>
+<p>我们所有的主题渲染highlight.js以及数学公式katex.js都是都可以在<a href="https://www.jsdelivr.com/"><strong>jsdelivr</strong></a>上找到,而且也非常推荐使用此公共cdn,对中国有加速，支持npm,github ,WordPress包，完全免费无限制，全球都很快。</p>
+<br>
+<h3 id="span-idhead2-代码主题渲染span"><span id="head2"> <strong>代码主题渲染</strong></span></h3>
+<hr>
+<blockquote>
+<p>访问其官方网站<a href="https://highlightjs.org/"><strong>highlight.js</strong></a>进行探索</p>
+<p><strong>操作步骤:</strong></p>
+</blockquote>
+<ol>
+<li>只需要把以下代码放在你的博客源码的head中,他会自动寻找&lt;\pre&gt;&lt;\code&gt;中的代码并且去渲染</li>
+</ol>
+<pre><code class="language-js">&lt;link rel=&quot;stylesheet&quot;
+href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css&quot;&gt;
+&lt;script src=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</code></pre>
+<ol start="2">
+<li>如果你不喜欢默认的主题,你可以把代码中的<strong>default</strong>关键字替换成你喜欢的主题的名字,所有主题你都可以在官网上查看渲染不同语音的不同主题效果,如图所示:</li>
+</ol>
+<p><img src="https://42one.xyz/post-images/1561820901909.png" alt=""></p>
+<p><strong>此处写一下我在操作遇到的坑:</strong></p>
+<ul>
+<li>直接在官网上找链接,不要使用jsdelivr网站上的npm方式的链接方式(很气愤😤,不知道为什么渲染不成功,搞了好长时间)</li>
+<li>一定要看自己的博客有么有&lt;\pre&gt;,如果没有需要自己设置</li>
+</ul>
+<p><strong>以下为渲染后的效果:</strong></p>
+<pre><code class="language-java">/**
+* @author John Smith &lt;john.smith@example.com&gt;
+*/
+package l2f.gameserver.model;
+
+public abstract class L2Char extends L2Object {
+public static final Short ERROR = 0x0001;
+
+public void moveTo(int x, int y, int z) {
+_ai = null;
+log(&quot;Should not be called&quot;);
+if (1 &gt; 5) { // wtf!?
+return;
+}
+}
+}
+</code></pre>
+<br>
+<h3 id="span-idhead3-数学公式span"><span id="head3"> <strong>数学公式</strong></span></h3>
+<hr>
+<p><strong>操作步骤:</strong></p>
+<ol>
+<li>访问其官网<a href="https://katex.org/"><strong>katex</strong></a>可自行探索  ,数学公式的渲染如同代码主题的渲染操作,复制以下代码添加到head中:</li>
+</ol>
+<pre><code class="language-js">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css&quot; integrity=&quot;sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js&quot; integrity=&quot;sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js&quot; integrity=&quot;sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI&quot; crossorigin=&quot;anonymous&quot;
+onload=&quot;renderMathInElement(document.body);&quot;&gt;&lt;/script&gt;
+</code></pre>
+<blockquote>
+<p>此代码不会在页面加载时就开始渲染,而是出现关键符号是才会加载,所以不会影响页面加载速度</p>
+</blockquote>
+<ol start="2">
+<li>在写公式的时候按照markdown格式处理你要显示的数学公式即可.</li>
+</ol>
+<p><strong>以下为转换效果:</strong></p>
+<p><em>转换前:</em></p>
+<pre><code>f{x} = \int_{-\infty}^\infty
+\hat f(\xi),e^{2 \pi i \xi x}
+\,d\xi
+</code></pre>
+<p><em>转换后:</em></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>x</mi><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mi mathvariant="normal">∞</mi></mrow><mi mathvariant="normal">∞</mi></msubsup><mover accent="true"><mi>f</mi><mo>^</mo></mover><mo>(</mo><mi>ξ</mi><mo>)</mo><mo separator="true">,</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>ξ</mi><mi>x</mi></mrow></msup><mtext> </mtext><mi>d</mi><mi>ξ</mi></mrow><annotation encoding="application/x-tex">f{x} = \int_{-\infty}^\infty
+\hat f(\xi),e^{2 \pi i \xi x}
+\,d\xi
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord"><span class="mord mathdefault">x</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.384573em;vertical-align:-0.970281em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.414292em;"><span style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">∞</span></span></span></span><span style="top:-3.8129000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.970281em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578799999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span><span style="top:-3.26344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.08332999999999999em;">^</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04601em;">ξ</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.04601em;">ξ</span><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.04601em;">ξ</span></span></span></span></span></p>
+<hr>
+<p>还是要学好基础啊,走了许多弯路</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于666高级数学高阶方程式的解法]]></title>
+        <id>https://42one.xyz/post/KDLTgKK5X</id>
+        <link href="https://42one.xyz/post/KDLTgKK5X">
+        </link>
+        <updated>2019-06-29T12:34:13.000Z</updated>
+        <summary type="html"><![CDATA[<p>已知以下方程式:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><mi>lim</mi><mo>⁡</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi mathvariant="normal">∞</mi></mrow></munder><mo>−</mo><mfrac><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mfrac><mrow><mi>ln</mi><mo>⁡</mo><mi>t</mi></mrow><mrow><mrow><mo fence="true">(</mo><msup><mi>t</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><msup><mi>t</mi><mn>3</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mrow></mfrac><mi>d</mi><mi>t</mi><msup><mrow><mo fence="true">(</mo><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi mathvariant="normal">∣</mi><mi>d</mi><mi>t</mi><mo fence="true">)</mo></mrow><mn>2</mn></msup><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mn>3</mn><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mi>x</mi></munderover><mfrac><mn>1</mn><mrow><mi>x</mi><mo>+</mo><mi>k</mi></mrow></mfrac><mo fence="true">)</mo></mrow></mrow><mrow><msup><mi>x</mi><mn>5</mn></msup><mi>L</mi><msub><mi>i</mi><mn>5</mn></msub><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mi>x</mi></mfrac><mo fence="true">)</mo></mrow><mo>−</mo><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mfrac><mn>1</mn><mn>32</mn></mfrac><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\lim _{x \rightarrow+\infty}-\frac{\int_{0}^{x} \frac{\ln t}{\left(t^{2}+1\right)\left(t^{3}+1\right)} d t\left(\int_{0}^{x}|\sin t| d t\right)^{2} \exp \left(3 \sum_{k=0}^{x} \frac{1}{x+k}\right)}{x^{5} L i_{5}\left(\frac{1}{x}\right)-x^{4}-\frac{1}{32} x^{3}}
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.06331em;vertical-align:-1.09001em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-2.1em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mrel mtight">→</span><span class="mord mtight">+</span><span class="mord mtight">∞</span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop">lim</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.758331em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.9733em;"><span style="top:-2.3233em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.2933em;"><span class="pstrut" style="height:3.0633em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.9733em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">ln</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mord">∣</span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0633em;"><span style="top:-3.3121920000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord">3</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.09001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>求解结果</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>已知以下方程式:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><munder><mi>lim</mi><mo>⁡</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi mathvariant="normal">∞</mi></mrow></munder><mo>−</mo><mfrac><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mfrac><mrow><mi>ln</mi><mo>⁡</mo><mi>t</mi></mrow><mrow><mrow><mo fence="true">(</mo><msup><mi>t</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><msup><mi>t</mi><mn>3</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mrow></mfrac><mi>d</mi><mi>t</mi><msup><mrow><mo fence="true">(</mo><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi mathvariant="normal">∣</mi><mi>d</mi><mi>t</mi><mo fence="true">)</mo></mrow><mn>2</mn></msup><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mn>3</mn><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mi>x</mi></munderover><mfrac><mn>1</mn><mrow><mi>x</mi><mo>+</mo><mi>k</mi></mrow></mfrac><mo fence="true">)</mo></mrow></mrow><mrow><msup><mi>x</mi><mn>5</mn></msup><mi>L</mi><msub><mi>i</mi><mn>5</mn></msub><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mi>x</mi></mfrac><mo fence="true">)</mo></mrow><mo>−</mo><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mfrac><mn>1</mn><mn>32</mn></mfrac><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\lim _{x \rightarrow+\infty}-\frac{\int_{0}^{x} \frac{\ln t}{\left(t^{2}+1\right)\left(t^{3}+1\right)} d t\left(\int_{0}^{x}|\sin t| d t\right)^{2} \exp \left(3 \sum_{k=0}^{x} \frac{1}{x+k}\right)}{x^{5} L i_{5}\left(\frac{1}{x}\right)-x^{4}-\frac{1}{32} x^{3}}
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.06331em;vertical-align:-1.09001em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-2.1em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mrel mtight">→</span><span class="mord mtight">+</span><span class="mord mtight">∞</span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop">lim</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.758331em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.9733em;"><span style="top:-2.3233em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.2933em;"><span class="pstrut" style="height:3.0633em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.9733em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">ln</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mord">∣</span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0633em;"><span style="top:-3.3121920000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord">3</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.09001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>求解结果</p>
+<!-- more -->
+<h3 id="详细解法"><strong>详细解法</strong></h3>
+<hr>
+<p><strong>第一部分</strong></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msubsup><mo>∫</mo><mn>0</mn><mi mathvariant="normal">∞</mi></msubsup><mfrac><mrow><mi>ln</mi><mo>⁡</mo><mi>x</mi></mrow><mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo fence="true">)</mo></mrow></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mi mathvariant="normal">∞</mi></msubsup><mfrac><mrow><mi>ln</mi><mo>⁡</mo><mi>x</mi></mrow><mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo fence="true">)</mo></mrow></mrow></mfrac><mi>d</mi><mi>x</mi><mo>−</mo><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mfrac><mrow><msup><mi>x</mi><mn>3</mn></msup><mi>ln</mi><mo>⁡</mo><mi>x</mi></mrow><mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msup><mi>x</mi><mn>3</mn></msup><mo fence="true">)</mo></mrow></mrow></mfrac><mi>d</mi><mi>x</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><msub><mo>∫</mo><mn>0</mn></msub><mrow><mo fence="true">(</mo><mfrac><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mo fence="true">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mfrac><mo>−</mo><mfrac><msup><mi>x</mi><mn>2</mn></msup><mrow><mo fence="true">(</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mfrac><mo fence="true">)</mo></mrow><mi>ln</mi><mo>⁡</mo><mi>x</mi><mi>d</mi><mi>x</mi><mo>−</mo><msub><mo>∫</mo><mn>0</mn></msub><mrow><mo fence="true">(</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow><mrow><mo fence="true">(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mfrac><mo>−</mo><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow><mrow><mo fence="true">(</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>1</mn><mo fence="true">)</mo></mrow></mfrac><mo fence="true">)</mo></mrow><mi>ln</mi><mo>⁡</mo><mi>x</mi><mi>d</mi><mi>x</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mfrac><mrow><mn>37</mn><msup><mi>π</mi><mn>2</mn></msup></mrow><mn>432</mn></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l}{\int_{0}^{\infty} \frac{\ln x}{\left(1+x^{2}\right)\left(1+x^{3}\right)} d x} \\ {=\int_{0}^{\infty} \frac{\ln x}{\left(1+x^{2}\right)\left(1+x^{3}\right)} d x-\int_{0}^{1} \frac{x^{3} \ln x}{\left(1+x^{2}\right)\left(1+x^{3}\right)} d x} \\ {=\int_{0}\left(\frac{x+1}{\left(x^{2}+1\right)}-\frac{x^{2}}{\left(x^{3}+1\right)}\right) \ln x d x-\int_{0}\left(\frac{1-x}{\left(x^{2}+1\right)}-\frac{x^{2}-1}{\left(x^{3}+1\right)}\right) \ln x d x} \\ {=\frac{37 \pi^{2}}{432}}\end{array}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:6.115967999999999em;vertical-align:-2.8079839999999994em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.307984em;"><span style="top:-5.577876em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∞</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">ln</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span><span style="top:-4.039956em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∞</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">ln</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0090080000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight">ln</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span><span style="top:-2.369956em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.09528799999999993em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.09528799999999993em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="minner mtight"><span class="mopen mtight delimcenter" style="top:0em;"><span class="mtight">(</span></span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight delimcenter" style="top:0em;"><span class="mtight">)</span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mord mathdefault">d</span><span class="mord mathdefault">x</span></span></span></span><span style="top:-0.7020160000000006em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">7</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.8079839999999994em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
+<p><strong>第二部分</strong></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mfrac><mi>n</mi><mrow><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo><mi>π</mi></mrow></mfrac><mo>≤</mo><mfrac><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi>d</mi><mi>t</mi></mrow><mi>x</mi></mfrac><mo>≤</mo><mfrac><mrow><mn>2</mn><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>x</mi></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>⇒</mo><msub><mi>lim</mi><mo>⁡</mo><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow></msub><msup><mrow><mo fence="true">(</mo><mfrac><mrow><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi>d</mi><mi>t</mi></mrow><mi>x</mi></mfrac><mo fence="true">)</mo></mrow><mn>2</mn></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mfrac><mn>4</mn><msup><mi>π</mi><mn>2</mn></msup></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l}{\frac{n}{(n+1) \pi} \leq \frac{\int_{0}^{x} | \sin t d t}{x} \leq \frac{2(n+1)}{x}} \\ {\Rightarrow \lim _{n \rightarrow \infty}\left(\frac{\int_{0}^{x} | \sin t d t}{x}\right)^{2}} \\ {=\frac{4}{\pi^{2}}}\end{array}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.86692em;vertical-align:-2.18346em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.68346em;"><span style="top:-4.899684000000001em;"><span class="pstrut" style="height:3.354008em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1377840000000001em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.574284em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7596857142857143em;"><span style="top:-2.1224514285714284em;margin-left:-0.19445em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-2.9521428571428574em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.37754857142857146em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mtight">∣</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight">sin</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span style="top:-3.025676em;"><span class="pstrut" style="height:3.354008em;"></span><span class="mord"><span class="mord"><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mop"><span class="mop">lim</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mrel mtight">→</span><span class="mord mtight">∞</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1377840000000001em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.574284em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7596857142857143em;"><span style="top:-2.1224514285714284em;margin-left:-0.19445em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-2.9521428571428574em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.37754857142857146em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mtight">∣</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight">sin</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.3540079999999999em;"><span style="top:-3.6029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-1.5305479999999998em;"><span class="pstrut" style="height:3.354008em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.18346em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
+<p><strong>第三部分</strong></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mn>3</mn><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mi>x</mi></msubsup><mfrac><mn>1</mn><mrow><mi>x</mi><mo>+</mo><mi>k</mi></mrow></mfrac><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mi>exp</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mn>3</mn><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><mi>t</mi></mrow></mfrac><mi>d</mi><mi>t</mi><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mn>8</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l}{\exp \left(3 \sum_{k=0}^{x} \frac{1}{x+k}\right)} \\ {=\exp \left(3 \int_{0}^{1} \frac{1}{1+t} d t\right)} \\ {=8}\end{array}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.253350999999999em;vertical-align:-1.8766754999999993em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.3766755em;"><span style="top:-4.6766755em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord">3</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.804292em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span><span class="mrel mtight">=</span><span class="mord mtight">0</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span><span style="top:-3.123344500000001em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord">3</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0090080000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight">t</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.403331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span></span></span></span><span style="top:-1.6333245000000007em;"><span class="pstrut" style="height:3.15em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">8</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.8766754999999993em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
+<p><strong>第四部分</strong></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>L</mi><msub><mi>i</mi><mi>s</mi></msub><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mi>x</mi></mfrac><mo fence="true">)</mo></mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>∼</mo><mfrac><mn>1</mn><mrow><mn>3125</mn><msup><mi>x</mi><mn>5</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mn>1024</mn><msup><mi>x</mi><mn>4</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mn>243</mn><msup><mn>3</mn><mn>3</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mn>32</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mi>x</mi></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>⇒</mo><msup><mi>x</mi><mn>5</mn></msup><mi>L</mi><msub><mi>i</mi><mn>5</mn></msub><mrow><mo fence="true">(</mo><mfrac><mn>1</mn><mi>x</mi></mfrac><mo fence="true">)</mo></mrow><mo>−</mo><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mfrac><msup><mi>x</mi><mn>3</mn></msup><mn>32</mn></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>∼</mo><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>243</mn></mfrac><mo>+</mo><mfrac><mi>x</mi><mn>1024</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>3125</mn></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l}{L i_{s}\left(\frac{1}{x}\right)} \\ {\sim \frac{1}{3125 x^{5}}+\frac{1}{1024 x^{4}}+\frac{1}{2433^{3}}+\frac{1}{32 x^{2}}+\frac{1}{x}} \\ {\Rightarrow x^{5} L i_{5}\left(\frac{1}{x}\right)-x^{4}-\frac{x^{3}}{32}} \\ {\sim \frac{x^{2}}{243}+\frac{x}{1024}+\frac{1}{3125}}\end{array}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:5.170947999999999em;vertical-align:-2.335473999999999em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.8354739999999996em;"><span style="top:-5.003394em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span><span style="top:-3.798286em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">5</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mtight">3</span><span class="mord mtight"><span class="mord mtight">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span style="top:-2.4203660000000005em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span><span class="mord mathdefault">L</span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span style="top:-1.042446000000001em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mtight">3</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">2</span><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">5</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.335473999999999em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
+<p><strong>整合方程式</strong></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>37</mn><msup><mi>π</mi><mn>2</mn></msup></mrow><mn>54</mn></mfrac><mi>lim</mi><mo>⁡</mo><mfrac><msup><mrow><mo fence="true">(</mo><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi mathvariant="normal">∣</mi><mi>d</mi><mi>t</mi><mo fence="true">)</mo></mrow><mn>2</mn></msup><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>243</mn></mfrac><mo>+</mo><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>1024</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>3125</mn></mfrac></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{37 \pi^{2}}{54} \lim \frac{\left(\int_{0}^{x}|\sin t| d t\right)^{2}}{\frac{x^{2}}{243}+\frac{x^{2}}{1024}+\frac{1}{3125}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.96054em;vertical-align:-1.1514199999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span><span class="mord">4</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span><span class="mord">7</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lim</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.80912em;"><span style="top:-2.2568799999999998em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.91642em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mtight">3</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.91642em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">2</span><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span><span class="mord mtight">2</span><span class="mord mtight">5</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-3.2933em;"><span class="pstrut" style="height:3.0633em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.80912em;"><span class="pstrut" style="height:3.0633em;"></span><span class="mord"><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8592920000000001em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-3.2579000000000002em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mord">∣</span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.0633em;"><span style="top:-3.3121920000000005em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1514199999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mfrac><mrow><mn>37</mn><msup><mi>π</mi><mn>2</mn></msup></mrow><mn>54</mn></mfrac><munder><mi>lim</mi><mo>⁡</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi mathvariant="normal">∞</mi></mrow></munder><mfrac><msup><mrow><mo fence="true">(</mo><mfrac><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>2</mn></msubsup><mi mathvariant="normal">∣</mi><mi>sin</mi><mo>⁡</mo><mi>t</mi><mi>d</mi><mi>t</mi><msup><mo>)</mo><mn>2</mn></msup></mrow><mi>x</mi></mfrac><mo fence="true">)</mo></mrow><mn>2</mn></msup><mrow><mfrac><mn>1</mn><mn>243</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mn>1024</mn><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mn>1025</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></mfrac></mrow><annotation encoding="application/x-tex">=\frac{37 \pi^{2}}{54} \lim _{x \rightarrow+\infty} \frac{\left(\frac{\int_{0}^{2} | \sin t d t )^{2}}{x}\right)^{2}}{\frac{1}{243}+\frac{1}{1024 x}+\frac{1}{1025 x^{2}}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.5371400000000004em;vertical-align:-1.080108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5</span><span class="mord">4</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span><span class="mord">7</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-2.1em;margin-left:0em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="mrel mtight">→</span><span class="mord mtight">+</span><span class="mord mtight">∞</span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span><span class="mop">lim</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.758331em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.4570320000000003em;"><span style="top:-2.6819039999999994em;"><span class="pstrut" style="height:3.4170119999999997em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mtight">3</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">2</span><span class="mord mtight">4</span><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span><span class="mord mtight">2</span><span class="mord mtight">5</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-3.6470119999999997em;"><span class="pstrut" style="height:3.4170119999999997em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-4.457032em;"><span class="pstrut" style="height:3.4170119999999997em;"></span><span class="mord"><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.213004em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.574284em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9124571428571429em;"><span style="top:-2.1224514285714284em;margin-left:-0.19445em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span><span style="top:-2.9521428571428574em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.37754857142857146em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mtight">∣</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mop mtight">sin</span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">t</span><span class="mord mathdefault mtight">d</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.417012em;"><span style="top:-3.6659040000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.080108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mfrac><mrow><mn>37</mn><msup><mi>π</mi><mn>2</mn></msup></mrow><mn>54</mn></mfrac><mo>⋅</mo><mfrac><mn>4</mn><msup><mi>π</mi><mn>2</mn></msup></mfrac><mo>⋅</mo><mn>243</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo><mn>666</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{l}{=\frac{37 \pi^{2}}{54} \cdot \frac{4}{\pi^{2}} \cdot 243} \\ {=666}\end{array}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.5779200000000007em;vertical-align:-1.0389600000000005em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.53896em;"><span style="top:-3.5389600000000003em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01792em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span><span class="mord mtight">4</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">7</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mord">4</span><span class="mord">3</span></span></span></span><span style="top:-2.3389599999999997em;"><span class="pstrut" style="height:3.01792em;"></span><span class="mord"><span class="mord"><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">6</span><span class="mord">6</span><span class="mord">6</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.0389600000000005em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
+<h3 id="结果"><strong>结果</strong></h3>
+<hr>
+<p><img src="https://42one.xyz/post-images/1562330668188.jpg" alt=""></p>
+<p><strong>的结果为:</strong><br>
+<img src="https://42one.xyz/post-images/1562330674185.png" alt=""></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[linux(四)vim操作指南]]></title>
+        <id>https://42one.xyz/post/LSdg1x9wT</id>
+        <link href="https://42one.xyz/post/LSdg1x9wT">
+        </link>
+        <updated>2019-06-24T00:29:55.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"><strong>1.普通模式</strong>  </a></li>
+<li><a href="#head2"> <strong>2.插入模式</strong></a></li>
+<li><a href="#head3"> <strong>3.命令行模式</strong></a></li>
+<li><a href="#head4"> <strong>4.设置Vi环境:</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p><a href="#head1"><strong>1.普通模式</strong>  </a></p>
+</li>
+<li>
+<p><a href="#head2"> <strong>2.插入模式</strong></a></p>
+</li>
+<li>
+<p><a href="#head3"> <strong>3.命令行模式</strong></a></p>
+</li>
+<li>
+<p><a href="#head4"> <strong>4.设置Vi环境:</strong></a></p>
+<!-- more -->
+</li>
+</ul>
+<br>
+<h3 id="span-idhead11普通模式-span"><span id="head1"><strong>1.普通模式</strong>  </span></h3>
+<hr>
+<ul>
+<li><code>G</code> 用于直接跳转到文件尾</li>
+<li><code>ZZ</code> 用于存盘退出Vi</li>
+<li><code>ZQ</code> 用于不存盘退出Vi</li>
+<li><code>/和？</code> 用于查找字符串</li>
+<li><code>n</code> 继续查找下一个</li>
+<li><code>yy</code> 复制一行</li>
+<li><code>p</code> 粘帖在下一行，P粘贴在前一行</li>
+<li><code>dd</code> 删除一行文本</li>
+<li><code>x</code> 删除光标所在的字符</li>
+<li><code>u</code> 取消上一次编辑操作（undo）</li>
+</ul>
+<h3 id="span-idhead2-2插入模式span"><span id="head2"> <strong>2.插入模式</strong></span></h3>
+<hr>
+<p>在 Normal 模式下输入插入命令 <code>i、 a 、 o</code>进入insert模式。用户输入的任何字符都被vim<strong>当做文件内容保存起来</strong>，并将其显示在屏幕上。</p>
+<ul>
+<li>在文本输入过程中，若想回到Normal模式下，按 Esc 键即可。</li>
+</ul>
+<h3 id="span-idhead3-3命令行模式span"><span id="head3"> <strong>3.命令行模式</strong></span></h3>
+<hr>
+<p>Normal 模式下，用户按冒号 <code>:</code>即可进入 Command 模式，此时 vim 会在显示窗口的最后一行 (屏幕的最后一行) 显示一个 “:” 作为 Command 模式的提示符，等待输入命令。</p>
+<ul>
+<li><code>:w</code> 保存当前编辑文件，但并不退出</li>
+<li><code>:w</code> newfile 存为另外一个名为 “newfile” 的文件</li>
+<li><code>:wq</code> 用于存盘退出Vi</li>
+<li><code>:q!</code> 用于不存盘退出Vi</li>
+<li><code>:q</code>用于直接退出Vi （未做修改）</li>
+</ul>
+<h3 id="span-idhead4-4设置vi环境span"><span id="head4"> <strong>4.设置Vi环境:</strong></span></h3>
+<hr>
+<ul>
+<li><code>:set autoindent</code> 缩进,常用于程序的编写</li>
+<li><code>:set noautoindent</code> 取消缩进</li>
+<li><code>:set number</code> 在编辑文件时显示行号</li>
+<li><code>:set nonumber</code> 不显示行号</li>
+<li><code>:set tabstop=value</code> 设置显示制表符的空格字符个数</li>
+<li><code>:set</code> 显示设置的所有选项</li>
+<li><code>:set all</code> 显示所有可以设置的选项</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[linux(三)正则表达式]]></title>
+        <id>https://42one.xyz/post/aP3l-gFIw</id>
+        <link href="https://42one.xyz/post/aP3l-gFIw">
+        </link>
+        <updated>2019-06-24T00:24:54.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>正则表达式</strong></a></li>
+<li><a href="#head2"> <strong>常见的正则表达式</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li>
+<p><a href="#head1"> <strong>正则表达式</strong></a></p>
+</li>
+<li>
+<p><a href="#head2"> <strong>常见的正则表达式</strong></a></p>
+<!-- more -->
+</li>
+</ul>
+<br>
+<h3 id="span-idhead1-正则表达式span"><span id="head1"> <strong>正则表达式</strong></span></h3>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:left">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，“<code>n</code>”匹配字符“<code>n</code>”。“<code>\n</code>”匹配一个换行符。串行“<code>\\</code>”匹配“<code>\</code>”而“<code>\(</code>”则匹配“<code>(</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:left">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配“<code>\n</code>”或“<code>\r</code>”之后的位置。</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:left">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配“<code>\n</code>”或“<code>\r</code>”之前的位置。</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:left">匹配前面的子表达式零次或多次。例如，zo*能匹配“<code>z</code>”以及“<code>zoo</code>”。*等价于{0,}。</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:left">匹配前面的子表达式一次或多次。例如，“<code>zo+</code>”能匹配“<code>zo</code>”以及“<code>zoo</code>”，但不能匹配“<code>z</code>”。+等价于{1,}。</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:left">匹配前面的子表达式零次或一次。例如，“<code>do(es)?</code>”可以匹配“<code>does</code>”或“<code>does</code>”中的“<code>do</code>”。?等价于{0,1}。</td>
+</tr>
+<tr>
+<td style="text-align:center">{<em>n</em>}</td>
+<td style="text-align:left"><em>n</em>是一个非负整数。匹配确定的<em>n</em>次。例如，“<code>o{2}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但是能匹配“<code>food</code>”中的两个o。</td>
+</tr>
+<tr>
+<td style="text-align:center">{<em>n</em>,}</td>
+<td style="text-align:left"><em>n</em>是一个非负整数。至少匹配<em>n</em>次。例如，“<code>o{2,}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但能匹配“<code>foooood</code>”中的所有o。“<code>o{1,}</code>”等价于“<code>o+</code>”。“<code>o{0,}</code>”则等价于“<code>o*</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">{<em>n</em>,<em>m</em>}</td>
+<td style="text-align:left"><em>m</em>和<em>n</em>均为非负整数，其中<em>n</em>&lt;=<em>m</em>。最少匹配<em>n</em>次且最多匹配<em>m</em>次。例如，“<code>o{1,3}</code>”将匹配“<code>fooooood</code>”中的前三个o。“<code>o{0,1}</code>”等价于“<code>o?</code>”。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:left">当该字符紧跟在任何一个其他限制符（*,+,?，{<em>n</em>}，{<em>n</em>,}，{<em>n</em>,<em>m</em>}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串“<code>oooo</code>”，“<code>o+?</code>”将匹配单个“<code>o</code>”，而“<code>o+</code>”将匹配所有“<code>o</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:left">匹配除“<code>\</code><em><code>n</code></em>”之外的任何单个字符。要匹配包括“<code>\</code><em><code>n</code></em>”在内的任何字符，请使用像“<code>(.|\n)</code>”的模式。</td>
+</tr>
+<tr>
+<td style="text-align:center">(pattern)</td>
+<td style="text-align:left">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0…$9属性。要匹配圆括号字符，请使用“<code>\(</code>”或“<code>\)</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">(?:pattern)</td>
+<td style="text-align:left">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符“<code>(|)</code>”来组合一个模式的各个部分是很有用。例如“<code>industr(?:y|ies)</code>”就是一个比“<code>industry|industries</code>”更简略的表达式。</td>
+</tr>
+<tr>
+<td style="text-align:center">(?=pattern)</td>
+<td style="text-align:left">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，“<code>Windows(?=95|98|NT|2000)</code>”能匹配“<code>Windows2000</code>”中的“<code>Windows</code>”，但不能匹配“<code>Windows3.1</code>”中的“<code>Windows</code>”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</td>
+</tr>
+<tr>
+<td style="text-align:center">(?!pattern)</td>
+<td style="text-align:left">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如“<code>Windows(?!95|98|NT|2000)</code>”能匹配“<code>Windows3.1</code>”中的“<code>Windows</code>”，但不能匹配“<code>Windows2000</code>”中的“<code>Windows</code>”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
+</tr>
+<tr>
+<td style="text-align:center">(?&lt;=pattern)</td>
+<td style="text-align:left">反向肯定预查，与正向肯定预查类拟，只是方向相反。例如，“<code>(?&lt;=95|98|NT|2000)Windows</code>”能匹配“<code>2000Windows</code>”中的“<code>Windows</code>”，但不能匹配“<code>3.1Windows</code>”中的“<code>Windows</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">(?&lt;!pattern)</td>
+<td style="text-align:left">反向否定预查，与正向否定预查类拟，只是方向相反。例如“<code>(?&lt;!95|98|NT|2000)Windows</code>”能匹配“<code>3.1Windows</code>”中的“<code>Windows</code>”，但不能匹配“<code>2000Windows</code>”中的“<code>Windows</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">x|y</td>
+<td style="text-align:left">匹配x或y。例如，“<code>z|food</code>”能匹配“<code>z</code>”或“<code>food</code>”。“<code>(z|f)ood</code>”则匹配“<code>zood</code>”或“<code>food</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">[xyz]</td>
+<td style="text-align:left">字符集合。匹配所包含的任意一个字符。例如，“<code>[abc]</code>”可以匹配“<code>plain</code>”中的“<code>a</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">[^xyz]</td>
+<td style="text-align:left">负值字符集合。匹配未包含的任意字符。例如，“<code>[^abc]</code>”可以匹配“<code>plain</code>”中的“<code>p</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">[a-z]</td>
+<td style="text-align:left">字符范围。匹配指定范围内的任意字符。例如，“<code>[a-z]</code>”可以匹配“<code>a</code>”到“<code>z</code>”范围内的任意小写字母字符。</td>
+</tr>
+<tr>
+<td style="text-align:center">[^a-z]</td>
+<td style="text-align:left">负值字符范围。匹配任何不在指定范围内的任意字符。例如，“<code>[^a-z]</code>”可以匹配任何不在“<code>a</code>”到“<code>z</code>”范围内的任意字符。</td>
+</tr>
+<tr>
+<td style="text-align:center">\b</td>
+<td style="text-align:left">匹配一个单词边界，也就是指单词和空格间的位置。例如，“<code>er\b</code>”可以匹配“<code>never</code>”中的“<code>er</code>”，但不能匹配“<code>verb</code>”中的“<code>er</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">\B</td>
+<td style="text-align:left">匹配非单词边界。“<code>er\B</code>”能匹配“<code>verb</code>”中的“<code>er</code>”，但不能匹配“<code>never</code>”中的“<code>er</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">\cx</td>
+<td style="text-align:left">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的“<code>c</code>”字符。</td>
+</tr>
+<tr>
+<td style="text-align:center">\d</td>
+<td style="text-align:left">匹配一个数字字符。等价于[0-9]。</td>
+</tr>
+<tr>
+<td style="text-align:center">\D</td>
+<td style="text-align:left">匹配一个非数字字符。等价于[^0-9]。</td>
+</tr>
+<tr>
+<td style="text-align:center">\f</td>
+<td style="text-align:left">匹配一个换页符。等价于\x0c和\cL。</td>
+</tr>
+<tr>
+<td style="text-align:center">\n</td>
+<td style="text-align:left">匹配一个换行符。等价于\x0a和\cJ。</td>
+</tr>
+<tr>
+<td style="text-align:center">\r</td>
+<td style="text-align:left">匹配一个回车符。等价于\x0d和\cM。</td>
+</tr>
+<tr>
+<td style="text-align:center">\s</td>
+<td style="text-align:left">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td style="text-align:center">\S</td>
+<td style="text-align:left">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td style="text-align:center">\t</td>
+<td style="text-align:left">匹配一个制表符。等价于\x09和\cI。</td>
+</tr>
+<tr>
+<td style="text-align:center">\v</td>
+<td style="text-align:left">匹配一个垂直制表符。等价于\x0b和\cK。</td>
+</tr>
+<tr>
+<td style="text-align:center">\w</td>
+<td style="text-align:left">匹配包括下划线的任何单词字符。等价于“<code>[A-Za-z0-9_]</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">\W</td>
+<td style="text-align:left">匹配任何非单词字符。等价于“<code>[^A-Za-z0-9_]</code>”。</td>
+</tr>
+<tr>
+<td style="text-align:center">\x<em>n</em></td>
+<td style="text-align:left">匹配<em>n</em>，其中<em>n</em>为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，“<code>\x41</code>”匹配“<code>A</code>”。“<code>\x041</code>”则等价于“<code>\x04&amp;1</code>”。正则表达式中可以使用ASCII编码。.</td>
+</tr>
+<tr>
+<td style="text-align:center">\n<em>u</em>m</td>
+<td style="text-align:left">匹配<em>num</em>，其中<em>num</em>是一个正整数。对所获取的匹配的引用。例如，“<code>(.)\1</code>”匹配两个连续的相同字符。</td>
+</tr>
+<tr>
+<td style="text-align:center">\n</td>
+<td style="text-align:left">标识一个八进制转义值或一个向后引用。如果*n<em>之前至少</em>n<em>个获取的子表达式，则</em>n<em>为向后引用。否则，如果</em>n<em>为八进制数字（0-7），则</em>n*为一个八进制转义值。</td>
+</tr>
+<tr>
+<td style="text-align:center">\n<em>m</em></td>
+<td style="text-align:left">标识一个八进制转义值或一个向后引用。如果<em>nm</em>之前至少有<em>nm</em>个获得子表达式，则<em>nm</em>为向后引用。如果*nm<em>之前至少有</em>n<em>个获取，则</em>n<em>为一个后跟文字</em>m<em>的向后引用。如果前面的条件都不满足，若</em>n<em>和</em>m<em>均为八进制数字（0-7），则*nm</em>将匹配八进制转义值<em>nm</em>。</td>
+</tr>
+<tr>
+<td style="text-align:center">\nml</td>
+<td style="text-align:left">如果<em>n</em>为八进制数字（0-3），且<em>m和l</em>均为八进制数字（0-7），则匹配八进制转义值<em>nm</em>l。</td>
+</tr>
+<tr>
+<td style="text-align:center">\u<em>n</em></td>
+<td style="text-align:left">匹配<em>n</em>，其中<em>n</em>是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（©）。</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h3 id="span-idhead2-常见的正则表达式span"><span id="head2"> <strong>常见的正则表达式</strong></span></h3>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">用户名</th>
+<th>/<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>{3,16}$/</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">密码</td>
+<td>/<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>{6,18}$/</td>
+</tr>
+<tr>
+<td style="text-align:center">十六进制值</td>
+<td>/^#?([a-f0-9]{6}|[a-f0-9]{3})$/</td>
+</tr>
+<tr>
+<td style="text-align:center">电子邮箱</td>
+<td>/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \d at position 9: / /^[a-z\̲d̲]+(\.[a-z\d]+)*…'>/ /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+</span>/</td>
+</tr>
+<tr>
+<td style="text-align:center">URL</td>
+<td>/^(https?://)?([\da-z.-]+).([a-z.]{2,6})([/\w .-]<em>)</em>/?$/</td>
+</tr>
+<tr>
+<td style="text-align:center">IP 地址</td>
+<td>/((2[0-4]\d|25[0-5]|[01]?\d\d?).){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)/ /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/</td>
+</tr>
+<tr>
+<td style="text-align:center">HTML 标签</td>
+<td>/<sup>&lt;([a-z]+)([</sup>&lt;]+)<em>(?:&gt;(.</em>)&lt;/\1&gt;|\s+/&gt;)$/</td>
+</tr>
+<tr>
+<td style="text-align:center">删除代码\注释</td>
+<td>(?&lt;!http:|\S)//.*$</td>
+</tr>
+<tr>
+<td style="text-align:center">Unicode编码中的汉字范围</td>
+<td>/<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+$/</td>
+</tr>
+</tbody>
+</table>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>a-z0-9_- <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>a-z0-9_- <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>\u2E80-\u9FFF <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java面试题(JDBC)]]></title>
+        <id>https://42one.xyz/post/ci_77H9lE</id>
+        <link href="https://42one.xyz/post/ci_77H9lE">
+        </link>
+        <updated>2019-06-23T01:12:03.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>JDBC操作数据库的步骤</strong></a></li>
+<li><a href="#head2"><strong>JDBC中的Statement 和PreparedStatement，CallableStatement的区别</strong></a></li>
+<li><a href="#head3"> <strong>写出一段JDBC连接本机MySQL数据库的代码</strong></a></li>
+<li><a href="#head4"> <strong>execute，executeQuery，executeUpdate的区别是什么</strong></a></li>
+<li><a href="#head5"> <strong>Apache的DBCP</strong></a></li>
+<li><a href="#head6"> <strong>什么是JDBC的最佳实践</strong></a></li>
+<li><a href="#head7"> <strong>JDBC的脏读是什么？哪种数据库隔离级别能防止脏读</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>JDBC操作数据库的步骤</strong></a></li>
+<li><a href="#head2"><strong>JDBC中的Statement 和PreparedStatement，CallableStatement的区别</strong></a></li>
+<li><a href="#head3"> <strong>写出一段JDBC连接本机MySQL数据库的代码</strong></a></li>
+<li><a href="#head4"> <strong>execute，executeQuery，executeUpdate的区别是什么</strong></a></li>
+<li><a href="#head5"> <strong>Apache的DBCP</strong></a></li>
+<li><a href="#head6"> <strong>什么是JDBC的最佳实践</strong></a></li>
+<li><a href="#head7"> <strong>JDBC的脏读是什么？哪种数据库隔离级别能防止脏读</strong></a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1-jdbc操作数据库的步骤span"><span id="head1"> <strong>JDBC操作数据库的步骤</strong></span></h3>
+<hr>
+<ol>
+<li>注册数据库驱动。</li>
+<li>建立数据库连接。</li>
+<li>创建一个Statement。</li>
+<li>执行SQL语句。</li>
+<li>处理结果集。</li>
+<li>关闭数据库连接</li>
+</ol>
+<br>
+<h3 id="span-idhead2jdbc中的statement-和preparedstatementcallablestatement的区别span"><span id="head2"><strong>JDBC中的Statement 和PreparedStatement，CallableStatement的区别</strong></span></h3>
+<hr>
+<ul>
+<li>PreparedStatement是预编译的SQL语句，效率高于Statement。</li>
+<li>PreparedStatement支持?操作符，相对于Statement更加灵活。</li>
+<li>PreparedStatement可以防止SQL注入，安全性高于Statement。</li>
+<li>CallableStatement适用于执行存储过程。</li>
+</ul>
+<br>
+<h3 id="span-idhead3-写出一段jdbc连接本机mysql数据库的代码span"><span id="head3"> <strong>写出一段JDBC连接本机MySQL数据库的代码</strong></span></h3>
+<hr>
+<pre><code class="language-js">Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+String url=&quot;jdbc:mysql://localhost/test&quot;;
+Stirng user='root';
+String password='root';
+Connection conn = DriverManager.getConnection(url,user,password);
+
+</code></pre>
+<br>
+<h3 id="span-idhead4-executeexecutequeryexecuteupdate的区别是什么span"><span id="head4"> <strong>execute，executeQuery，executeUpdate的区别是什么</strong></span></h3>
+<hr>
+<ul>
+<li>Statement的execute(String query)方法用来<strong>执行任意的SQL查询</strong>，如果查询的结果是一个ResultSet，这个方法就返回true。如果结果不是ResultSet，比如insert或者update查询，它就会返回false。我们可以通过它的getResultSet方法来获取ResultSet，或者通过getUpdateCount()方法来获取更新的记录条数。</li>
+<li>Statement的executeQuery(String query)接口用来执行select查询，并且返回ResultSet。即使查询不到记录返回的ResultSet也不会为null。我们通常使用executeQuery<strong>来执行查询语句</strong>，这样的话如果传进来的是insert或者update语句的话，它会抛出错误信息为 “executeQuery method can not be used for update”的java.util.SQLException。</li>
+<li>Statement的executeUpdate(String query)方法<strong>用来执行insert或者update/delete（DML）语句，或者 什么也不返回DDL语句</strong>。返回值是int类型，如果是DML语句的话，它就是更新的条数，如果是DDL的话，就返回0。</li>
+<li>只有当你不确定是什么语句的时候才应该使用execute()方法，否则应该使用executeQuery或者executeUpdate方法。</li>
+</ul>
+<br>
+<h3 id="span-idhead5-apache的dbcpspan"><span id="head5"> <strong>Apache的DBCP</strong></span></h3>
+<hr>
+<p>如果用DataSource来获取连接的话，<strong>通常获取连接的代码和驱动特定的DataSource是紧耦合的</strong>。另外，除了选择DataSource的实现类，剩下的代码基本都是一样的。</p>
+<p>Apache的DBCP就是用来解决这些问题的，它提供的DataSource实现成为了应用程序和不同JDBC驱动间的一个抽象层。<strong>Apache的DBCP库依赖commons-pool库，所以要确保它们都在部署路径下。</strong></p>
+<p>使用DBCP数据源的步骤：</p>
+<ol>
+<li>导入两个jar包【Commons-dbcp.jar和Commons-pool.jar】</li>
+<li>读取配置文件</li>
+<li>获取BasicDataSourceFactory对象</li>
+<li>创建DataSource对象</li>
+</ol>
+<br>
+<h3 id="span-idhead6-什么是jdbc的最佳实践span"><span id="head6"> <strong>什么是JDBC的最佳实践？</strong></span></h3>
+<hr>
+<ul>
+<li>数据库资源是非常昂贵的，<strong>用完了应该尽快关闭它</strong>。Connection, Statement, ResultSet等JDBC对象都有close方法，调用它就好了。</li>
+<li><strong>养成在代码中显式关闭掉ResultSet，Statement，Connection的习惯</strong>，如果你用的是连接池的话，连接用完后会放回池里，但是没有关闭的ResultSet和Statement就会造成资源泄漏了。</li>
+<li>在finally块中关闭资源，保证即便出了异常也能正常关闭。</li>
+<li><strong>大量类似的查询应当使用批处理完成</strong>。</li>
+<li><strong>尽量使用PreparedStatement而不是Statement，以避免SQL注入，同时还能通过预编译和缓存机制提升执行的效率。</strong></li>
+<li>如果你要将大量数据读入到ResultSet中，<strong>应该合理的设置fetchSize以便提升性能</strong>。</li>
+<li>你用的数据库可能没有支持所有的隔离级别，用之前先仔细确认下。</li>
+<li>数据库隔离级别越高性能越差，确保你的数据库连接设置的隔离级别是最优的。</li>
+<li>如果在WEB程序中创建数据库连接，最好通过JNDI使用JDBC的数据源，这样可以对连接进行重用。</li>
+<li><strong>如果你需要长时间对ResultSet进行操作的话，尽量使用离线的RowSet。</strong></li>
+</ul>
+<br>
+<h3 id="span-idhead7-jdbc的脏读是什么哪种数据库隔离级别能防止脏读span"><span id="head7"> <strong>JDBC的脏读是什么？哪种数据库隔离级别能防止脏读</strong></span></h3>
+<hr>
+<p>脏读：<strong>一个事务读取到另外一个事务未提交的数据</strong></p>
+<p>例子：A向B转账，A执行了转账语句，但A还没有提交事务，B读取数据，发现自己账户钱变多了！B跟A说，我已经收到钱了。A回滚事务【rollback】，等B再查看账户的钱时，发现钱并没有多。</p>
+<p>下面的三种个隔离级别都可以防止：</p>
+<ul>
+<li>Serializable【TRANSACTION_SERIALIZABLE】</li>
+<li>Repeatable read【TRANSACTION_REPEATABLE_READ】</li>
+<li>Read committed【TRANSACTION_READ_COMMITTED】</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[java面试题(集合)]]></title>
+        <id>https://42one.xyz/post/HOVDsriA1</id>
+        <link href="https://42one.xyz/post/HOVDsriA1">
+        </link>
+        <updated>2019-06-21T13:22:39.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>集合的分类</strong></a><a name="divtop"></a></li>
+<li><a href="#head2"> <strong>ArrayList和vector的区别</strong></a></li>
+<li><a href="#head3"> <strong>HashMap与HashTable的区别</strong></a></li>
+<li><a href="#head4"> <strong>HashMap是怎么解决哈希冲突的</strong></a><a name="divtop"></a></li>
+<li><a href="#head5"> <strong>list和map的区别</strong></a></li>
+<li><a href="#head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></a></li>
+<li><a href="#head7"> <strong>arraylist和linkedlist的存储特性</strong></a></li>
+<li><a href="#head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>集合的分类</strong></a><a name="divtop"></a></li>
+<li><a href="#head2"> <strong>ArrayList和vector的区别</strong></a></li>
+<li><a href="#head3"> <strong>HashMap与HashTable的区别</strong></a></li>
+<li><a href="#head4"> <strong>HashMap是怎么解决哈希冲突的</strong></a><a name="divtop"></a></li>
+<li><a href="#head5"> <strong>list和map的区别</strong></a></li>
+<li><a href="#head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></a></li>
+<li><a href="#head7"> <strong>arraylist和linkedlist的存储特性</strong></a></li>
+<li><a href="#head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1-集合的分类span"><span id="head1"> <strong>集合的分类</strong></span></h3>
+<hr>
+<p>主要分为collection,map.</p>
+<ul>
+<li><strong>collection</strong>
+<ul>
+<li>list
+<ul>
+<li><strong>ArrayLis</strong>t</li>
+<li>linkedlist</li>
+<li>vector(已过时,了解)</li>
+</ul>
+</li>
+<li>set
+<ul>
+<li>hashset
+<ul>
+<li>linkedhashset</li>
+</ul>
+</li>
+<li>treeset</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>map</strong>
+<ul>
+<li><strong>hashmap</strong>
+<ul>
+<li>linkedhashmap</li>
+</ul>
+</li>
+<li>hashtable
+<ul>
+<li>properties</li>
+</ul>
+</li>
+<li>concurrenthashmap</li>
+</ul>
+</li>
+<li>treemap</li>
+</ul>
+<br>
+<h3 id="span-idhead2-arraylist和vector的区别span"><span id="head2"> <strong>ArrayList和vector的区别</strong></span></h3>
+<hr>
+<p><strong>共同点</strong>:这两个类都实现了list接口,他们都是有序的集合(存储有序),底层是数组,允许元素重复和为null</p>
+<p><strong>区别</strong>:</p>
+<ul>
+<li>同步性
+<ul>
+<li>ArrayList是非同步的</li>
+<li>vector是同步的</li>
+<li>需要同步时一般通过collections工具构建同步的ArrayList</li>
+</ul>
+</li>
+<li>扩容大小
+<ul>
+<li>vector增长原来的一倍,ArrayList增长原来的0.5倍</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead3-hashmap与hashtable的区别span"><span id="head3"> <strong>HashMap与HashTable的区别</strong></span></h3>
+<hr>
+<ul>
+<li>HashMap没有考虑同步，是线程不安全的；Hashtable使用了synchronized关键字，是线程安全的；</li>
+<li>HashMap允许K/V都为null；后者K/V都不允许为null；</li>
+<li>HashMap继承自AbstractMap类；而Hashtable继承自Dictionary类；</li>
+</ul>
+<p>HashMap的put方法的具体流程？</p>
+<br>
+<p>源码为:</p>
+<pre><code class="language-js">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+    HashMap.Node&lt;K,V&gt;[] tab; HashMap.Node&lt;K,V&gt; p; int n, i;
+    // 1.如果table为空或者长度为0，即没有元素，那么使用resize()方法扩容    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
+    // 2.计算插入存储的数组索引i，此处计算方法同 1.7 中的indexFor()方法    // 如果数组为空，即不存在Hash冲突，则直接插入数组    if ((p = tab[i = (n - 1) &amp; hash]) == null)
+        tab[i] = newNode(hash, key, value, null);
+    // 3.插入时，如果发生Hash冲突，则依次往下判断    else {
+        HashMap.Node&lt;K,V&gt; e; K k;
+        // a.判断table[i]的元素的key是否与需要插入的key一样，若相同则直接用新的value覆盖掉旧的value        // 判断原则equals() - 所以需要当key的对象重写该方法        if (p.hash == hash &amp;&amp;
+                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
+            e = p;
+        // b.继续判断：需要插入的数据结构是红黑树还是链表        // 如果是红黑树，则直接在树中插入 or 更新键值对        else if (p instanceof HashMap.TreeNode)
+            e = ((HashMap.TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
+        // 如果是链表，则在链表中插入 or 更新键值对        else {
+            // i .遍历table[i]，判断key是否已存在：采用equals对比当前遍历结点的key与需要插入数据的key            //    如果存在相同的，则直接覆盖            // ii.遍历完毕后任务发现上述情况，则直接在链表尾部插入数据            //    插入完成后判断链表长度是否 &gt; 8：若是，则把链表转换成红黑树            for (int binCount = 0; ; ++binCount) {
+                if ((e = p.next) == null) {
+                    p.next = newNode(hash, key, value, null);
+                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st                        treeifyBin(tab, hash);
+                    break;
+                }
+                if (e.hash == hash &amp;&amp;
+                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+                    break;
+                p = e;
+            }
+        }
+        // 对于i 情况的后续操作：发现key已存在，直接用新value覆盖旧value&amp;返回旧value        if (e != null) { // existing mapping for key            V oldValue = e.value;
+            if (!onlyIfAbsent || oldValue == null)
+                e.value = value;
+            afterNodeAccess(e);
+            return oldValue;
+        }
+    }
+    ++modCount;
+    // 插入成功后，判断实际存在的键值对数量size &gt; 最大容量    // 如果大于则进行扩容    if (++size &gt; threshold)
+        resize();
+    // 插入成功时会调用的方法（默认实现为空）    afterNodeInsertion(evict);
+    return null;
+}
+</code></pre>
+<p>图示为:</p>
+<p><img src="https://42one.xyz/post-images/1561125478643.png" alt=""></p>
+<br>
+<h3 id="span-idhead4-hashmap是怎么解决哈希冲突的span"><span id="head4"> <strong>HashMap是怎么解决哈希冲突的</strong></span></h3>
+<hr>
+<p><strong>什么是哈希？</strong><br>
+Hash，一般翻译为“散列”，也有直接音译为“哈希”的，这就是把任意长度的输入通过散列算法，变换成固定长度的输出，该输出就是散列值（哈希值）；这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，所以不可能从散列值来唯一的确定输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。</p>
+<p>所有散列函数都有如下一个基本特性：根据同一散列函数计算出的散列值如果不同，那么输入值肯定也不同。但是，根据同一散列函数计算出的散列值如果相同，输入值不一定相同。</p>
+<p><strong>解决办法</strong></p>
+<ol>
+<li>使用链地址法（使用散列表）来链接拥有相同hash值的数据；</li>
+<li>使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；</li>
+<li>引入红黑树进一步降低遍历的时间复杂度，使得遍历更快；</li>
+</ol>
+<br>
+<h3 id="span-idhead5-list和map的区别span"><span id="head5"> <strong>list和map的区别</strong></span></h3>
+<hr>
+<ul>
+<li>存储结构不同
+<ul>
+<li>list是存储单列的集合</li>
+<li>map是以键值对的形式存储数据的</li>
+</ul>
+</li>
+<li>元素是否重复
+<ul>
+<li>list允许元素重复</li>
+<li>map不允许元素重复</li>
+</ul>
+</li>
+<li>是否有序
+<ul>
+<li>list集合元素是有序的</li>
+<li>map集合元素是无序的</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead6-set里的元素是不能重复的那么用什么方法来区分重复的元素是还是equalsspan"><span id="head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></span></h3>
+<hr>
+<p>set集合实际上大都使用的是 <strong>map集合的put方法来添加元素的</strong><br>
+以hashset元素为例,hashset里的元素不能重复<br>
+源码为</p>
+<p>// 1. 如果key 相等<br>
+if (p.hash == hash &amp;&amp;<br>
+((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))<br>
+e = p;<br>
+// 2. 修改对应的value<br>
+if (e != null) { // existing mapping for key<br>
+V oldValue = e.value;<br>
+if (!onlyIfAbsent || oldValue == null)<br>
+e.value = value;<br>
+afterNodeAccess(e);<br>
+return oldValue;<br>
+}</p>
+<p>添加元素的时候,如果key(也就是对应的是set集合的元素)相等,那么修改value值.而在set集合中,value值仅仅是一个object对象罢了(该对象对set集合来说是无用的)</p>
+<p><strong>Set集合如果添加的元素相同时，是根本没有插入的(仅修改了一个无用的value值)！从源码(HashMap)中也看出来，==和equals()方法都有使用！</strong></p>
+<br>
+<h3 id="span-idhead7-arraylist和linkedlist的存储特性span"><span id="head7"> <strong>arraylist和linkedlist的存储特性</strong></span></h3>
+<hr>
+<p>ArrayList的底层是数组，LinkedList的底层是双向链表。</p>
+<ul>
+<li>ArrayList它支持以角标位置进行索引出对应的元素(随机访问)，而LinkedList则需要遍历整个链表来获取对应的元素。因此一般来说ArrayList的访问速度是要比LinkedList要快的</li>
+<li>ArrayList由于是数组，对于删除和修改而言消耗是比较大(复制和移动数组实现)，LinkedList是双向链表删除和修改只需要修改对应的指针即可，消耗是很小的。因此一般来说LinkedList的增删速度是要比ArrayList要快的</li>
+</ul>
+<br>
+<blockquote>
+<p>ArrayList的增删未必就是比LinkedList要慢。</p>
+<ul>
+<li>如果增删都是在末尾来操作【每次调用的都是remove()和add()】，此时ArrayList就不需要移动和复制数组来进行操作了。如果数据量有百万级的时，速度是会比LinkedList要快的。</li>
+<li>如果删除操作的位置是在中间。由于LinkedList的消耗主要是在遍历上，ArrayList的消耗主要是在移动和复制上(底层调用的是arraycopy()方法，是native方法)。
+<ul>
+<li>LinkedList的遍历速度是要慢于ArrayList的复制移动速度的</li>
+<li>如果数据量有百万级的时，还是ArrayList要快。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<br>
+<h3 id="span-idhead8-arraylist集合中插入一万条数据如何提高效率span"><span id="head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></span><a href="#divtop">🔝</a></h3>
+<hr>
+<p>ArrayList的默认初始容量为10，要插入大量数据的时候需要不断扩容，而扩容是非常影响性能的。因此，现在明确了10万条数据了，我们可以直接在初始化的时候就设置ArrayList的容量.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[java面试题(辨析)]]></title>
+        <id>https://42one.xyz/post/v6elpPCfB</id>
+        <link href="https://42one.xyz/post/v6elpPCfB">
+        </link>
+        <updated>2019-06-21T11:06:14.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"><strong>==和equals</strong>  </a></li>
+<li><a href="#head2"> <strong>continue和break</strong></a></li>
+<li><a href="#head3"><strong>final, finally, finalize有什么区别</strong></a></li>
+<li><a href="#head4"> <strong>String和StringBuffer的对比</strong></a></li>
+<li><a href="#head5"> <strong>JDK,JRE和JVM的区别和联系</strong></a></li>
+<li><a href="#head6"> <strong>接口和抽象类的区别以及联系</strong></a></li>
+<li><a href="#head7"> 未完待续😉</a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"><strong>==和equals</strong>  </a></li>
+<li><a href="#head2"> <strong>continue和break</strong></a></li>
+<li><a href="#head3"><strong>final, finally, finalize有什么区别</strong></a></li>
+<li><a href="#head4"> <strong>String和StringBuffer的对比</strong></a></li>
+<li><a href="#head5"> <strong>JDK,JRE和JVM的区别和联系</strong></a></li>
+<li><a href="#head6"> <strong>接口和抽象类的区别以及联系</strong></a></li>
+<li><a href="#head7"> 未完待续😉</a></li>
+</ul>
+<!-- more -->
+<br>
+<h3 id="span-idhead1和equals-span"><span id="head1"><strong>==和equals</strong>  </span></h3>
+<hr>
+<ul>
+<li><strong>==:</strong> 比较的是两个字符串内存地址(堆内存)的数值是否相等,属于数值比较.</li>
+<li><strong>equals():</strong> 比较的是两个字符串的内容,属于内容比较,<strong>所以以后字符串相等判断的时候都使用equals</strong>.</li>
+</ul>
+<blockquote>
+<p>equals这个方法的初始默认行为行为是比较字符串的内存地址值,一般来说意义不大,所以,在一些类库中这个方法被重写了,如string,integer,date.在这些类中equals有其自身的实现(一般来说是比较对象的成员变量值是否相等),而不去比较字符串的内存地址.</p>
+</blockquote>
+</br>
+<h3 id="span-idhead2-continue和breakspan"><span id="head2"> <strong>continue和break</strong></span></h3>
+<hr>
+<ul>
+<li><strong>continue</strong> 跳出本次循环继续下一个循环.</li>
+<li><strong>break</strong> 跳出循环体,继续执行循环体味道函数体</li>
+<li><strong>return</strong> 跳出循环体,函数体后边的部分不再执行</li>
+</ul>
+</br>
+<h3 id="span-idhead3final-finally-finalize有什么区别span"><span id="head3"><strong>final, finally, finalize有什么区别</strong></span></h3>
+<hr>
+<ul>
+<li>final用于声明属性,方法和类.分别表示属性不可变,方法不可重写(可重载),类不可继承</li>
+<li>finally是异常处理语句结构的一部分</li>
+<li>finalize是object类的一个方法,在垃圾收集器执行的时候会被调用被回收对象的此方法可以覆盖此方法提供垃圾收集时的其他资源回收,例如关闭软件</li>
+</ul>
+</br>
+<h3 id="span-idhead4-string和stringbuffer的对比span"><span id="head4"> <strong>String和StringBuffer的对比</strong></span></h3>
+<hr>
+<ul>
+<li><strong>stringbuffer</strong> :保存的是字符串常量,里边的值可以被修改,比较适合做字符串的更新操作,效率较高.</li>
+<li><strong>string</strong> :保存的是字符串常量,里边的值不能改变,每次只能更改内存地址,所以不适合做字符串的更新操作,适合作为数据库存储.</li>
+</ul>
+</br>
+<h3 id="span-idhead5-jdkjre和jvm的区别和联系span"><span id="head5"> <strong>JDK,JRE和JVM的区别和联系</strong></span></h3>
+<hr>
+<p>JDK(Java Development Kit):Java开发工具包<br>
+JRE(Java runtime environment):Java运行环境<br>
+JVM(Java Virtual Machine):Java虚拟机</p>
+<ul>
+<li><strong>三者联系:</strong>
+<ul>
+<li>JVM不能单独搞定class的执行，解释class的时候JVM需要调用解释所需要的类库lib。在JDK下面的的jre目录里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。JVM+Lib=JRE。总体来说就是，我们利用JDK（调用JAVA API）开发了属于我们自己的JAVA程序后，通过JDK中的编译程序（javac）将我们的文本java文件编译成JAVA字节码，在JRE上运行这些JAVA字节码，JVM解析这些字节码，映射到CPU指令集或OS的系统调用。</li>
+</ul>
+</li>
+<li><strong>三者区别:</strong>
+<ul>
+<li>JDK和JRE区别：在bin文件夹下会发现，JDK有javac.exe而JRE里面没有，javac指令是用来将java文件编译成class文件的，这是开发者需要的，而用户（只需要运行的人）是不需要的。JDK还有jar.exe, javadoc.exe等等用于开发的可执行指令文件。这也证实了一个是开发环境，一个是运行环境。</li>
+<li>JRE和JVM区别：JVM并不代表就可以执行class了，JVM执行.class还需要JRE下的lib类库的支持，尤其是rt.jar。</li>
+</ul>
+</li>
+</ul>
+<br>
+<h3 id="span-idhead6-接口和抽象类的区别以及联系span"><span id="head6"> <strong>接口和抽象类的区别以及联系</strong></span></h3>
+<hr>
+<ul>
+<li>联系:
+<ul>
+<li>都是上层的抽象层</li>
+<li>都不能被实例化</li>
+<li>都包含抽象的方法,用于描述类具备的功能,但是不提供具体的实现</li>
+</ul>
+</li>
+<li>区别:
+<ul>
+<li>在抽象类中可以写非抽象的方法,从而避免在子类中重复书写他们,这样可以提高代码的复用性,这是抽象类的优势.接口中只有抽象类的方法</li>
+<li>一个类只能继承一个直接父类,这个父类可以是具体的类也可以是抽象类.但是一个类可以实现多个接口.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Java语言中类的继承是单继承原因是：当子类重写父类方法的时候，或者隐藏父类的成员变量以及静态方法的时候，JVM使用不同的绑定规则。如果一个类有多个直接的父类，那么会使绑定规则变得更复杂。为了简化软件的体系结构和绑定机制，java语言禁止多继承。接口可以多继承，是因为接口中只有抽象方法，没有静态方法和非常量的属性，只有接口的实现类才会重写接口中方法。因此一个类有多个接口也不会增加JVM的绑定机制和复杂度。对于已经存在的继承树，可以方便的从类中抽象出新的接口，但是从类中抽象出新的抽象类就不那么容易了，因此接口更有利于软件系统的维护和重构。</p>
+</blockquote>
+<br>
+<h1 id="span-idhead7-未完待续span"><span id="head7"> 未完待续😉</span></h1>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Git操作]]></title>
+        <id>https://42one.xyz/post/c8Dggeox4</id>
+        <link href="https://42one.xyz/post/c8Dggeox4">
+        </link>
+        <updated>2019-06-20T11:08:22.000Z</updated>
+        <summary type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
+<li><a href="#head2"> <strong>版本管理</strong></a></li>
+<li><a href="#head3"> <strong>撤销修改</strong></a></li>
+<li><a href="#head4"> <strong>远程仓库</strong></a></li>
+<li><a href="#head5"> 未完待续...😬</a></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
+<li><a href="#head2"> <strong>版本管理</strong></a></li>
+<li><a href="#head3"> <strong>撤销修改</strong></a></li>
+<li><a href="#head4"> <strong>远程仓库</strong></a></li>
+<li><a href="#head5"> 未完待续...😬</a></li>
+</ul>
+<!-- more -->
+<br>
+<hr>
+<p><img src="https://42one.xyz/post-images/1561036798587.png" alt=""></p>
+<hr>
+</br>  
+<h3 id="span-idhead1-初始化一个git环境span"><span id="head1"> <strong>初始化一个Git环境</strong></span></h3>
+<hr>
+<p><strong>Git init</strong><br>
+添加文件到git仓库.</p>
+<p><strong>Git add file</strong><br>
+可以多次使用,添加文件到暂缓区.</p>
+<p><strong>Git commit -m &quot;massage&quot;</strong><br>
+完成把暂缓区的所有内容提交到当前分支.</p>
+</br>
+<h3 id="span-idhead2-版本管理span"><span id="head2"> <strong>版本管理</strong></span></h3>
+<hr>
+<p><strong>Git reset --herd commend ID</strong><br>
+head指向的版本就是当前版本,Git允许我们在所有版本的历史内任意穿梭.穿梭前,用git log 查看提交历史,以确认要回退的版本.要重返未来,用git relog 查看命令历史,以便确认未来的版本.</p>
+</br>
+<h3 id="span-idhead3-撤销修改span"><span id="head3"> <strong>撤销修改</strong></span></h3>
+<hr>
+<p><strong>场景一</strong><br>
+当你改乱了工作区的某个文件的内容,想直接丢弃工作区的更改时,使用命令<strong>git checkout --file</strong></p>
+<p><strong>场景二</strong><br>
+当你不但改乱了工作区的文件的内容,而且已经提交给了暂缓区,想丢弃修改,分两步:第一步用命令<strong>git reset</strong>回到上一个版本,也就是场景一,第二步按场景一的方式修改.</p>
+<blockquote>
+<p><em>git checkout其实是用版本库的版本去替换工作区的版本,无论工作区是是修改还是删除埋在可以一键删除</em></p>
+</blockquote>
+</br>
+<h3 id="span-idhead4-远程仓库span"><span id="head4"> <strong>远程仓库</strong></span></h3>
+<hr>
+<p><strong>1.克隆远程仓库</strong></p>
+<p><em>要克隆一个仓库,必须知道仓库的地址,然后使用<strong>git clone</strong> 命令克隆</em></p>
+<pre><code class="language-js">git clone git@github:markwhitey.github.io.git
+</code></pre>
+<p><em>github支持多种协议,包括https,但ssh原生的git协议最快</em></p>
+<p><strong>2.添加远程仓库</strong></p>
+<pre><code class="language-js">git remote add [shortname] [url]
+</code></pre>
+<p><strong>3.查看当前远程仓库</strong></p>
+<pre><code class="language-js">git remote
+</code></pre>
+<p><strong>4.提取远程仓库</strong></p>
+<ul>
+<li>从远程仓库下载分支</li>
+</ul>
+<pre><code class="language-java">git fetch
+</code></pre>
+<p><em>该命令执行后需要执行git merge远程分支到自己的分支</em></p>
+<ul>
+<li>从远程仓库和本地仓库合并</li>
+</ul>
+<pre><code class="language-java">git merge
+</code></pre>
+</br>  
+<h1 id="span-idhead5-未完待续span"><span id="head5"> 未完待续...😬</span></h1>
+]]></content>
+    </entry>
+</feed>
