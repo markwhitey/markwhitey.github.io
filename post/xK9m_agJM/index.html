@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>代码和数学公式渲染 | Martian`Blog</title>
+<title>精酿啤酒 | Martian`Blog</title>
 <link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562425430722">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
@@ -180,123 +180,97 @@
         <div id="loop-container" class="loop-container">
             <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
                 
-                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/d-SAxjqze.jpg">
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/xK9m_agJM.jpg">
                     </div>
                 
 
                 <div class="entry-meta">
-                    <span class="date">· 2019-06-29 ·</span> <span> / </span>
+                    <span class="date">· 2019-07-06 ·</span> <span> / </span>
                     <span class="author">
             <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
                     
                         <span class="category">
                     <span> / </span>
-                    <a href="https://42one.xyz/tag/3h7N1DtwN">BLOG</a>
+                    <a href="https://42one.xyz/tag/ytd1XpOn4">LIFE</a>
                 </span>
                     
                 </div>
                 <div class='entry-header'>
-                    <h1 class='entry-title'>代码和数学公式渲染</h1>
+                    <h1 class='entry-title'>精酿啤酒</h1>
                 </div>
                 <div class="entry-container">
                     <div class="entry-content">
                         <article>
-                            <ul>
-<li><a href="#head1"> <strong>前言</strong></a></li>
-<li><a href="#head2"> <strong>代码主题渲染</strong></a></li>
-<li><a href="#head3"> <strong>数学公式</strong></a></li>
-</ul>
-<!-- more -->
-<br>
-<h3 id="span-idhead1-前言span"><span id="head1"> <strong>前言</strong></span></h3>
+                            <h3 id="概念"><strong>概念</strong></h3>
 <hr>
-<p><strong>首先我们需要了解cdn一下</strong></p>
-<blockquote>
-<p>内容分发网络（英语：Content Delivery Network或Content Distribution Network，缩写：CDN）是指一种透过互联网互相连接的计算机网络系统，利用最靠近每位用户的服务器，更快、更可靠地将音乐、图片、影片、应用程序及其他文件发送给用户，来提供高性能、可扩展性及低成本的网络内容传递给用户。</p>
-</blockquote>
-<p><strong>优点:</strong></p>
+<p><strong>目前比较官方的定义是：</strong></p>
+<ol>
+<li>
+<p>年产量小于600万桶（70.2万吨），用于商业交易；</p>
+</li>
+<li>
+<p>非精酿酿造者或公司机构，其占股份不能超过25%；</p>
+</li>
+<li>
+<p>酿造者所酿造的大部分啤酒的风味，应从传统或者创新原料与发酵工艺中获得。</p>
+</li>
+</ol>
+<p>简单来说就是，精酿啤酒是区别于<strong>工业啤酒</strong>的一种概念：</p>
 <ul>
-<li>内容分发网络的总承载量可以比单一骨干最大的带宽还要大。这使得内容分发网络可以承载的用户数量比起传统单一服务器多。也就是说，若把有100Gbps处理能力的服务器放在只有10Gbps带宽的数据中心，则亦只能发挥出10Gbps的承载量。但如果放到十个有10Gbps的地点，整个系统的承载量就可以到10×10Gbps。同时，将服务器放到不同地点，可以减少互连的流量，进而降低带宽成本。</li>
-<li>对于TCP传输而言，TCP的速度（throughput）会受到延迟时间（latency）与数据包漏失率（packet loss）影响。为了改善这些负面因素，内容分发网络通常会指派较近、较顺畅的服务器节点将数据传输给用户。虽然距离并不是绝对因素，但这么做可以尽可能提高性能，用户将会觉得比较顺畅。这使得一些比较高带宽的应用（传输高清画质的影片）更容易推动。</li>
-<li>内容分发网络另外一个好处在于有异地备援。当某个服务器故障时，系统将会调用其他邻近地区的服务器服务，进而提供接近100%的可靠度。</li>
-<li>除此之外，内容分发网络提供给服务提供者更多的控制权。提供服务的人可以针对客户、地区，或是其他因子调整。</li>
+<li>水啤的特点：颜色很浅，泡沫稍纵即逝，味道寡淡；</li>
+<li>精酿啤酒：颜色多样，泡沫丰富，风味多样，饮用方式讲究仪式感。</li>
 </ul>
-<p><strong>公用开源cdn哪家强?</strong></p>
-<p>我们所有的主题渲染highlight.js以及数学公式katex.js都是都可以在<a href="https://www.jsdelivr.com/"><strong>jsdelivr</strong></a>上找到,而且也非常推荐使用此公共cdn,对中国有加速，支持npm,github ,WordPress包，完全免费无限制，全球都很快。</p>
 <br>
-<h3 id="span-idhead2-代码主题渲染span"><span id="head2"> <strong>代码主题渲染</strong></span></h3>
+<h3 id="分类"><strong>分类</strong></h3>
 <hr>
+<p><strong>至于生啤、熟啤、扎啤、冰啤：</strong></p>
+<ul>
+<li>
+<p>生啤：啤酒里有活酵母的啤酒，喝起来感觉更新鲜；</p>
+</li>
+<li>
+<p>熟啤：经过高温消毒，酵母都死翘翘了；</p>
+</li>
+<li>
+<p>扎啤：把啤酒灌进不锈钢桶里，最大程度还原啤酒刚刚出厂的味道；</p>
+</li>
+<li>
+<p>冰啤：过滤的时候瞬间把温度降到0℃左右，让杂质析出，这样过滤出来的啤酒非常清澈，但味道也十分寡淡。</p>
+</li>
+</ul>
+<br>
+<p><strong>精酿的分类方式一:发酵工艺</strong></p>
+<ol>
+<li><strong>艾尔 Ale，也称上层发酵啤酒</strong></li>
+</ol>
+<p>我们喝的大部分精酿属于艾尔啤酒，艾尔啤酒的酵母在发酵时会集中在酒桶的上方，所以又称“上层发酵啤酒”。它发酵所需温度较高（18-23℃），酵母在这个温度下能产生更多风味物质，如：坚果、西柚、香蕉、辛香……同时也会产生更多酒精。<br>
+所以艾尔啤酒的味道更加丰富、醇厚、风格更加多变，酒精度数普遍更高（5-10%酒精度是家常便饭）。</p>
+<ol start="2">
+<li><strong>拉格Lager，也称下层发酵啤酒</strong></li>
+</ol>
+<p>“工业啤酒”就是典型的拉格啤酒，与艾尔相反，拉格的酵母在酒桶底起作用，所以又称“底层发酵”。拉格啤酒发酵所需温度较低（4-10℃），酵母产生的风味物质更少，再加上酿造者会加入大量辅料（大米、玉米……）以降低成本。</p>
+<p>以至于拉格啤酒风味较寡淡，口感更清爽，酒精度更低。（一般工业啤酒酒精度在3%左右，比起5-10%酒精度的艾尔啤酒，简直小巫见大巫）。</p>
+<p>所以拉格极其讲究做工，若是味道有一点瑕疵就会暴露。但是！敲黑板！拉格绝对不是劣质啤酒的代名词，市面上依然有很多高品质的拉格啤酒。</p>
+<br>
+<p><strong>精酿啤酒的分类方式二：产地</strong></p>
 <blockquote>
-<p>访问其官方网站<a href="https://highlightjs.org/"><strong>highlight.js</strong></a>进行探索</p>
-<p><strong>操作步骤:</strong></p>
+<p>全球有 4 个地方的精酿比较有代表性，他们分别是：比利时、英国、德国、美国。当然，像新西兰、日本等地也有自己的特色，但是不具备普遍性和代表性，因此这里暂时以4个有代表性的地区来分类。</p>
 </blockquote>
 <ol>
-<li>只需要把以下代码放在你的博客源码的head中,他会自动寻找&lt;\pre&gt;&lt;\code&gt;中的代码并且去渲染</li>
+<li><strong>比利时</strong></li>
 </ol>
-<pre><code class="language-js">&lt;link rel=&quot;stylesheet&quot;
-href=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css&quot;&gt;
-&lt;script src=&quot;//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
-</code></pre>
+<p>比利时是个不折不扣的啤酒大国，虽然面积不大，但啤酒产量遥遥领先。而且啤酒历史悠久，品质高，其中修道院啤酒最具有代表性。</p>
+<p>比利时的啤酒种类非常多，浓度、颜色、风味、辅料……都千差万别，但总结来说，其共同点是：苦味较低，香味浓郁，风味多变且平衡。</p>
 <ol start="2">
-<li>如果你不喜欢默认的主题,你可以把代码中的<strong>default</strong>关键字替换成你喜欢的主题的名字,所有主题你都可以在官网上查看渲染不同语音的不同主题效果,如图所示:</li>
+<li><strong>英国</strong></li>
 </ol>
-<p><img src="https://42one.xyz/post-images/1561820901909.png" alt=""></p>
-<p><strong>此处写一下我在操作遇到的坑:</strong></p>
-<ul>
-<li>直接在官网上找链接,不要使用jsdelivr网站上的npm方式的链接方式(很气愤😤,不知道为什么渲染不成功,搞了好长时间)</li>
-<li>一定要看自己的博客有么有&lt;\pre&gt;,如果没有需要自己设置</li>
-</ul>
-<p><strong>以下为渲染后的效果:</strong></p>
-<pre><code class="language-java">/**
-* @author John Smith &lt;john.smith@example.com&gt;
-*/
-package l2f.gameserver.model;
-
-public abstract class L2Char extends L2Object {
-public static final Short ERROR = 0x0001;
-
-public void moveTo(int x, int y, int z) {
-_ai = null;
-log(&quot;Should not be called&quot;);
-if (1 &gt; 5) { // wtf!?
-return;
-}
-}
-}
-</code></pre>
-<br>
-<h3 id="span-idhead3-数学公式span"><span id="head3"> <strong>数学公式</strong></span></h3>
-<hr>
-<p><strong>操作步骤:</strong></p>
-<ol>
-<li>访问其官网<a href="https://katex.org/"><strong>katex</strong></a>可自行探索  ,数学公式的渲染如同代码主题的渲染操作,复制以下代码添加到head中:</li>
+<p>很久以前，英国啤酒课税标准是麦汁浓度的高低，麦汁浓度越高，税越高，所以英国人民为了利润最大化，广推酿度数较低的啤酒（3-6% 酒精度）。另外，英国的啤酒更加突出麦芽的味道，例如：烤面包、咖啡、巧克力、焦糖……。</p>
+<ol start="3">
+<li><strong>德国</strong></li>
 </ol>
-<pre><code class="language-js">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css&quot; integrity=&quot;sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js&quot; integrity=&quot;sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
-&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js&quot; integrity=&quot;sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI&quot; crossorigin=&quot;anonymous&quot;
-onload=&quot;renderMathInElement(document.body);&quot;&gt;&lt;/script&gt;
-</code></pre>
-<blockquote>
-<p>此代码不会在页面加载时就开始渲染,而是出现关键符号是才会加载,所以不会影响页面加载速度</p>
-</blockquote>
-<ol start="2">
-<li>在写公式的时候按照markdown格式处理你要显示的数学公式即可.</li>
-</ol>
-<p><strong>以下为转换效果:</strong></p>
-<p><em>转换前:</em></p>
-<pre><code>f{x} = \int_{-\infty}^\infty
-\hat f(\xi),e^{2 \pi i \xi x}
-\,d\xi
-</code></pre>
-<p><em>转换后:</em></p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>x</mi><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><mi mathvariant="normal">∞</mi></mrow><mi mathvariant="normal">∞</mi></msubsup><mover accent="true"><mi>f</mi><mo>^</mo></mover><mo>(</mo><mi>ξ</mi><mo>)</mo><mo separator="true">,</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>ξ</mi><mi>x</mi></mrow></msup><mtext> </mtext><mi>d</mi><mi>ξ</mi></mrow><annotation encoding="application/x-tex">f{x} = \int_{-\infty}^\infty
-\hat f(\xi),e^{2 \pi i \xi x}
-\,d\xi
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord"><span class="mord mathdefault">x</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.384573em;vertical-align:-0.970281em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.414292em;"><span style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">∞</span></span></span></span><span style="top:-3.8129000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.970281em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578799999999998em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span><span style="top:-3.26344em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.08332999999999999em;">^</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04601em;">ξ</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">π</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.04601em;">ξ</span><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault" style="margin-right:0.04601em;">ξ</span></span></span></span></span></p>
-<hr>
-<p>还是要学好基础啊,走了许多弯路</p>
+<p>一说到德国啤酒，估摸着你第一反应到了「德国黑啤」。其实这里「德国黑啤」大多属于「欧洲深色拉格」，除了这种风格外，德国还有很多经典啤酒等你发掘。</p>
+<p>德国啤酒更注重麦芽与酒花的平衡，而且会突出德国酵母的香味（如丁香、香蕉味），而且普遍度数较低，适合大口畅饮。</p>
 
                         </article>
                     </div>
@@ -394,7 +368,7 @@ onload=&quot;renderMathInElement(document.body);&quot;&gt;&lt;/script&gt;
                         <h2 class="screen-reader-text">Posts navigation</h2>
                         <div class="nav-links">
                             <a class="next page-numbers"
-                               href="https://42one.xyz/post/KDLTgKK5X">下一篇->关于666高级数学高阶方程式的解法</a>
+                               href="https://42one.xyz/post/8sT_2xfrt">下一篇->Java面试题(Servlet)</a>
                         </div>
                     </nav>
                 

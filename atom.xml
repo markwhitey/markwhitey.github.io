@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://42one.xyz</id>
     <title>Martian`Blog</title>
-    <updated>2019-07-06T06:40:44.741Z</updated>
+    <updated>2019-07-06T15:03:57.949Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://42one.xyz"/>
     <link rel="self" href="https://42one.xyz/atom.xml"/>
@@ -10,6 +10,83 @@
     <logo>https://42one.xyz/images/avatar.png</logo>
     <icon>https://42one.xyz/favicon.ico</icon>
     <rights>All rights reserved 2019, Martian`Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[精酿啤酒]]></title>
+        <id>https://42one.xyz/post/xK9m_agJM</id>
+        <link href="https://42one.xyz/post/xK9m_agJM">
+        </link>
+        <updated>2019-07-06T14:17:28.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="概念"><strong>概念</strong></h3>
+<hr>
+<p><strong>目前比较官方的定义是：</strong></p>
+<ol>
+<li>
+<p>年产量小于600万桶（70.2万吨），用于商业交易；</p>
+</li>
+<li>
+<p>非精酿酿造者或公司机构，其占股份不能超过25%；</p>
+</li>
+<li>
+<p>酿造者所酿造的大部分啤酒的风味，应从传统或者创新原料与发酵工艺中获得。</p>
+</li>
+</ol>
+<p>简单来说就是，精酿啤酒是区别于<strong>工业啤酒</strong>的一种概念：</p>
+<ul>
+<li>水啤的特点：颜色很浅，泡沫稍纵即逝，味道寡淡；</li>
+<li>精酿啤酒：颜色多样，泡沫丰富，风味多样，饮用方式讲究仪式感。</li>
+</ul>
+<br>
+<h3 id="分类"><strong>分类</strong></h3>
+<hr>
+<p><strong>至于生啤、熟啤、扎啤、冰啤：</strong></p>
+<ul>
+<li>
+<p>生啤：啤酒里有活酵母的啤酒，喝起来感觉更新鲜；</p>
+</li>
+<li>
+<p>熟啤：经过高温消毒，酵母都死翘翘了；</p>
+</li>
+<li>
+<p>扎啤：把啤酒灌进不锈钢桶里，最大程度还原啤酒刚刚出厂的味道；</p>
+</li>
+<li>
+<p>冰啤：过滤的时候瞬间把温度降到0℃左右，让杂质析出，这样过滤出来的啤酒非常清澈，但味道也十分寡淡。</p>
+</li>
+</ul>
+<br>
+<p><strong>精酿的分类方式一:发酵工艺</strong></p>
+<ol>
+<li><strong>艾尔 Ale，也称上层发酵啤酒</strong></li>
+</ol>
+<p>我们喝的大部分精酿属于艾尔啤酒，艾尔啤酒的酵母在发酵时会集中在酒桶的上方，所以又称“上层发酵啤酒”。它发酵所需温度较高（18-23℃），酵母在这个温度下能产生更多风味物质，如：坚果、西柚、香蕉、辛香……同时也会产生更多酒精。<br>
+所以艾尔啤酒的味道更加丰富、醇厚、风格更加多变，酒精度数普遍更高（5-10%酒精度是家常便饭）。</p>
+<ol start="2">
+<li><strong>拉格Lager，也称下层发酵啤酒</strong></li>
+</ol>
+<p>“工业啤酒”就是典型的拉格啤酒，与艾尔相反，拉格的酵母在酒桶底起作用，所以又称“底层发酵”。拉格啤酒发酵所需温度较低（4-10℃），酵母产生的风味物质更少，再加上酿造者会加入大量辅料（大米、玉米……）以降低成本。</p>
+<p>以至于拉格啤酒风味较寡淡，口感更清爽，酒精度更低。（一般工业啤酒酒精度在3%左右，比起5-10%酒精度的艾尔啤酒，简直小巫见大巫）。</p>
+<p>所以拉格极其讲究做工，若是味道有一点瑕疵就会暴露。但是！敲黑板！拉格绝对不是劣质啤酒的代名词，市面上依然有很多高品质的拉格啤酒。</p>
+<br>
+<p><strong>精酿啤酒的分类方式二：产地</strong></p>
+<blockquote>
+<p>全球有 4 个地方的精酿比较有代表性，他们分别是：比利时、英国、德国、美国。当然，像新西兰、日本等地也有自己的特色，但是不具备普遍性和代表性，因此这里暂时以4个有代表性的地区来分类。</p>
+</blockquote>
+<ol>
+<li><strong>比利时</strong></li>
+</ol>
+<p>比利时是个不折不扣的啤酒大国，虽然面积不大，但啤酒产量遥遥领先。而且啤酒历史悠久，品质高，其中修道院啤酒最具有代表性。</p>
+<p>比利时的啤酒种类非常多，浓度、颜色、风味、辅料……都千差万别，但总结来说，其共同点是：苦味较低，香味浓郁，风味多变且平衡。</p>
+<ol start="2">
+<li><strong>英国</strong></li>
+</ol>
+<p>很久以前，英国啤酒课税标准是麦汁浓度的高低，麦汁浓度越高，税越高，所以英国人民为了利润最大化，广推酿度数较低的啤酒（3-6% 酒精度）。另外，英国的啤酒更加突出麦芽的味道，例如：烤面包、咖啡、巧克力、焦糖……。</p>
+<ol start="3">
+<li><strong>德国</strong></li>
+</ol>
+<p>一说到德国啤酒，估摸着你第一反应到了「德国黑啤」。其实这里「德国黑啤」大多属于「欧洲深色拉格」，除了这种风格外，德国还有很多经典啤酒等你发掘。</p>
+<p>德国啤酒更注重麦芽与酒花的平衡，而且会突出德国酵母的香味（如丁香、香蕉味），而且普遍度数较低，适合大口畅饮。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java面试题(Servlet)]]></title>
         <id>https://42one.xyz/post/8sT_2xfrt</id>
@@ -1171,86 +1248,6 @@ JVM(Java Virtual Machine):Java虚拟机</p>
 </blockquote>
 <br>
 <h1 id="span-idhead7-未完待续span"><span id="head7"> 未完待续😉</span></h1>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Git操作]]></title>
-        <id>https://42one.xyz/post/c8Dggeox4</id>
-        <link href="https://42one.xyz/post/c8Dggeox4">
-        </link>
-        <updated>2019-06-20T11:08:22.000Z</updated>
-        <summary type="html"><![CDATA[<ul>
-<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
-<li><a href="#head2"> <strong>版本管理</strong></a></li>
-<li><a href="#head3"> <strong>撤销修改</strong></a></li>
-<li><a href="#head4"> <strong>远程仓库</strong></a></li>
-<li><a href="#head5"> 未完待续...😬</a></li>
-</ul>
-]]></summary>
-        <content type="html"><![CDATA[<ul>
-<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
-<li><a href="#head2"> <strong>版本管理</strong></a></li>
-<li><a href="#head3"> <strong>撤销修改</strong></a></li>
-<li><a href="#head4"> <strong>远程仓库</strong></a></li>
-<li><a href="#head5"> 未完待续...😬</a></li>
-</ul>
-<!-- more -->
-<br>
-<hr>
-<p><img src="https://42one.xyz/post-images/1561036798587.png" alt=""></p>
-<hr>
-</br>  
-<h3 id="span-idhead1-初始化一个git环境span"><span id="head1"> <strong>初始化一个Git环境</strong></span></h3>
-<hr>
-<p><strong>Git init</strong><br>
-添加文件到git仓库.</p>
-<p><strong>Git add file</strong><br>
-可以多次使用,添加文件到暂缓区.</p>
-<p><strong>Git commit -m &quot;massage&quot;</strong><br>
-完成把暂缓区的所有内容提交到当前分支.</p>
-</br>
-<h3 id="span-idhead2-版本管理span"><span id="head2"> <strong>版本管理</strong></span></h3>
-<hr>
-<p><strong>Git reset --herd commend ID</strong><br>
-head指向的版本就是当前版本,Git允许我们在所有版本的历史内任意穿梭.穿梭前,用git log 查看提交历史,以确认要回退的版本.要重返未来,用git relog 查看命令历史,以便确认未来的版本.</p>
-</br>
-<h3 id="span-idhead3-撤销修改span"><span id="head3"> <strong>撤销修改</strong></span></h3>
-<hr>
-<p><strong>场景一</strong><br>
-当你改乱了工作区的某个文件的内容,想直接丢弃工作区的更改时,使用命令<strong>git checkout --file</strong></p>
-<p><strong>场景二</strong><br>
-当你不但改乱了工作区的文件的内容,而且已经提交给了暂缓区,想丢弃修改,分两步:第一步用命令<strong>git reset</strong>回到上一个版本,也就是场景一,第二步按场景一的方式修改.</p>
-<blockquote>
-<p><em>git checkout其实是用版本库的版本去替换工作区的版本,无论工作区是是修改还是删除埋在可以一键删除</em></p>
-</blockquote>
-</br>
-<h3 id="span-idhead4-远程仓库span"><span id="head4"> <strong>远程仓库</strong></span></h3>
-<hr>
-<p><strong>1.克隆远程仓库</strong></p>
-<p><em>要克隆一个仓库,必须知道仓库的地址,然后使用<strong>git clone</strong> 命令克隆</em></p>
-<pre><code class="language-js">git clone git@github:markwhitey.github.io.git
-</code></pre>
-<p><em>github支持多种协议,包括https,但ssh原生的git协议最快</em></p>
-<p><strong>2.添加远程仓库</strong></p>
-<pre><code class="language-js">git remote add [shortname] [url]
-</code></pre>
-<p><strong>3.查看当前远程仓库</strong></p>
-<pre><code class="language-js">git remote
-</code></pre>
-<p><strong>4.提取远程仓库</strong></p>
-<ul>
-<li>从远程仓库下载分支</li>
-</ul>
-<pre><code class="language-java">git fetch
-</code></pre>
-<p><em>该命令执行后需要执行git merge远程分支到自己的分支</em></p>
-<ul>
-<li>从远程仓库和本地仓库合并</li>
-</ul>
-<pre><code class="language-java">git merge
-</code></pre>
-</br>  
-<h1 id="span-idhead5-未完待续span"><span id="head5"> 未完待续...😬</span></h1>
 ]]></content>
     </entry>
 </feed>
