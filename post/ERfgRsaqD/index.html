@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>Java(listener,filter) | Martian`Blog</title>
-<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562633929410">
+<title>Java(listener&amp;filter) | Martian`Blog</title>
+<link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562660836915">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
 
@@ -197,15 +197,21 @@
                     
                 </div>
                 <div class='entry-header'>
-                    <h1 class='entry-title'>Java(listener,filter)</h1>
+                    <h1 class='entry-title'>Java(listener&amp;filter)</h1>
                 </div>
                 <div class="entry-container">
                     <div class="entry-content">
                         <article>
-                            <p>监听器与过滤器的作用及用法</p>
-<br>
+                            <ul>
+<li><a href="#head1"> <strong>监听器有哪些作用和用法</strong></a></li>
+<li><a href="#head2"> <strong>监听器的用法</strong></a></li>
+<li><a href="#head3"> <strong>过滤器的作用</strong></a></li>
+<li><a href="#head4"> <strong>过滤器使用方法</strong></a></li>
+<li><a href="#head5"> <strong>过滤器细节</strong></a></li>
+</ul>
 <!-- more -->
-<h3 id="监听器有哪些作用和用法"><strong>监听器有哪些作用和用法</strong></h3>
+<br>
+<h3 id="span-idhead1-监听器有哪些作用和用法span"><span id="head1"> <strong>监听器有哪些作用和用法</strong></span></h3>
 <hr>
 <p>Java Web开发中的监听器（listener）就是application、session、request三个对象创建、销毁或者往其中添加修改删除属性时自动执行代码的功能组件，如下所示：</p>
 <ul>
@@ -225,12 +231,168 @@ session超时（可以在web.xml中通过<code>&lt;session- config&gt;/&lt;sessi
 </ul>
 <p>常见的监听器用途主要包括：<strong>网站在线人数技术、监听用户的行为(管理员踢人)</strong>。</p>
 <br>
-<h3 id="过滤器有哪些作用和用法"><strong>过滤器有哪些作用和用法</strong></h3>
+<h3 id="span-idhead2-监听器的用法span"><span id="head2"> <strong>监听器的用法</strong></span></h3>
+<hr>
+<p><strong>ServletContextListener:监听ServletContext对象的创建和销毁</strong></p>
+<ul>
+<li><strong>方法</strong>：
+<ol>
+<li>void contextDestroyed(ServletContextEvent sce) ：ServletContext对象被销毁之前会调用该方法</li>
+<li>void contextInitialized(ServletContextEvent sce) ：ServletContext对象创建后会调用该方法</li>
+</ol>
+</li>
+<li><strong>步骤</strong>：
+<ol>
+<li>定义一个类，实现ServletContextListener接口</li>
+<li>复写方法</li>
+<li>配置
+<ol>
+<li>web.xml(见代码块)</li>
+<li>注解配置:@WebListener</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-java">&lt;listener&gt;
+&lt;listener-class&gt;
+cn.listener.ContextLoaderListener
+&lt;/listener-class
+&lt;/listener&gt;
+</code></pre>
+<br>
+<h3 id="span-idhead3-过滤器的作用span"><span id="head3"> <strong>过滤器的作用</strong></span></h3>
 <hr>
 <p>Java Web开发中的过滤器（filter）是从Servlet 2.3规范开始增加的功能，并在Servlet 2.4规范中得到增强。对Web应用来说，<strong>过滤器是一个驻留在服务器端的Web组件</strong>，它可以截取客户端和服务器之间的请求与响应信息，并对这些信息进行过 滤。当Web容器接受到一个对资源的请求时，它将判断是否有过滤器与这个资源相关联。如果有，那么容器将把请求交给过滤器进行处理。在过滤器中，<strong>你可以改 变请求的内容，或者重新设置请求的报头信息，然后再将请求发送给目标资源。当目标资源对请求作出响应时候，容器同样会将响应先转发给过滤器，再过滤器中， 你可以对响应的内容进行转换，然后再将响应发送到客户端。</strong></p>
 <p>常见的过滤器用途主要包括：<strong>对用户请求进行统一认证、对用户的访问请求进行记录和审核、对用户发送的数据进行过滤或替换、转换图象格式、对响应内容进行压缩以减少传输量、对请求或响应进行加解密处理、触发资源访问事件、对XML的输出应用XSLT等</strong>。</p>
 <p>和过滤器相关的接口主要有：Filter、FilterConfig、FilterChain</p>
 <br>
+<h3 id="span-idhead4-过滤器使用方法span"><span id="head4"> <strong>过滤器使用方法</strong></span></h3>
+<hr>
+<ol>
+<li><strong>步骤</strong>：
+<ol>
+<li>定义一个类，实现接口Filter</li>
+<li>复写方法</li>
+<li>配置拦截路径
+<ol>
+<li>web.xml</li>
+<li>注解:@WebFilter(&quot;/*&quot;)//访问所有资源之前，都会执行该过滤器</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>代码</strong>：</li>
+</ol>
+<pre><code class="language-java">			public class FilterDemo1 implements Filter {
+			    @Override
+			    public void init(FilterConfig filterConfig) throws ServletException {
+			
+			    }
+			
+			    @Override
+			    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+			        System.out.println(&quot;filterDemo1被执行了....&quot;);
+
+			
+			        //放行
+			        filterChain.doFilter(servletRequest,servletResponse);
+			
+			    }
+			
+			    @Override
+			    public void destroy() {
+			
+			    }
+			}
+</code></pre>
+<h3 id="span-idhead5-过滤器细节span"><span id="head5"> <strong>过滤器细节</strong></span></h3>
+<ol>
+<li><strong>web.xml配置</strong></li>
+</ol>
+<pre><code class="language-java">		&lt;filter&gt;
+	        &lt;filter-name&gt;demo1&lt;/filter-name&gt;
+	        &lt;filter-class&gt;web.filter.FilterDemo1&lt;/filter-class&gt;
+	    &lt;/filter&gt;
+	    &lt;filter-mapping&gt;
+	        &lt;filter-name&gt;demo1&lt;/filter-name&gt;
+			&lt;!-- 拦截路径 --&gt;
+	        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	    &lt;/filter-mapping&gt;
+</code></pre>
+<ol start="2">
+<li><strong>过滤器执行流程</strong>
+<ol>
+<li>执行过滤器</li>
+<li>执行放行后的资源</li>
+<li>回来执行过滤器放行代码下边的代码</li>
+</ol>
+</li>
+<li><strong>过滤器生命周期方法</strong>
+<ol>
+<li>init:在服务器启动后，会创建Filter对象，然后调用init方法。只执行一次。用于加载资源</li>
+<li>doFilter:每一次请求被拦截资源时，会执行。执行多次</li>
+<li>destroy:在服务器关闭后，Filter对象被销毁。如果服务器是正常关闭，则会执行destroy方法。只执行一次。用于释放资源</li>
+</ol>
+</li>
+<li><strong>过滤器配置详解</strong>
+<ul>
+<li><strong>拦截路径配置</strong>：
+<ol>
+<li>具体资源路径： /index.jsp   只有访问index.jsp资源时，过滤器才会被执行</li>
+<li>拦截目录： /user/*	访问/user下的所有资源时，过滤器都会被执行</li>
+<li>后缀名拦截： *.jsp		访问所有后缀名为jsp资源时，过滤器都会被执行</li>
+<li>拦截所有资源：/*		访问所有资源时，过滤器都会被执行</li>
+</ol>
+</li>
+<li><strong>拦截方式配置：资源被访问的方式</strong>
+<ul>
+<li>注解配置：
+<ul>
+<li>设置dispatcherTypes属性
+<ol>
+<li>REQUEST：默认值。浏览器直接请求资源</li>
+<li>FORWARD：转发访问资源</li>
+<li>INCLUDE：包含访问资源</li>
+<li>ERROR：错误跳转资源</li>
+<li>ASYNC：异步访问资源</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>web.xml配置
+<ul>
+<li>设置<dispatcher></dispatcher>标签即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>过滤器链(配置多个过滤器)</strong>
+<ul>
+<li>执行顺序：如果有两个过滤器：过滤器1和过滤器2
+<ol>
+<li>过滤器1</li>
+<li>过滤器2</li>
+<li>资源执行</li>
+<li>过滤器2</li>
+<li>过滤器1</li>
+</ol>
+</li>
+<li><strong>过滤器先后顺序问题</strong>：
+<ol>
+<li>注解配置：按照类名的字符串比较规则比较，值小的先执行
+<ul>
+<li>如： AFilter 和 BFilter，AFilter就先执行了。</li>
+</ul>
+</li>
+<li>web.xml配置： <filter-mapping>谁定义在上边，谁先执行</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
 
                         </article>
                     </div>
@@ -284,7 +446,7 @@ session超时（可以在web.xml中通过<code>&lt;session- config&gt;/&lt;sessi
                     </div>
                     <div class="author-meta">
                         <div class="author">
-                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562633929410"
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562660836915"
                                  class='avatar avatar-72 photo' height='72' width='72'>
                             <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
                                         href='https://42one.xyz'>Martian</a> </span>
