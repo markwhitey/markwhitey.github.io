@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>Martian`Blog</title>
+<title>Java(listener,filter) | Martian`Blog</title>
 <link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562633929410">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
@@ -177,205 +177,193 @@
 
 
     <div id="main" class="main" role="main">
-  <h1 class="screen-reader-text">Posts</h1>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <a class="featured-image-link" href="https://42one.xyz/post/v6elpPCfB">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/v6elpPCfB.jpg"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2019-06-21 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://42one.xyz" title="Posts by  Martian`Blog" rel="author"> Martian`Blog</a>
+        <div id="loop-container" class="loop-container">
+            <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+                
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/ERfgRsaqD.jpg">
+                    </div>
+                
+
+                <div class="entry-meta">
+                    <span class="date">· 2019-07-09 ·</span> <span> / </span>
+                    <span class="author">
+            <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
+                    
+                        <span class="category">
+                    <span> / </span>
+                    <a href="https://42one.xyz/tag/Iw4_cGMkz">JAVA</a>
                 </span>
-            
-
-        </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://42one.xyz/post/v6elpPCfB"> java面试题(辨析) </a>
-          </h2>
-        </div>
-        <div class='excerpt-content'>
-          <article>
-              <ul>
-<li><a href="#head1"><strong>==和equals</strong>  </a></li>
-<li><a href="#head2"> <strong>continue和break</strong></a></li>
-<li><a href="#head3"><strong>final, finally, finalize有什么区别</strong></a></li>
-<li><a href="#head4"> <strong>String和StringBuffer的对比</strong></a></li>
-<li><a href="#head5"> <strong>JDK,JRE和JVM的区别和联系</strong></a></li>
-<li><a href="#head6"> <strong>接口和抽象类的区别以及联系</strong></a></li>
-<li><a href="#head7"> 未完待续😉</a></li>
+                    
+                </div>
+                <div class='entry-header'>
+                    <h1 class='entry-title'>Java(listener,filter)</h1>
+                </div>
+                <div class="entry-container">
+                    <div class="entry-content">
+                        <article>
+                            <p>监听器与过滤器的作用及用法</p>
+<br>
+<!-- more -->
+<h3 id="监听器有哪些作用和用法"><strong>监听器有哪些作用和用法</strong></h3>
+<hr>
+<p>Java Web开发中的监听器（listener）就是application、session、request三个对象创建、销毁或者往其中添加修改删除属性时自动执行代码的功能组件，如下所示：</p>
+<ul>
+<li>ServletContextListener：对Servlet上下文的创建和销毁进行监听。</li>
+<li>ServletContextAttributeListener：监听Servlet上下文属性的添加、删除和替换。</li>
+<li>HttpSessionListener：对Session的创建和销毁进行监听。</li>
 </ul>
-
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-        odd
-       excerpt">
-      
-      <a class="featured-image-link" href="https://42one.xyz/post/c8Dggeox4">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/c8Dggeox4.jpg"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2019-06-20 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://42one.xyz" title="Posts by  Martian`Blog" rel="author"> Martian`Blog</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://42one.xyz/tag/yZsB2hCgh">GIT</a>
-                </span>
-            
-
-        </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://42one.xyz/post/c8Dggeox4"> Git操作 </a>
-          </h2>
-        </div>
-        <div class='excerpt-content'>
-          <article>
-              <ul>
-<li><a href="#head1"> <strong>初始化一个Git环境</strong></a></li>
-<li><a href="#head2"> <strong>版本管理</strong></a></li>
-<li><a href="#head3"> <strong>撤销修改</strong></a></li>
-<li><a href="#head4"> <strong>远程仓库</strong></a></li>
-<li><a href="#head5"> 未完待续...😬</a></li>
+<blockquote>
+<p>补 充：session的销毁有两种情况：<br>
+session超时（可以在web.xml中通过<code>&lt;session- config&gt;/&lt;session-timeout&gt;</code>标签配置超时时间）；<br>
+通过调用session对象的invalidate()方 法使session失效。</p>
+</blockquote>
+<ul>
+<li>HttpSessionAttributeListener：对Session对象中属性的添加、删除和替换进行监听。</li>
+<li>ServletRequestListener：对请求对象的初始化和销毁进行监听。</li>
+<li>ServletRequestAttributeListener：对请求对象属性的添加、删除和替换进行监听。</li>
 </ul>
+<p>常见的监听器用途主要包括：<strong>网站在线人数技术、监听用户的行为(管理员踢人)</strong>。</p>
+<br>
+<h3 id="过滤器有哪些作用和用法"><strong>过滤器有哪些作用和用法</strong></h3>
+<hr>
+<p>Java Web开发中的过滤器（filter）是从Servlet 2.3规范开始增加的功能，并在Servlet 2.4规范中得到增强。对Web应用来说，<strong>过滤器是一个驻留在服务器端的Web组件</strong>，它可以截取客户端和服务器之间的请求与响应信息，并对这些信息进行过 滤。当Web容器接受到一个对资源的请求时，它将判断是否有过滤器与这个资源相关联。如果有，那么容器将把请求交给过滤器进行处理。在过滤器中，<strong>你可以改 变请求的内容，或者重新设置请求的报头信息，然后再将请求发送给目标资源。当目标资源对请求作出响应时候，容器同样会将响应先转发给过滤器，再过滤器中， 你可以对响应的内容进行转换，然后再将响应发送到客户端。</strong></p>
+<p>常见的过滤器用途主要包括：<strong>对用户请求进行统一认证、对用户的访问请求进行记录和审核、对用户发送的数据进行过滤或替换、转换图象格式、对响应内容进行压缩以减少传输量、对请求或响应进行加解密处理、触发资源访问事件、对XML的输出应用XSLT等</strong>。</p>
+<p>和过滤器相关的接口主要有：Filter、FilterConfig、FilterChain</p>
+<br>
 
-          </article>
+                        </article>
+                    </div>
+                    <div class='entry-meta-bottom'>
+                        <div class="entry-categories">
+                            <p>
+                                <span style="color:#8FBC8B;font-size:20px">Tags</span>
+                                
+                                    
+                                        
+                                        <a href="https://42one.xyz/tag/Iw4_cGMkz"
+                                           title="View all posts in JAVA">JAVA</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/ytd1XpOn4"
+                                           title="View all posts in LIFE">LIFE</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/web"
+                                           title="View all posts in WEB">WEB</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/3h7N1DtwN"
+                                           title="View all posts in BLOG">BLOG</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/Lv3dEyzll"
+                                           title="View all posts in FUNNY">FUNNY</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/CA7Cv-521"
+                                           title="View all posts in LINUX">LINUX</a>
+                                        
+                                
+                                        
+                                        <a href="https://42one.xyz/tag/yZsB2hCgh"
+                                           title="View all posts in GIT">GIT</a>
+                                        
+                                
+                            </p>
+                        </div>
+                        <!--            <div class="entry-tags">
+                                      <p><span>Tags</span>
+                                      </p>
+                                    </div>-->
+                    </div>
+                    <div class="author-meta">
+                        <div class="author">
+                            <img alt='' src="https://42one.xyz/images/avatar.png?v=1562633929410"
+                                 class='avatar avatar-72 photo' height='72' width='72'>
+                            <span>WRITTEN BY: &nbsp;&nbsp;&nbsp;<a
+                                        href='https://42one.xyz'>Martian</a> </span>
+                        </div>
+                        <div class="bio">
+                            <p>KEEP LOOKING     |  |  NEVER SETTLE.</p>
+                            
+                                
+                                    <a class="github" target="_blank"
+                                       href="https://github.com/markwhitey">
+                                        <i class="fab fa-github"
+                                           title="github"></i>
+                                    </a>
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                            
+                                
+                                    <a class="rss" target="_blank"
+                                       href="https://42one.xyz/atom.xml">
+                                        <i class="fa fa-rss"
+                                           title="rss"></i>
+                                    </a>
+                                
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                    <nav class="navigation pagination" role="navigation">
+                        <h2 class="screen-reader-text">Posts navigation</h2>
+                        <div class="nav-links">
+                            <a class="next page-numbers"
+                               href="https://42one.xyz/post/xK9m_agJM">下一篇->精酿啤酒</a>
+                        </div>
+                    </nav>
+                
+            </div>
+            <section id="comments" class="comments">
+                
+                    
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'ae4c2b195cb86142aacf',
+    clientSecret: '41420acfbb5030f42a8e9d0ea216cea3b4216076',
+    repo: 'markwhitey.github.io',
+    owner: 'markwhitey',
+    admin: ['markwhitey'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                    
+
+                    
+                
+            </section>
         </div>
-      </div>
     </div>
-  </div>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-      even
-       excerpt">
-      
-      <a class="featured-image-link" href="https://42one.xyz/post/N846lZsvx">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/N846lZsvx.jpg"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2019-06-20 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://42one.xyz" title="Posts by  Martian`Blog" rel="author"> Martian`Blog</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
-                </span>
-            
-
-        </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://42one.xyz/post/N846lZsvx"> linux(二)常用命令 </a>
-          </h2>
-        </div>
-        <div class='excerpt-content'>
-          <article>
-              <ul>
-<li><a href="#head1"> <strong>常用命令</strong></a></li>
-<li><a href="#head2"> <strong>命令格式</strong></a></li>
-<li><a href="#head3"> <strong>文件打包和压缩命令</strong></a></li>
-</ul>
-
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div id="loop-container" class="loop-container">
-    <div class="post type-post status-publish format-standard   has-post-thumbnail hentry category-design tag-memories
-    tag-normal-post tag-standard-2 excerpt zoom full-without-featured
-      
-        odd
-       excerpt">
-      
-      <a class="featured-image-link" href="https://42one.xyz/post/T2xbZUDkZ">
-        <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/T2xbZUDkZ.jpg"></div>
-      </a>
-      
-      <div class="excerpt-container">
-        <div class="excerpt-meta">
-          <span class="date">  · 2018-06-20 ·</span> <span> / </span>
-          <span class="author">
-              <a href="https://42one.xyz" title="Posts by  Martian`Blog" rel="author"> Martian`Blog</a>
-          </span>
-            
-                <span> / </span>
-                <span class="category">
-                        <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
-                </span>
-            
-
-        </div>
-        <div class='excerpt-header'>
-          <h2 class='excerpt-title'>
-            <a href="https://42one.xyz/post/T2xbZUDkZ"> linux(一)系统目录详情 </a>
-          </h2>
-        </div>
-        <div class='excerpt-content'>
-          <article>
-              <ul>
-<li><a href="#head1"> <strong>系统启动</strong></a></li>
-<li><a href="#head2"> <strong>指令集合</strong></a></li>
-<li><a href="#head3"> <strong>外部文件管理</strong></a></li>
-<li><a href="#head4"> <strong>临时文件</strong></a></li>
-<li><a href="#head5"> <strong>账户</strong></a></li>
-<li><a href="#head6"> <strong>运行过程中要用</strong></a></li>
-<li><a href="#head7"> <strong>拓展需要</strong></a></li>
-</ul>
-
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-</div>
-
-    <nav class="navigation pagination" role="navigation">
-    <h2 class="screen-reader-text">Posts navigation</h2>
-    <div class="nav-links">
-        
-            <a class="page-numbers" href="https://42one.xyz/">上一页</a>
-        
-        
-    </div>
-</nav>
 
     <footer id="site-footer" class="site-footer" role="contentinfo">
     <h1>
@@ -430,7 +418,6 @@
 <script src="https://42one.xyz/media/scripts/lib/jquery.min.js"></script>
 <script src="https://42one.xyz/media/scripts/lib/jquerymigrate.js"></script>
 <script src="https://42one.xyz/media/scripts/lib/production.min.js"></script>
-
 
 
 
