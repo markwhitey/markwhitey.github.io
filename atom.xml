@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://42one.xyz</id>
     <title>Martian`Blog</title>
-    <updated>2019-07-09T08:54:23.228Z</updated>
+    <updated>2019-07-09T13:26:53.929Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://42one.xyz"/>
     <link rel="self" href="https://42one.xyz/atom.xml"/>
@@ -10,6 +10,370 @@
     <logo>https://42one.xyz/images/avatar.png</logo>
     <icon>https://42one.xyz/favicon.ico</icon>
     <rights>All rights reserved 2019, Martian`Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[jQuery基本操作]]></title>
+        <id>https://42one.xyz/post/ye2Yre-eC</id>
+        <link href="https://42one.xyz/post/ye2Yre-eC">
+        </link>
+        <updated>2019-07-09T13:21:25.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>概念及快速入门</p>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>概念及快速入门</p>
+<!-- more -->
+<hr>
+<ol>
+<li>
+<p>概念： 一个JavaScript框架。简化JS开发</p>
+<ul>
+<li>jQuery是一个快速、简洁的JavaScript框架，是继Prototype之后又一个优秀的JavaScript代码库（或JavaScript框架）。jQuery设计的宗旨	是“write Less，Do More”，即倡导写更少的代码，做更多的事情。它封装JavaScript常用的功能代码，提供一种简便的JavaScript设计模式，优	化HTML文档操作、事件处理、动画设计和Ajax交互。</li>
+<li>JavaScript框架：本质上就是一些js文件，封装了js的原生代码而已</li>
+</ul>
+</li>
+<li>
+<p>快速入门</p>
+<ol>
+<li>
+<p>步骤：</p>
+<ol>
+<li>下载JQuery</li>
+</ol>
+<ul>
+<li>目前jQuery有三个大版本：<br>
+1.x：兼容ie678,使用最为广泛的，官方只做BUG维护，<br>
+功能不再新增。因此一般项目来说，使用1.x版本就可以了，<br>
+最终版本：1.12.4 (2016年5月20日)<br>
+2.x：不兼容ie678，很少有人使用，官方只做BUG维护，<br>
+功能不再新增。如果不考虑兼容低版本的浏览器可以使用2.x，<br>
+最终版本：2.2.4 (2016年5月20日)<br>
+3.x：不兼容ie678，只支持最新的浏览器。除非特殊要求，<br>
+一般不会使用3.x版本的，很多老的jQuery插件不支持这个版本。<br>
+目前该版本是官方主要更新维护的版本。最新版本：3.2.1（2017年3月20日）
+<ul>
+<li>jquery-xxx.js 与 jquery-xxx.min.js区别：
+<ol>
+<li>jquery-xxx.js：开发版本。给程序员看的，有良好的缩进和注释。体积大一些</li>
+<li>jquery-xxx.min.js：生产版本。程序中使用，没有缩进。体积小一些。程序加载更快</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>导入JQuery的js文件：导入min.js文件</p>
+<ol start="3">
+<li>使用</li>
+</ol>
+<pre><code>   var div1 = $(&quot;#div1&quot;);
+
+  
+   			alert(div1.html());
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>JQuery对象和JS对象区别与转换</p>
+<ol>
+<li>JQuery对象在操作时，更加方便。</li>
+<li>JQuery对象和js对象方法不通用的.</li>
+</ol>
+</li>
+<li>
+<p>两者相互转换</p>
+<ul>
+<li>jq -- &gt; js : jq对象[索引] 或者 jq对象.get(索引)</li>
+<li>js -- &gt; jq : $(js对象)</li>
+</ul>
+</li>
+<li>
+<p>选择器：筛选具有相似特征的元素(标签)</p>
+<ol>
+<li>
+<p>基本操作学习：</p>
+<ol>
+<li>
+<p>事件绑定</p>
+<pre><code class="language-java">//1.获取b1按钮
+   $(&quot;#b1&quot;).click(function(){
+          alert(&quot;abc&quot;);
+   });
+</code></pre>
+</li>
+<li>
+<p>入口函数'钱'(function () {});window.onload  和 '钱'(function) 区别</p>
+<ul>
+<li>window.onload 只能定义一次,如果定义多次，后边的会将前边的覆盖掉<br>
+(function)可以定义多次的。</li>
+</ul>
+</li>
+<li>
+<p>样式控制：css方法<br>
+'钱'(&quot;#div1&quot;).css(&quot;background-color&quot;,&quot;red&quot;);<br>
+​'钱'(&quot;#div1&quot;).css(&quot;backgroundColor&quot;,&quot;pink&quot;);</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>分类</p>
+<ol>
+<li>
+<p>基本选择器</p>
+<ol>
+<li>
+<p>标签选择器（元素选择器）</p>
+<ul>
+<li>语法： $(&quot;html标签名&quot;) 获得所有匹配标签名称的元素</li>
+</ul>
+<ol start="2">
+<li>id选择器
+<ul>
+<li>语法： $(&quot;#id的属性值&quot;) 获得与指定id属性值匹配的元素</li>
+</ul>
+</li>
+<li>类选择器
+<ul>
+<li>语法： $(&quot;.class的属性值&quot;) 获得与指定的class属性值匹配的元素</li>
+</ul>
+</li>
+<li>并集选择器：
+<ul>
+<li>语法： $(&quot;选择器1,选择器2....&quot;) 获取多个选择器选中的所有元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>层级选择器</p>
+<ol>
+<li>后代选择器
+<ul>
+<li>语法： $(&quot;A B &quot;) 选择A元素内部的所有B元素</li>
+</ul>
+</li>
+<li>子选择器
+<ul>
+<li>语法： $(&quot;A &gt; B&quot;) 选择A元素内部的所有B子元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>属性选择器</p>
+<ol>
+<li>属性名称选择器
+<ul>
+<li>语法： $(&quot;A[属性名]&quot;) 包含指定属性的选择器</li>
+</ul>
+</li>
+<li>属性选择器
+<ul>
+<li>语法： $(&quot;A[属性名='值']&quot;) 包含指定属性等于指定值的选择器</li>
+</ul>
+</li>
+<li>复合属性选择器
+<ul>
+<li>语法： $(&quot;A[属性名='值'][]...&quot;) 包含多个属性条件的选择器</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>过滤选择器</p>
+<ol>
+<li>首元素选择器
+<ul>
+<li>语法： :first 获得选择的元素中的第一个元素</li>
+</ul>
+</li>
+<li>尾元素选择器
+<ul>
+<li>语法： :last 获得选择的元素中的最后一个元素</li>
+</ul>
+</li>
+<li>非元素选择器
+<ul>
+<li>语法： :not(selector) 不包括指定内容的元素</li>
+</ul>
+</li>
+<li>偶数选择器
+<ul>
+<li>语法： :even 偶数，从 0 开始计数</li>
+</ul>
+</li>
+<li>奇数选择器
+<ul>
+<li>语法： :odd 奇数，从 0 开始计数</li>
+</ul>
+</li>
+<li>等于索引选择器
+<ul>
+<li>语法： :eq(index) 指定索引元素</li>
+</ul>
+</li>
+<li>大于索引选择器
+<ul>
+<li>语法： :gt(index) 大于指定索引元素</li>
+</ul>
+</li>
+<li>小于索引选择器
+<ul>
+<li>语法： :lt(index) 小于指定索引元素</li>
+</ul>
+</li>
+<li>标题选择器
+<ul>
+<li>语法： :header 获得标题（h1~h6）元素，固定写法</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>表单过滤选择器</p>
+<ol>
+<li>可用元素选择器
+<ul>
+<li>语法： :enabled 获得可用元素</li>
+</ul>
+</li>
+<li>不可用元素选择器
+<ul>
+<li>语法： :disabled 获得不可用元素</li>
+</ul>
+</li>
+<li>选中选择器
+<ul>
+<li>语法： :checked 获得单选/复选框选中的元素</li>
+</ul>
+</li>
+<li>选中选择器
+<ul>
+<li>语法： :selected 获得下拉框选中的元素</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>DOM操作</p>
+<ol>
+<li>
+<p>内容操作</p>
+<ol>
+<li>html(): 获取/设置元素的标签体内容   <code>&lt;a&gt;&lt;font&gt;内容&lt;/font&gt;&lt;/a&gt; --&gt; &lt;font&gt;内容&lt;/font&gt;</code></li>
+<li>text(): 获取/设置元素的标签体纯文本内容   <code>&lt;a&gt;&lt;font&gt;内容&lt;/font&gt;&lt;/a&gt; --&gt; 内容</code></li>
+<li>val()： 获取/设置元素的value属性值</li>
+</ol>
+</li>
+<li>
+<p>属性操作</p>
+<ol>
+<li>
+<p>通用属性操作</p>
+<ol>
+<li>attr(): 获取/设置元素的属性</li>
+<li>removeAttr():删除属性</li>
+<li>prop():获取/设置元素的属性</li>
+<li>removeProp():删除属性</li>
+</ol>
+<ul>
+<li>attr和prop区别？
+<ol>
+<li>如果操作的是元素的固有属性，则建议使用prop</li>
+<li>如果操作的是元素自定义的属性，则建议使用attr</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>对class属性操作</p>
+<ol>
+<li>addClass():添加class属性值</li>
+<li>removeClass():删除class属性值</li>
+<li>toggleClass():切换class属性
+<ul>
+<li>toggleClass(&quot;one&quot;):
+<ul>
+<li>判断如果元素对象上存在class=&quot;one&quot;，则将属性值one删除掉。  如果元素对象上不存在class=&quot;one&quot;，则添加</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>css():</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>CRUD操作:</p>
+<ol>
+<li>append():父元素将子元素追加到末尾
+<ul>
+<li>对象1.append(对象2): 将对象2添加到对象1元素内部，并且在末尾</li>
+</ul>
+</li>
+<li>prepend():父元素将子元素追加到开头
+<ul>
+<li>对象1.prepend(对象2):将对象2添加到对象1元素内部，并且在开头</li>
+</ul>
+</li>
+<li>appendTo():
+<ul>
+<li>对象1.appendTo(对象2):将对象1添加到对象2内部，并且在末尾</li>
+</ul>
+</li>
+<li>prependTo()：
+<ul>
+<li>对象1.prependTo(对象2):将对象1添加到对象2内部，并且在开头</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>after():添加元素到元素后边</p>
+<ul>
+<li>对象1.after(对象2)： 将对象2添加到对象1后边。对象1和对象2是兄弟关系<br>
+6. before():添加元素到元素前边
+<ul>
+<li>对象1.before(对象2)： 将对象2添加到对象1前边。对象1和对象2是兄弟关系</li>
+</ul>
+<ol start="7">
+<li>insertAfter()
+<ul>
+<li>对象1.insertAfter(对象2)：将对象2添加到对象1后边。对象1和对象2是兄弟关系</li>
+</ul>
+</li>
+<li>insertBefore()
+<ul>
+<li>对象1.insertBefore(对象2)： 将对象2添加到对象1前边。对象1和对象2是兄弟关系</li>
+</ul>
+</li>
+<li>remove():移除元素
+<ul>
+<li>对象.remove():将对象删除掉</li>
+</ul>
+</li>
+<li>empty():清空元素的所有后代元素。
+<ul>
+<li>对象.empty():将对象的后代元素全部清空，但是保留当前对象以及其属性节点</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java(listener&filter)]]></title>
         <id>https://42one.xyz/post/ERfgRsaqD</id>
@@ -1132,232 +1496,6 @@ Connection conn = DriverManager.getConnection(url,user,password);
 <li>Repeatable read【TRANSACTION_REPEATABLE_READ】</li>
 <li>Read committed【TRANSACTION_READ_COMMITTED】</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[java面试题(集合)]]></title>
-        <id>https://42one.xyz/post/HOVDsriA1</id>
-        <link href="https://42one.xyz/post/HOVDsriA1">
-        </link>
-        <updated>2019-06-21T13:22:39.000Z</updated>
-        <summary type="html"><![CDATA[<ul>
-<li><a href="#head1"> <strong>集合的分类</strong></a><a name="divtop"></a></li>
-<li><a href="#head2"> <strong>ArrayList和vector的区别</strong></a></li>
-<li><a href="#head3"> <strong>HashMap与HashTable的区别</strong></a></li>
-<li><a href="#head4"> <strong>HashMap是怎么解决哈希冲突的</strong></a><a name="divtop"></a></li>
-<li><a href="#head5"> <strong>list和map的区别</strong></a></li>
-<li><a href="#head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></a></li>
-<li><a href="#head7"> <strong>arraylist和linkedlist的存储特性</strong></a></li>
-<li><a href="#head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></a></li>
-</ul>
-]]></summary>
-        <content type="html"><![CDATA[<ul>
-<li><a href="#head1"> <strong>集合的分类</strong></a><a name="divtop"></a></li>
-<li><a href="#head2"> <strong>ArrayList和vector的区别</strong></a></li>
-<li><a href="#head3"> <strong>HashMap与HashTable的区别</strong></a></li>
-<li><a href="#head4"> <strong>HashMap是怎么解决哈希冲突的</strong></a><a name="divtop"></a></li>
-<li><a href="#head5"> <strong>list和map的区别</strong></a></li>
-<li><a href="#head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></a></li>
-<li><a href="#head7"> <strong>arraylist和linkedlist的存储特性</strong></a></li>
-<li><a href="#head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></a></li>
-</ul>
-<!-- more -->
-<br>
-<h3 id="span-idhead1-集合的分类span"><span id="head1"> <strong>集合的分类</strong></span></h3>
-<hr>
-<p>主要分为collection,map.</p>
-<ul>
-<li><strong>collection</strong>
-<ul>
-<li>list
-<ul>
-<li><strong>ArrayLis</strong>t</li>
-<li>linkedlist</li>
-<li>vector(已过时,了解)</li>
-</ul>
-</li>
-<li>set
-<ul>
-<li>hashset
-<ul>
-<li>linkedhashset</li>
-</ul>
-</li>
-<li>treeset</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>map</strong>
-<ul>
-<li><strong>hashmap</strong>
-<ul>
-<li>linkedhashmap</li>
-</ul>
-</li>
-<li>hashtable
-<ul>
-<li>properties</li>
-</ul>
-</li>
-<li>concurrenthashmap</li>
-</ul>
-</li>
-<li>treemap</li>
-</ul>
-<br>
-<h3 id="span-idhead2-arraylist和vector的区别span"><span id="head2"> <strong>ArrayList和vector的区别</strong></span></h3>
-<hr>
-<p><strong>共同点</strong>:这两个类都实现了list接口,他们都是有序的集合(存储有序),底层是数组,允许元素重复和为null</p>
-<p><strong>区别</strong>:</p>
-<ul>
-<li>同步性
-<ul>
-<li>ArrayList是非同步的</li>
-<li>vector是同步的</li>
-<li>需要同步时一般通过collections工具构建同步的ArrayList</li>
-</ul>
-</li>
-<li>扩容大小
-<ul>
-<li>vector增长原来的一倍,ArrayList增长原来的0.5倍</li>
-</ul>
-</li>
-</ul>
-<br>
-<h3 id="span-idhead3-hashmap与hashtable的区别span"><span id="head3"> <strong>HashMap与HashTable的区别</strong></span></h3>
-<hr>
-<ul>
-<li>HashMap没有考虑同步，是线程不安全的；Hashtable使用了synchronized关键字，是线程安全的；</li>
-<li>HashMap允许K/V都为null；后者K/V都不允许为null；</li>
-<li>HashMap继承自AbstractMap类；而Hashtable继承自Dictionary类；</li>
-</ul>
-<p>HashMap的put方法的具体流程？</p>
-<br>
-<p>源码为:</p>
-<pre><code class="language-js">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
-               boolean evict) {
-    HashMap.Node&lt;K,V&gt;[] tab; HashMap.Node&lt;K,V&gt; p; int n, i;
-    // 1.如果table为空或者长度为0，即没有元素，那么使用resize()方法扩容    if ((tab = table) == null || (n = tab.length) == 0)
-        n = (tab = resize()).length;
-    // 2.计算插入存储的数组索引i，此处计算方法同 1.7 中的indexFor()方法    // 如果数组为空，即不存在Hash冲突，则直接插入数组    if ((p = tab[i = (n - 1) &amp; hash]) == null)
-        tab[i] = newNode(hash, key, value, null);
-    // 3.插入时，如果发生Hash冲突，则依次往下判断    else {
-        HashMap.Node&lt;K,V&gt; e; K k;
-        // a.判断table[i]的元素的key是否与需要插入的key一样，若相同则直接用新的value覆盖掉旧的value        // 判断原则equals() - 所以需要当key的对象重写该方法        if (p.hash == hash &amp;&amp;
-                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))
-            e = p;
-        // b.继续判断：需要插入的数据结构是红黑树还是链表        // 如果是红黑树，则直接在树中插入 or 更新键值对        else if (p instanceof HashMap.TreeNode)
-            e = ((HashMap.TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);
-        // 如果是链表，则在链表中插入 or 更新键值对        else {
-            // i .遍历table[i]，判断key是否已存在：采用equals对比当前遍历结点的key与需要插入数据的key            //    如果存在相同的，则直接覆盖            // ii.遍历完毕后任务发现上述情况，则直接在链表尾部插入数据            //    插入完成后判断链表长度是否 &gt; 8：若是，则把链表转换成红黑树            for (int binCount = 0; ; ++binCount) {
-                if ((e = p.next) == null) {
-                    p.next = newNode(hash, key, value, null);
-                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st                        treeifyBin(tab, hash);
-                    break;
-                }
-                if (e.hash == hash &amp;&amp;
-                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
-                    break;
-                p = e;
-            }
-        }
-        // 对于i 情况的后续操作：发现key已存在，直接用新value覆盖旧value&amp;返回旧value        if (e != null) { // existing mapping for key            V oldValue = e.value;
-            if (!onlyIfAbsent || oldValue == null)
-                e.value = value;
-            afterNodeAccess(e);
-            return oldValue;
-        }
-    }
-    ++modCount;
-    // 插入成功后，判断实际存在的键值对数量size &gt; 最大容量    // 如果大于则进行扩容    if (++size &gt; threshold)
-        resize();
-    // 插入成功时会调用的方法（默认实现为空）    afterNodeInsertion(evict);
-    return null;
-}
-</code></pre>
-<p>图示为:</p>
-<p><img src="https://42one.xyz/post-images/1561125478643.png" alt=""></p>
-<br>
-<h3 id="span-idhead4-hashmap是怎么解决哈希冲突的span"><span id="head4"> <strong>HashMap是怎么解决哈希冲突的</strong></span></h3>
-<hr>
-<p><strong>什么是哈希？</strong><br>
-Hash，一般翻译为“散列”，也有直接音译为“哈希”的，这就是把任意长度的输入通过散列算法，变换成固定长度的输出，该输出就是散列值（哈希值）；这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，所以不可能从散列值来唯一的确定输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。</p>
-<p>所有散列函数都有如下一个基本特性：根据同一散列函数计算出的散列值如果不同，那么输入值肯定也不同。但是，根据同一散列函数计算出的散列值如果相同，输入值不一定相同。</p>
-<p><strong>解决办法</strong></p>
-<ol>
-<li>使用链地址法（使用散列表）来链接拥有相同hash值的数据；</li>
-<li>使用2次扰动函数（hash函数）来降低哈希冲突的概率，使得数据分布更平均；</li>
-<li>引入红黑树进一步降低遍历的时间复杂度，使得遍历更快；</li>
-</ol>
-<br>
-<h3 id="span-idhead5-list和map的区别span"><span id="head5"> <strong>list和map的区别</strong></span></h3>
-<hr>
-<ul>
-<li>存储结构不同
-<ul>
-<li>list是存储单列的集合</li>
-<li>map是以键值对的形式存储数据的</li>
-</ul>
-</li>
-<li>元素是否重复
-<ul>
-<li>list允许元素重复</li>
-<li>map不允许元素重复</li>
-</ul>
-</li>
-<li>是否有序
-<ul>
-<li>list集合元素是有序的</li>
-<li>map集合元素是无序的</li>
-</ul>
-</li>
-</ul>
-<br>
-<h3 id="span-idhead6-set里的元素是不能重复的那么用什么方法来区分重复的元素是还是equalsspan"><span id="head6"> <strong>set里的元素是不能重复的,那么用什么方法来区分重复的元素,是==还是equals</strong></span></h3>
-<hr>
-<p>set集合实际上大都使用的是 <strong>map集合的put方法来添加元素的</strong><br>
-以hashset元素为例,hashset里的元素不能重复<br>
-源码为</p>
-<p>// 1. 如果key 相等<br>
-if (p.hash == hash &amp;&amp;<br>
-((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))<br>
-e = p;<br>
-// 2. 修改对应的value<br>
-if (e != null) { // existing mapping for key<br>
-V oldValue = e.value;<br>
-if (!onlyIfAbsent || oldValue == null)<br>
-e.value = value;<br>
-afterNodeAccess(e);<br>
-return oldValue;<br>
-}</p>
-<p>添加元素的时候,如果key(也就是对应的是set集合的元素)相等,那么修改value值.而在set集合中,value值仅仅是一个object对象罢了(该对象对set集合来说是无用的)</p>
-<p><strong>Set集合如果添加的元素相同时，是根本没有插入的(仅修改了一个无用的value值)！从源码(HashMap)中也看出来，==和equals()方法都有使用！</strong></p>
-<br>
-<h3 id="span-idhead7-arraylist和linkedlist的存储特性span"><span id="head7"> <strong>arraylist和linkedlist的存储特性</strong></span></h3>
-<hr>
-<p>ArrayList的底层是数组，LinkedList的底层是双向链表。</p>
-<ul>
-<li>ArrayList它支持以角标位置进行索引出对应的元素(随机访问)，而LinkedList则需要遍历整个链表来获取对应的元素。因此一般来说ArrayList的访问速度是要比LinkedList要快的</li>
-<li>ArrayList由于是数组，对于删除和修改而言消耗是比较大(复制和移动数组实现)，LinkedList是双向链表删除和修改只需要修改对应的指针即可，消耗是很小的。因此一般来说LinkedList的增删速度是要比ArrayList要快的</li>
-</ul>
-<br>
-<blockquote>
-<p>ArrayList的增删未必就是比LinkedList要慢。</p>
-<ul>
-<li>如果增删都是在末尾来操作【每次调用的都是remove()和add()】，此时ArrayList就不需要移动和复制数组来进行操作了。如果数据量有百万级的时，速度是会比LinkedList要快的。</li>
-<li>如果删除操作的位置是在中间。由于LinkedList的消耗主要是在遍历上，ArrayList的消耗主要是在移动和复制上(底层调用的是arraycopy()方法，是native方法)。
-<ul>
-<li>LinkedList的遍历速度是要慢于ArrayList的复制移动速度的</li>
-<li>如果数据量有百万级的时，还是ArrayList要快。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<br>
-<h3 id="span-idhead8-arraylist集合中插入一万条数据如何提高效率span"><span id="head8"> <strong>ArrayList集合中插入一万条数据,如何提高效率</strong></span><a href="#divtop">🔝</a></h3>
-<hr>
-<p>ArrayList的默认初始容量为10，要插入大量数据的时候需要不断扩容，而扩容是非常影响性能的。因此，现在明确了10万条数据了，我们可以直接在初始化的时候就设置ArrayList的容量.</p>
 ]]></content>
     </entry>
 </feed>

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<title>linux(三)正则表达式 | Martian`Blog</title>
+<title>jQuery基本操作 | Martian`Blog</title>
 <link rel="shortcut icon" href="https://42one.xyz/favicon.ico?v=1562678808669">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://42one.xyz/styles/main.css" type='text/css' media='all'>
@@ -180,274 +180,381 @@
         <div id="loop-container" class="loop-container">
             <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
                 
-                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/aP3l-gFIw.jpg">
+                    <div class='featured-image lazy lazy-bg-image' data-background="https://42one.xyz/post-images/ye2Yre-eC.jpg">
                     </div>
                 
 
                 <div class="entry-meta">
-                    <span class="date">· 2019-06-24 ·</span> <span> / </span>
+                    <span class="date">· 2019-07-09 ·</span> <span> / </span>
                     <span class="author">
             <a href="https://42one.xyz" title="" rel="author"> Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></a>
           </span>
                     
                         <span class="category">
                     <span> / </span>
-                    <a href="https://42one.xyz/tag/CA7Cv-521">LINUX</a>
+                    <a href="https://42one.xyz/tag/web">WEB</a>
                 </span>
                     
                 </div>
                 <div class='entry-header'>
-                    <h1 class='entry-title'>linux(三)正则表达式</h1>
+                    <h1 class='entry-title'>jQuery基本操作</h1>
                 </div>
                 <div class="entry-container">
                     <div class="entry-content">
                         <article>
-                            <ul>
+                            <br>
+<p>概念及快速入门</p>
+<!-- more -->
+<hr>
+<ol>
 <li>
-<p><a href="#head1"> <strong>正则表达式</strong></a></p>
+<p>概念： 一个JavaScript框架。简化JS开发</p>
+<ul>
+<li>jQuery是一个快速、简洁的JavaScript框架，是继Prototype之后又一个优秀的JavaScript代码库（或JavaScript框架）。jQuery设计的宗旨	是“write Less，Do More”，即倡导写更少的代码，做更多的事情。它封装JavaScript常用的功能代码，提供一种简便的JavaScript设计模式，优	化HTML文档操作、事件处理、动画设计和Ajax交互。</li>
+<li>JavaScript框架：本质上就是一些js文件，封装了js的原生代码而已</li>
+</ul>
 </li>
 <li>
-<p><a href="#head2"> <strong>常见的正则表达式</strong></a></p>
-<!-- more -->
+<p>快速入门</p>
+<ol>
+<li>
+<p>步骤：</p>
+<ol>
+<li>下载JQuery</li>
+</ol>
+<ul>
+<li>目前jQuery有三个大版本：<br>
+1.x：兼容ie678,使用最为广泛的，官方只做BUG维护，<br>
+功能不再新增。因此一般项目来说，使用1.x版本就可以了，<br>
+最终版本：1.12.4 (2016年5月20日)<br>
+2.x：不兼容ie678，很少有人使用，官方只做BUG维护，<br>
+功能不再新增。如果不考虑兼容低版本的浏览器可以使用2.x，<br>
+最终版本：2.2.4 (2016年5月20日)<br>
+3.x：不兼容ie678，只支持最新的浏览器。除非特殊要求，<br>
+一般不会使用3.x版本的，很多老的jQuery插件不支持这个版本。<br>
+目前该版本是官方主要更新维护的版本。最新版本：3.2.1（2017年3月20日）
+<ul>
+<li>jquery-xxx.js 与 jquery-xxx.min.js区别：
+<ol>
+<li>jquery-xxx.js：开发版本。给程序员看的，有良好的缩进和注释。体积大一些</li>
+<li>jquery-xxx.min.js：生产版本。程序中使用，没有缩进。体积小一些。程序加载更快</li>
+</ol>
 </li>
 </ul>
-<br>
-<h3 id="span-idhead1-正则表达式span"><span id="head1"> <strong>正则表达式</strong></span></h3>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字符</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">\</td>
-<td style="text-align:left">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，“<code>n</code>”匹配字符“<code>n</code>”。“<code>\n</code>”匹配一个换行符。串行“<code>\\</code>”匹配“<code>\</code>”而“<code>\(</code>”则匹配“<code>(</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">^</td>
-<td style="text-align:left">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配“<code>\n</code>”或“<code>\r</code>”之后的位置。</td>
-</tr>
-<tr>
-<td style="text-align:center">$</td>
-<td style="text-align:left">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配“<code>\n</code>”或“<code>\r</code>”之前的位置。</td>
-</tr>
-<tr>
-<td style="text-align:center">*</td>
-<td style="text-align:left">匹配前面的子表达式零次或多次。例如，zo*能匹配“<code>z</code>”以及“<code>zoo</code>”。*等价于{0,}。</td>
-</tr>
-<tr>
-<td style="text-align:center">+</td>
-<td style="text-align:left">匹配前面的子表达式一次或多次。例如，“<code>zo+</code>”能匹配“<code>zo</code>”以及“<code>zoo</code>”，但不能匹配“<code>z</code>”。+等价于{1,}。</td>
-</tr>
-<tr>
-<td style="text-align:center">?</td>
-<td style="text-align:left">匹配前面的子表达式零次或一次。例如，“<code>do(es)?</code>”可以匹配“<code>does</code>”或“<code>does</code>”中的“<code>do</code>”。?等价于{0,1}。</td>
-</tr>
-<tr>
-<td style="text-align:center">{<em>n</em>}</td>
-<td style="text-align:left"><em>n</em>是一个非负整数。匹配确定的<em>n</em>次。例如，“<code>o{2}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但是能匹配“<code>food</code>”中的两个o。</td>
-</tr>
-<tr>
-<td style="text-align:center">{<em>n</em>,}</td>
-<td style="text-align:left"><em>n</em>是一个非负整数。至少匹配<em>n</em>次。例如，“<code>o{2,}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但能匹配“<code>foooood</code>”中的所有o。“<code>o{1,}</code>”等价于“<code>o+</code>”。“<code>o{0,}</code>”则等价于“<code>o*</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">{<em>n</em>,<em>m</em>}</td>
-<td style="text-align:left"><em>m</em>和<em>n</em>均为非负整数，其中<em>n</em>&lt;=<em>m</em>。最少匹配<em>n</em>次且最多匹配<em>m</em>次。例如，“<code>o{1,3}</code>”将匹配“<code>fooooood</code>”中的前三个o。“<code>o{0,1}</code>”等价于“<code>o?</code>”。请注意在逗号和两个数之间不能有空格。</td>
-</tr>
-<tr>
-<td style="text-align:center">?</td>
-<td style="text-align:left">当该字符紧跟在任何一个其他限制符（*,+,?，{<em>n</em>}，{<em>n</em>,}，{<em>n</em>,<em>m</em>}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串“<code>oooo</code>”，“<code>o+?</code>”将匹配单个“<code>o</code>”，而“<code>o+</code>”将匹配所有“<code>o</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">.</td>
-<td style="text-align:left">匹配除“<code>\</code><em><code>n</code></em>”之外的任何单个字符。要匹配包括“<code>\</code><em><code>n</code></em>”在内的任何字符，请使用像“<code>(.|\n)</code>”的模式。</td>
-</tr>
-<tr>
-<td style="text-align:center">(pattern)</td>
-<td style="text-align:left">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0…$9属性。要匹配圆括号字符，请使用“<code>\(</code>”或“<code>\)</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">(?:pattern)</td>
-<td style="text-align:left">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符“<code>(|)</code>”来组合一个模式的各个部分是很有用。例如“<code>industr(?:y|ies)</code>”就是一个比“<code>industry|industries</code>”更简略的表达式。</td>
-</tr>
-<tr>
-<td style="text-align:center">(?=pattern)</td>
-<td style="text-align:left">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，“<code>Windows(?=95|98|NT|2000)</code>”能匹配“<code>Windows2000</code>”中的“<code>Windows</code>”，但不能匹配“<code>Windows3.1</code>”中的“<code>Windows</code>”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</td>
-</tr>
-<tr>
-<td style="text-align:center">(?!pattern)</td>
-<td style="text-align:left">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如“<code>Windows(?!95|98|NT|2000)</code>”能匹配“<code>Windows3.1</code>”中的“<code>Windows</code>”，但不能匹配“<code>Windows2000</code>”中的“<code>Windows</code>”。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始</td>
-</tr>
-<tr>
-<td style="text-align:center">(?&lt;=pattern)</td>
-<td style="text-align:left">反向肯定预查，与正向肯定预查类拟，只是方向相反。例如，“<code>(?&lt;=95|98|NT|2000)Windows</code>”能匹配“<code>2000Windows</code>”中的“<code>Windows</code>”，但不能匹配“<code>3.1Windows</code>”中的“<code>Windows</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">(?&lt;!pattern)</td>
-<td style="text-align:left">反向否定预查，与正向否定预查类拟，只是方向相反。例如“<code>(?&lt;!95|98|NT|2000)Windows</code>”能匹配“<code>3.1Windows</code>”中的“<code>Windows</code>”，但不能匹配“<code>2000Windows</code>”中的“<code>Windows</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">x|y</td>
-<td style="text-align:left">匹配x或y。例如，“<code>z|food</code>”能匹配“<code>z</code>”或“<code>food</code>”。“<code>(z|f)ood</code>”则匹配“<code>zood</code>”或“<code>food</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">[xyz]</td>
-<td style="text-align:left">字符集合。匹配所包含的任意一个字符。例如，“<code>[abc]</code>”可以匹配“<code>plain</code>”中的“<code>a</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">[^xyz]</td>
-<td style="text-align:left">负值字符集合。匹配未包含的任意字符。例如，“<code>[^abc]</code>”可以匹配“<code>plain</code>”中的“<code>p</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">[a-z]</td>
-<td style="text-align:left">字符范围。匹配指定范围内的任意字符。例如，“<code>[a-z]</code>”可以匹配“<code>a</code>”到“<code>z</code>”范围内的任意小写字母字符。</td>
-</tr>
-<tr>
-<td style="text-align:center">[^a-z]</td>
-<td style="text-align:left">负值字符范围。匹配任何不在指定范围内的任意字符。例如，“<code>[^a-z]</code>”可以匹配任何不在“<code>a</code>”到“<code>z</code>”范围内的任意字符。</td>
-</tr>
-<tr>
-<td style="text-align:center">\b</td>
-<td style="text-align:left">匹配一个单词边界，也就是指单词和空格间的位置。例如，“<code>er\b</code>”可以匹配“<code>never</code>”中的“<code>er</code>”，但不能匹配“<code>verb</code>”中的“<code>er</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">\B</td>
-<td style="text-align:left">匹配非单词边界。“<code>er\B</code>”能匹配“<code>verb</code>”中的“<code>er</code>”，但不能匹配“<code>never</code>”中的“<code>er</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">\cx</td>
-<td style="text-align:left">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的“<code>c</code>”字符。</td>
-</tr>
-<tr>
-<td style="text-align:center">\d</td>
-<td style="text-align:left">匹配一个数字字符。等价于[0-9]。</td>
-</tr>
-<tr>
-<td style="text-align:center">\D</td>
-<td style="text-align:left">匹配一个非数字字符。等价于[^0-9]。</td>
-</tr>
-<tr>
-<td style="text-align:center">\f</td>
-<td style="text-align:left">匹配一个换页符。等价于\x0c和\cL。</td>
-</tr>
-<tr>
-<td style="text-align:center">\n</td>
-<td style="text-align:left">匹配一个换行符。等价于\x0a和\cJ。</td>
-</tr>
-<tr>
-<td style="text-align:center">\r</td>
-<td style="text-align:left">匹配一个回车符。等价于\x0d和\cM。</td>
-</tr>
-<tr>
-<td style="text-align:center">\s</td>
-<td style="text-align:left">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</td>
-</tr>
-<tr>
-<td style="text-align:center">\S</td>
-<td style="text-align:left">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</td>
-</tr>
-<tr>
-<td style="text-align:center">\t</td>
-<td style="text-align:left">匹配一个制表符。等价于\x09和\cI。</td>
-</tr>
-<tr>
-<td style="text-align:center">\v</td>
-<td style="text-align:left">匹配一个垂直制表符。等价于\x0b和\cK。</td>
-</tr>
-<tr>
-<td style="text-align:center">\w</td>
-<td style="text-align:left">匹配包括下划线的任何单词字符。等价于“<code>[A-Za-z0-9_]</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">\W</td>
-<td style="text-align:left">匹配任何非单词字符。等价于“<code>[^A-Za-z0-9_]</code>”。</td>
-</tr>
-<tr>
-<td style="text-align:center">\x<em>n</em></td>
-<td style="text-align:left">匹配<em>n</em>，其中<em>n</em>为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，“<code>\x41</code>”匹配“<code>A</code>”。“<code>\x041</code>”则等价于“<code>\x04&amp;1</code>”。正则表达式中可以使用ASCII编码。.</td>
-</tr>
-<tr>
-<td style="text-align:center">\n<em>u</em>m</td>
-<td style="text-align:left">匹配<em>num</em>，其中<em>num</em>是一个正整数。对所获取的匹配的引用。例如，“<code>(.)\1</code>”匹配两个连续的相同字符。</td>
-</tr>
-<tr>
-<td style="text-align:center">\n</td>
-<td style="text-align:left">标识一个八进制转义值或一个向后引用。如果*n<em>之前至少</em>n<em>个获取的子表达式，则</em>n<em>为向后引用。否则，如果</em>n<em>为八进制数字（0-7），则</em>n*为一个八进制转义值。</td>
-</tr>
-<tr>
-<td style="text-align:center">\n<em>m</em></td>
-<td style="text-align:left">标识一个八进制转义值或一个向后引用。如果<em>nm</em>之前至少有<em>nm</em>个获得子表达式，则<em>nm</em>为向后引用。如果*nm<em>之前至少有</em>n<em>个获取，则</em>n<em>为一个后跟文字</em>m<em>的向后引用。如果前面的条件都不满足，若</em>n<em>和</em>m<em>均为八进制数字（0-7），则*nm</em>将匹配八进制转义值<em>nm</em>。</td>
-</tr>
-<tr>
-<td style="text-align:center">\nml</td>
-<td style="text-align:left">如果<em>n</em>为八进制数字（0-3），且<em>m和l</em>均为八进制数字（0-7），则匹配八进制转义值<em>nm</em>l。</td>
-</tr>
-<tr>
-<td style="text-align:center">\u<em>n</em></td>
-<td style="text-align:left">匹配<em>n</em>，其中<em>n</em>是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（©）。</td>
-</tr>
-</tbody>
-</table>
-<br>
-<h3 id="span-idhead2-常见的正则表达式span"><span id="head2"> <strong>常见的正则表达式</strong></span></h3>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">用户名</th>
-<th>/<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>{3,16}$/</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">密码</td>
-<td>/<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>{6,18}$/</td>
-</tr>
-<tr>
-<td style="text-align:center">十六进制值</td>
-<td>/^#?([a-f0-9]{6}|[a-f0-9]{3})$/</td>
-</tr>
-<tr>
-<td style="text-align:center">电子邮箱</td>
-<td>/^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \d at position 9: / /^[a-z\̲d̲]+(\.[a-z\d]+)*…'>/ /^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+</span>/</td>
-</tr>
-<tr>
-<td style="text-align:center">URL</td>
-<td>/^(https?://)?([\da-z.-]+).([a-z.]{2,6})([/\w .-]<em>)</em>/?$/</td>
-</tr>
-<tr>
-<td style="text-align:center">IP 地址</td>
-<td>/((2[0-4]\d|25[0-5]|[01]?\d\d?).){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)/ /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/</td>
-</tr>
-<tr>
-<td style="text-align:center">HTML 标签</td>
-<td>/<sup>&lt;([a-z]+)([</sup>&lt;]+)<em>(?:&gt;(.</em>)&lt;/\1&gt;|\s+/&gt;)$/</td>
-</tr>
-<tr>
-<td style="text-align:center">删除代码\注释</td>
-<td>(?&lt;!http:|\S)//.*$</td>
-</tr>
-<tr>
-<td style="text-align:center">Unicode编码中的汉字范围</td>
-<td>/<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+$/</td>
-</tr>
-</tbody>
-</table>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>a-z0-9_- <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>a-z0-9_- <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</ul>
 </li>
-<li id="fn3" class="footnote-item"><p>\u2E80-\u9FFF <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+<li>
+<p>导入JQuery的js文件：导入min.js文件</p>
+<ol start="3">
+<li>使用</li>
+</ol>
+<pre><code>   var div1 = $(&quot;#div1&quot;);
+
+  
+   			alert(div1.html());
+</code></pre>
 </li>
 </ol>
-</section>
+</li>
+<li>
+<p>JQuery对象和JS对象区别与转换</p>
+<ol>
+<li>JQuery对象在操作时，更加方便。</li>
+<li>JQuery对象和js对象方法不通用的.</li>
+</ol>
+</li>
+<li>
+<p>两者相互转换</p>
+<ul>
+<li>jq -- &gt; js : jq对象[索引] 或者 jq对象.get(索引)</li>
+<li>js -- &gt; jq : $(js对象)</li>
+</ul>
+</li>
+<li>
+<p>选择器：筛选具有相似特征的元素(标签)</p>
+<ol>
+<li>
+<p>基本操作学习：</p>
+<ol>
+<li>
+<p>事件绑定</p>
+<pre><code class="language-java">//1.获取b1按钮
+   $(&quot;#b1&quot;).click(function(){
+          alert(&quot;abc&quot;);
+   });
+</code></pre>
+</li>
+<li>
+<p>入口函数'钱'(function () {});window.onload  和 '钱'(function) 区别</p>
+<ul>
+<li>window.onload 只能定义一次,如果定义多次，后边的会将前边的覆盖掉<br>
+(function)可以定义多次的。</li>
+</ul>
+</li>
+<li>
+<p>样式控制：css方法<br>
+'钱'(&quot;#div1&quot;).css(&quot;background-color&quot;,&quot;red&quot;);<br>
+​'钱'(&quot;#div1&quot;).css(&quot;backgroundColor&quot;,&quot;pink&quot;);</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>分类</p>
+<ol>
+<li>
+<p>基本选择器</p>
+<ol>
+<li>
+<p>标签选择器（元素选择器）</p>
+<ul>
+<li>语法： $(&quot;html标签名&quot;) 获得所有匹配标签名称的元素</li>
+</ul>
+<ol start="2">
+<li>id选择器
+<ul>
+<li>语法： $(&quot;#id的属性值&quot;) 获得与指定id属性值匹配的元素</li>
+</ul>
+</li>
+<li>类选择器
+<ul>
+<li>语法： $(&quot;.class的属性值&quot;) 获得与指定的class属性值匹配的元素</li>
+</ul>
+</li>
+<li>并集选择器：
+<ul>
+<li>语法： $(&quot;选择器1,选择器2....&quot;) 获取多个选择器选中的所有元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>层级选择器</p>
+<ol>
+<li>后代选择器
+<ul>
+<li>语法： $(&quot;A B &quot;) 选择A元素内部的所有B元素</li>
+</ul>
+</li>
+<li>子选择器
+<ul>
+<li>语法： $(&quot;A &gt; B&quot;) 选择A元素内部的所有B子元素</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>属性选择器</p>
+<ol>
+<li>属性名称选择器
+<ul>
+<li>语法： $(&quot;A[属性名]&quot;) 包含指定属性的选择器</li>
+</ul>
+</li>
+<li>属性选择器
+<ul>
+<li>语法： $(&quot;A[属性名='值']&quot;) 包含指定属性等于指定值的选择器</li>
+</ul>
+</li>
+<li>复合属性选择器
+<ul>
+<li>语法： $(&quot;A[属性名='值'][]...&quot;) 包含多个属性条件的选择器</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>过滤选择器</p>
+<ol>
+<li>首元素选择器
+<ul>
+<li>语法： :first 获得选择的元素中的第一个元素</li>
+</ul>
+</li>
+<li>尾元素选择器
+<ul>
+<li>语法： :last 获得选择的元素中的最后一个元素</li>
+</ul>
+</li>
+<li>非元素选择器
+<ul>
+<li>语法： :not(selector) 不包括指定内容的元素</li>
+</ul>
+</li>
+<li>偶数选择器
+<ul>
+<li>语法： :even 偶数，从 0 开始计数</li>
+</ul>
+</li>
+<li>奇数选择器
+<ul>
+<li>语法： :odd 奇数，从 0 开始计数</li>
+</ul>
+</li>
+<li>等于索引选择器
+<ul>
+<li>语法： :eq(index) 指定索引元素</li>
+</ul>
+</li>
+<li>大于索引选择器
+<ul>
+<li>语法： :gt(index) 大于指定索引元素</li>
+</ul>
+</li>
+<li>小于索引选择器
+<ul>
+<li>语法： :lt(index) 小于指定索引元素</li>
+</ul>
+</li>
+<li>标题选择器
+<ul>
+<li>语法： :header 获得标题（h1~h6）元素，固定写法</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>表单过滤选择器</p>
+<ol>
+<li>可用元素选择器
+<ul>
+<li>语法： :enabled 获得可用元素</li>
+</ul>
+</li>
+<li>不可用元素选择器
+<ul>
+<li>语法： :disabled 获得不可用元素</li>
+</ul>
+</li>
+<li>选中选择器
+<ul>
+<li>语法： :checked 获得单选/复选框选中的元素</li>
+</ul>
+</li>
+<li>选中选择器
+<ul>
+<li>语法： :selected 获得下拉框选中的元素</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>DOM操作</p>
+<ol>
+<li>
+<p>内容操作</p>
+<ol>
+<li>html(): 获取/设置元素的标签体内容   <code>&lt;a&gt;&lt;font&gt;内容&lt;/font&gt;&lt;/a&gt; --&gt; &lt;font&gt;内容&lt;/font&gt;</code></li>
+<li>text(): 获取/设置元素的标签体纯文本内容   <code>&lt;a&gt;&lt;font&gt;内容&lt;/font&gt;&lt;/a&gt; --&gt; 内容</code></li>
+<li>val()： 获取/设置元素的value属性值</li>
+</ol>
+</li>
+<li>
+<p>属性操作</p>
+<ol>
+<li>
+<p>通用属性操作</p>
+<ol>
+<li>attr(): 获取/设置元素的属性</li>
+<li>removeAttr():删除属性</li>
+<li>prop():获取/设置元素的属性</li>
+<li>removeProp():删除属性</li>
+</ol>
+<ul>
+<li>attr和prop区别？
+<ol>
+<li>如果操作的是元素的固有属性，则建议使用prop</li>
+<li>如果操作的是元素自定义的属性，则建议使用attr</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>对class属性操作</p>
+<ol>
+<li>addClass():添加class属性值</li>
+<li>removeClass():删除class属性值</li>
+<li>toggleClass():切换class属性
+<ul>
+<li>toggleClass(&quot;one&quot;):
+<ul>
+<li>判断如果元素对象上存在class=&quot;one&quot;，则将属性值one删除掉。  如果元素对象上不存在class=&quot;one&quot;，则添加</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>css():</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>CRUD操作:</p>
+<ol>
+<li>append():父元素将子元素追加到末尾
+<ul>
+<li>对象1.append(对象2): 将对象2添加到对象1元素内部，并且在末尾</li>
+</ul>
+</li>
+<li>prepend():父元素将子元素追加到开头
+<ul>
+<li>对象1.prepend(对象2):将对象2添加到对象1元素内部，并且在开头</li>
+</ul>
+</li>
+<li>appendTo():
+<ul>
+<li>对象1.appendTo(对象2):将对象1添加到对象2内部，并且在末尾</li>
+</ul>
+</li>
+<li>prependTo()：
+<ul>
+<li>对象1.prependTo(对象2):将对象1添加到对象2内部，并且在开头</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>after():添加元素到元素后边</p>
+<ul>
+<li>对象1.after(对象2)： 将对象2添加到对象1后边。对象1和对象2是兄弟关系<br>
+6. before():添加元素到元素前边
+<ul>
+<li>对象1.before(对象2)： 将对象2添加到对象1前边。对象1和对象2是兄弟关系</li>
+</ul>
+<ol start="7">
+<li>insertAfter()
+<ul>
+<li>对象1.insertAfter(对象2)：将对象2添加到对象1后边。对象1和对象2是兄弟关系</li>
+</ul>
+</li>
+<li>insertBefore()
+<ul>
+<li>对象1.insertBefore(对象2)： 将对象2添加到对象1前边。对象1和对象2是兄弟关系</li>
+</ul>
+</li>
+<li>remove():移除元素
+<ul>
+<li>对象.remove():将对象删除掉</li>
+</ul>
+</li>
+<li>empty():清空元素的所有后代元素。
+<ul>
+<li>对象.empty():将对象的后代元素全部清空，但是保留当前对象以及其属性节点</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
 
                         </article>
                     </div>
@@ -545,7 +652,7 @@
                         <h2 class="screen-reader-text">Posts navigation</h2>
                         <div class="nav-links">
                             <a class="next page-numbers"
-                               href="https://42one.xyz/post/ci_77H9lE">下一篇->Java面试题(JDBC)</a>
+                               href="https://42one.xyz/post/ERfgRsaqD">下一篇->Java(listener&amp;filter)</a>
                         </div>
                     </nav>
                 
